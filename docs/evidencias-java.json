@@ -1,0 +1,98 @@
+{
+  "executedAt": "2026-10-14T19:39:46.695Z",
+  "java": "openjdk version \"25.0.1\" 2025-10-21 LTS\r\nOpenJDK Runtime Environment Temurin-25.0.1+8 (build 25.0.1+8-LTS)\r\nOpenJDK 64-Bit Server VM Temurin-25.0.1+8 (build 25.0.1+8-LTS, mixed mode, sharing)\r\n",
+  "sourcesUnmodified": true,
+  "results": [
+    {
+      "name": "HMAC",
+      "compiled": true,
+      "exit": 0,
+      "stdout": "Digite a msg: \r\nHMAC calculado em array de bytes = dd50fcc5033551a7baf17ffc035cb044dabb2afb4e0081796c67c838774e1cd3\r\nHMAC calculado = dd50fcc5033551a7baf17ffc035cb044dabb2afb4e0081796c67c838774e1cd3\r\nNome do algoritmo = HMacSHA256\r\nTamanho do MAC = 32\r\n\nDigite Mensagem 1 \r\nDigite Mensagem 2 \r\nMensagem 1 = mensagens-iguais\r\nChave 1 = d8469f52b8f8688dcebfe4a0b4f7f0d6\r\nHMAC da Mensagem 1 = 73cb2789a60d8051e14eff7d2c6b43c2ad707c1067d25a6a87e9df6dbf8b1342\r\nMensagem 2 = mensagens-iguais\r\nChave 2 = d8469f52b8f8688dcebfe4a0b4f7f0d6\r\nHMAC da Mensagem 2 = 73cb2789a60d8051e14eff7d2c6b43c2ad707c1067d25a6a87e9df6dbf8b1342\r\nHMACs iguais\r\n\n\nCom chaves diferentes, HMACs diferentes\r\nMensagem 1 = mensagens-iguais\r\nChave 1 = d8469f52b8f8688dcebfe4a0b4f7f0d6\r\nHMAC da Mensagem 1 = 73cb2789a60d8051e14eff7d2c6b43c2ad707c1067d25a6a87e9df6dbf8b1342\r\nMensagem 2 = mensagens-iguais\r\nChave 2 = 0123456789abcdef\r\nHMAC da Mensagem 2 = b5d14e264a9cb3d4a313f1c3bca4223eaa6ff4fda95128f07dbae356ae9b2be4\r\n",
+      "stderr": ""
+    },
+    {
+      "name": "Tampering sem MAC",
+      "compiled": true,
+      "exit": 0,
+      "stdout": "Texto plano    : Transferir 0000100 para Conta Corrente 1234-5678\r\nTexto decifrado: Transferir 9000100 para Conta Corrente 1234-5678\r\n",
+      "stderr": ""
+    },
+    {
+      "name": "Digest preservado",
+      "compiled": true,
+      "exit": 0,
+      "stdout": "Texto original : Transferir 0000100 para Conta Corrente 1234-5678\r\nHash em hexa: 2705c67dd11b81ba1ac0b5a2cc01813dbe8f36ddf57c05ba94fa35f9131ca390\r\nTamanho do hash em bytes: 32\r\nTexto decifrado: Transferir 9000100 para Conta Corrente 1234-5678\r\nVerificacao do hash: false\r\n",
+      "stderr": ""
+    },
+    {
+      "name": "Digest substituido",
+      "compiled": true,
+      "exit": 0,
+      "stdout": "Texto original : Transferir 0000100 para Conta Corrente 1234-5678\r\nTexto decifrado: Transferir 9000100 para Conta Corrente 1234-5678\r\nVerificacao do hash: true\r\n",
+      "stderr": ""
+    },
+    {
+      "name": "Tampering com HMAC",
+      "compiled": true,
+      "exit": 0,
+      "stdout": "Texto original : Transferir 0000100 to AC 1234-5678\r\nTexto decifrado: Transferir 9000100 to AC 1234-5678\r\nVerificado o Mac: false\r\n",
+      "stderr": ""
+    },
+    {
+      "name": "AES GCM",
+      "compiled": true,
+      "exit": 0,
+      "stdout": "Teste de GCM com AES usando BCFIPS\r\nBouncy Castle provider esta disponivel\r\nMsg = Transferir 0000100 para CC 1234-5678\r\nMsg cifrada = df6e92bb12b41e9038541e56b54154d6d2ad05ffcba356331897b2b19d576ff5a5bab5e57f01e692bb865fb8fef5bd5094863c4b\r\nMsg decifrada = Transferir 0000100 para CC 1234-5678\r\nAtaque -> Tentativa de modificar msg cifrada... \r\nResultado -> GCM detecta mudanca na tag e causa exception\r\n",
+      "stderr": "out. 14, 2026 4:39:37 PM AESTesteGCMFIPS main\r\nGRAVE: null\r\njavax.crypto.AEADBadTagException: Error finalising cipher data: mac check in GCM failed\r\n\tat java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62)\r\n\tat java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499)\r\n\tat java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:483)\r\n\tat org.bouncycastle.jcajce.provider.ClassUtil.throwBadTagException(Unknown Source)\r\n\tat org.bouncycastle.jcajce.provider.BaseCipher.engineDoFinal(Unknown Source)\r\n\tat java.base/javax.crypto.Cipher.doFinal(Cipher.java:2260)\r\n\tat AESTesteGCMFIPS.gcmTest2(AESTesteGCMFIPS.java:170)\r\n\tat AESTesteGCMFIPS.main(AESTesteGCMFIPS.java:194)\r\n\r\n"
+    },
+    {
+      "name": "PBKDF2",
+      "compiled": true,
+      "exit": 0,
+      "stdout": "Senha original = leopardo\r\nSal gerado = aafa2148161ec6d4a438fbfa9ded6fdc\r\nNumero de iteracoes = 1000\r\nChave derivada da senha = 6f1aaeea6b9406bc625c63c24c084bc4\r\n",
+      "stderr": ""
+    },
+    {
+      "name": "Scrypt BC",
+      "compiled": true,
+      "exit": 0,
+      "stdout": "Bouncy Castle provider esta disponivel\r\nDigite a senha: \r\nChave derivada usando scrypt: \r\nceaa0fa6ba14a3842e18202f87219e7109daf7dc3a4c0b2a38fc73b91ab620c0\r\n",
+      "stderr": ""
+    },
+    {
+      "name": "Scrypt FIPS",
+      "compiled": true,
+      "exit": 0,
+      "stdout": "Bouncy Castle provider esta disponivel\r\nDigite a senha: \r\nChave derivada usando scrypt: \r\n0713462e69f16751aaa66da4d429820af875152aa18dea18eb9777da6e17c096\r\n",
+      "stderr": ""
+    },
+    {
+      "name": "GCM AAD",
+      "compiled": true,
+      "exit": 0,
+      "stdout": "Bouncy Castle provider esta disponivel\r\nmsg in plaintext  : hello, world!\r\naad in plaintext  : now is the time!\r\nmsg  : 68656c6c6f2c20776f726c6421\r\ncText: 4024f07c59c758d2d0c7d09934dfe5a6760d5c1f6d778efc3e48e9d073\r\npText: 68656c6c6f2c20776f726c6421\r\nmsg in plaintext  : hello, world!\r\n",
+      "stderr": ""
+    },
+    {
+      "name": "AES KW",
+      "compiled": true,
+      "exit": 0,
+      "stdout": "Bouncy Castle provider esta disponivel\r\nGerando chave AES -> Chave = 8db96e5043a948afef8224e549bed5e0\r\nGerando chave Blowfish \t-> Chave Blowfish \t= 956d2dbd20ff7293\r\nkey: Blowfish\r\n   : true\r\nGerando chave AES para ser wrapped -> Chave = 8db96e5043a948afef8224e549bed5e0\r\nkey: AES\r\n   : true\r\n",
+      "stderr": ""
+    },
+    {
+      "name": "TOTP",
+      "compiled": true,
+      "exit": 0,
+      "stdout": "Procure o arquivo matrixCode.png no diretorio do projeto e leia o QR code para digitar o código\r\nEntre o código de autenticação: \r\nLogged in successfully\r\n",
+      "stderr": ""
+    },
+    {
+      "name": "IP2Location",
+      "compiled": true,
+      "exit": 0,
+      "stdout": "IP: 150.162.60.21\r\nPais: BR\r\nNome do pais: Brazil\r\nRegiao: Santa Catarina\r\nCidade: Florianopolis\r\nLatitude: -27.59627\r\nLongitude: -48.54917\r\nISP: Not_Supported\r\n",
+      "stderr": ""
+    }
+  ]
+}

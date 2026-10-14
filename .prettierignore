@@ -1,0 +1,9 @@
+node_modules/
+.data/
+.tools/
+data/*.BIN
+dist/
+output/
+docs/evidencias*.json
+docs/imagens/
+pnpm-lock.yaml

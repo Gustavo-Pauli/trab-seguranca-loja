@@ -1,0 +1,62 @@
+.demo-shell {
+  max-width: 1000px;
+  margin: auto;
+  padding: 40px 24px;
+}
+.demo-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 24px 0;
+}
+.demo-shell pre {
+  background: #fff;
+  border: 1px solid #e4e4e7;
+  border-radius: 8px;
+  padding: 20px;
+  font-size: 12px;
+  overflow: auto;
+  max-height: 550px;
+  margin-top: 24px;
+}
+.demo-shell code {
+  font-size: 12px;
+}
+.wire-details,
+.extra-tests {
+  margin-top: 24px;
+  font-size: 13px;
+  color: #52525b;
+}
+.attack-result {
+  background: white;
+  border: 1px solid #e4e4e7;
+  border-radius: 9px;
+  padding: 22px;
+  font-size: 14px;
+  line-height: 1.8;
+}
+.wire-details summary,
+.extra-tests summary {
+  cursor: pointer;
+}
+.totp-test-form {
+  max-width: 390px;
+  padding: 22px;
+  margin: 24px 0;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid #e4e4e7;
+  border-radius: 9px;
+}
+.totp-test-form .subtitle {
+  margin: 0 0 18px;
+}
+.session-error {
+  max-width: 1104px;
+  margin: 20px auto;
+}
+[hidden] {
+  display: none !important;
+}

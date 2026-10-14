@@ -1,0 +1,15 @@
+node_modules/
+dist/
+.data/
+.env
+.env.*
+!.env.example
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+*.log
+.DS_Store
+.tools/
+output/
+data/*.BIN
+enunciado-p7.png

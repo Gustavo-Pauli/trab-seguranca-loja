@@ -1,0 +1,250 @@
+{
+  "executedAt": "2026-10-14T19:57:19.9249623Z",
+  "environment": {
+    "node": "v22.14.0",
+    "pnpm": "10.15.1",
+    "system": "Windows"
+  },
+  "sourceChecks": [
+    {
+      "command": "pnpm typecheck",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm build",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm test:security",
+      "exitCode": 0
+    }
+  ],
+  "security": {
+    "completed": true,
+    "passed": 37
+  },
+  "java": {
+    "executedAt": "2026-10-14T19:39:46.695Z",
+    "examples": 13,
+    "compiled": 13,
+    "exits": [
+      {
+        "name": "HMAC",
+        "exit": 0
+      },
+      {
+        "name": "Tampering sem MAC",
+        "exit": 0
+      },
+      {
+        "name": "Digest preservado",
+        "exit": 0
+      },
+      {
+        "name": "Digest substituido",
+        "exit": 0
+      },
+      {
+        "name": "Tampering com HMAC",
+        "exit": 0
+      },
+      {
+        "name": "AES GCM",
+        "exit": 0
+      },
+      {
+        "name": "PBKDF2",
+        "exit": 0
+      },
+      {
+        "name": "Scrypt BC",
+        "exit": 0
+      },
+      {
+        "name": "Scrypt FIPS",
+        "exit": 0
+      },
+      {
+        "name": "GCM AAD",
+        "exit": 0
+      },
+      {
+        "name": "AES KW",
+        "exit": 0
+      },
+      {
+        "name": "TOTP",
+        "exit": 0
+      },
+      {
+        "name": "IP2Location",
+        "exit": 0
+      }
+    ]
+  },
+  "cleanInstallation": {
+    "completedAt": "2026-10-14T20:06:45.306437+00:00",
+    "directory": ".data/entrega-limpa-20261014-164950/loja-segura-final",
+    "dependencySource": "local pnpm cache, offline",
+    "startedWithoutDependenciesBinVaultsOrDatabases": true,
+    "installation": {
+      "command": "pnpm install --frozen-lockfile --offline",
+      "exitCode": 0
+    },
+    "setup": {
+      "command": "pnpm run setup --bin ../trabalho-seguranca-anexos/ip2location/ip2location/IP2LOCATION-LITE-DB5.BIN",
+      "interactive": true,
+      "newIndependentVaults": true
+    },
+    "checks": {
+      "checks": [
+        {
+          "command": "pnpm typecheck",
+          "exitCode": 0
+        },
+        {
+          "command": "pnpm build",
+          "exitCode": 0
+        },
+        {
+          "command": "pnpm test:security",
+          "exitCode": 0
+        }
+      ],
+      "securityPassed": 37,
+      "completed": true
+    },
+    "launcher": "pnpm demo",
+    "httpFlow": {
+      "executedAt": "2026-10-14T20:00:21.689Z",
+      "checks": [
+        {
+          "name": "Shop/gateway health",
+          "shop": 200,
+          "gateway": 200
+        },
+        {
+          "name": "Frontend HTML and compiled asset",
+          "status": 200
+        },
+        {
+          "name": "Registration and QR",
+          "status": 201,
+          "sessionCreated": false
+        },
+        {
+          "name": "Invalid TOTP",
+          "status": 401
+        },
+        {
+          "name": "Valid TOTP and DB5",
+          "status": 200,
+          "context": {
+            "allowed": true,
+            "reason": "FIRST_CONTEXT",
+            "location": {
+              "ip": "150.162.60.21",
+              "country": "BR",
+              "region": "Santa Catarina",
+              "city": "Florianopolis",
+              "latitude": -27.59627,
+              "longitude": -48.549171,
+              "asn": null,
+              "organization": null,
+              "kind": "public",
+              "source": "server-demo"
+            }
+          }
+        },
+        {
+          "name": "Purchase after setup",
+          "status": 200,
+          "total_cents": 10000
+        },
+        {
+          "name": "replay",
+          "gatewayStatus": 409,
+          "reason": "INVALID_NONCE"
+        },
+        {
+          "name": "tamper",
+          "gatewayStatus": 400,
+          "reason": "INVALID_AUTH_TAG"
+        },
+        {
+          "name": "expired",
+          "gatewayStatus": 409,
+          "reason": "INVALID_TIMESTAMP"
+        },
+        {
+          "name": "Forged location ignored",
+          "status": 200,
+          "observed": {
+            "ip": "150.162.60.21",
+            "country": "BR",
+            "region": "Santa Catarina",
+            "city": "Florianopolis",
+            "latitude": -27.59627,
+            "longitude": -48.549171,
+            "asn": null,
+            "organization": null,
+            "kind": "public",
+            "source": "server-demo"
+          }
+        },
+        {
+          "name": "Password login followed by TOTP",
+          "status": 200
+        }
+      ],
+      "completed": true,
+      "totpMethod": "Synthetic seed, computed code; no physical QR scan"
+    },
+    "browser": {
+      "url": "http://127.0.0.1:3001/login",
+      "title": "Loja Segura",
+      "emailFields": 1,
+      "passwordFields": 1,
+      "loginButtons": 1
+    },
+    "developmentLauncher": {
+      "command": "pnpm dev:demo",
+      "checks": [
+        {
+          "url": "http://127.0.0.1:3001/api/health",
+          "response": {
+            "status": "ok",
+            "service": "shop",
+            "demoMode": true
+          }
+        },
+        {
+          "url": "http://127.0.0.1:4000/health",
+          "response": {
+            "status": "ok",
+            "service": "gateway"
+          }
+        },
+        {
+          "url": "http://127.0.0.1:5173/api/health",
+          "response": {
+            "status": "ok",
+            "service": "shop",
+            "demoMode": true
+          }
+        },
+        {
+          "url": "http://127.0.0.1:5173/login",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:5173/src/main.tsx",
+          "status": 200
+        }
+      ]
+    },
+    "runtimeAndConfigFilesMatching": 91,
+    "originalDataPreserved": true,
+    "physicalPhoneQrScan": false
+  }
+}

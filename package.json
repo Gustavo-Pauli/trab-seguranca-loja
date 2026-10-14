@@ -1,0 +1,51 @@
+{
+  "name": "ine5680-loja-segura",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Loja virtual e gateway seguro — INE5680",
+  "packageManager": "pnpm@10.15.1",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "better-sqlite3",
+      "esbuild"
+    ]
+  },
+  "scripts": {
+    "setup": "tsx scripts/setup.ts",
+    "dev": "tsx scripts/run.ts --dev",
+    "dev:demo": "tsx scripts/run.ts --dev --demo",
+    "demo": "tsx scripts/run.ts --demo",
+    "dev:web": "vite --host 127.0.0.1",
+    "build": "tsc --noEmit && vite build",
+    "start": "tsx scripts/run.ts",
+    "typecheck": "tsc --noEmit",
+    "test:security": "tsx scripts/test-security.ts",
+    "examples:java": "tsx scripts/java-examples.ts",
+    "zip": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/package.ps1"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.10.0",
+    "express": "^5.1.0",
+    "ip2location-nodejs": "^9.8.0",
+    "qrcode": "^1.5.4",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-router-dom": "^7.18.4"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/express": "^5.0.1",
+    "@types/node": "^22.15.0",
+    "@types/qrcode": "^1.5.5",
+    "@types/react": "^19.1.2",
+    "@types/react-dom": "^19.1.2",
+    "@vitejs/plugin-react": "^4.4.1",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.4"
+  },
+  "engines": {
+    "node": ">=22.14.0"
+  }
+}

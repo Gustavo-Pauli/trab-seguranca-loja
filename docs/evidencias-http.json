@@ -1,0 +1,476 @@
+{
+  "executedAt": "2026-10-14T19:57:19.794Z",
+  "node": "v22.14.0",
+  "isolatedDataDirectory": ".data/test-1792007824438",
+  "completed": true,
+  "passed": 37,
+  "checks": [
+    {
+      "name": "Vetores HOTP RFC 4226 e TOTP RFC 6238",
+      "status": "PASS",
+      "details": "10 contadores HOTP e TOTP em t=59 s"
+    },
+    {
+      "name": "Cadastro real e QR code",
+      "status": 201,
+      "details": {
+        "mode": "enroll",
+        "qrPng": true,
+        "sessionCreated": false
+      }
+    },
+    {
+      "name": "Senha incorreta",
+      "status": 401,
+      "details": {
+        "error": "E-mail ou senha inválidos."
+      }
+    },
+    {
+      "name": "Desafio inutilizado após cinco códigos incorretos",
+      "status": 401,
+      "details": {
+        "attempts": 5,
+        "validCodeAfterLimitRejected": true,
+        "sessionCreated": false
+      }
+    },
+    {
+      "name": "Ataque C: TOTP incorreto de seis dígitos",
+      "status": 401,
+      "details": {
+        "error": "TOTP inválido ou expirado.",
+        "codeSubmitted": "000000",
+        "sessionCreated": false
+      }
+    },
+    {
+      "name": "TOTP válido e contexto IP2Location",
+      "status": 200,
+      "details": {
+        "allowed": true,
+        "reason": "FIRST_CONTEXT",
+        "location": {
+          "ip": "150.162.60.21",
+          "country": "BR",
+          "region": "Santa Catarina",
+          "city": "Florianopolis",
+          "latitude": -27.59627,
+          "longitude": -48.549171,
+          "asn": null,
+          "organization": null,
+          "kind": "public",
+          "source": "server-demo"
+        }
+      }
+    },
+    {
+      "name": "Reutilização de TOTP",
+      "status": 401,
+      "details": {
+        "error": "Este código TOTP já foi utilizado."
+      }
+    },
+    {
+      "name": "Catálogo autenticado",
+      "status": 200,
+      "details": {
+        "count": 4
+      }
+    },
+    {
+      "name": "Checkout sem sessão",
+      "status": 401,
+      "details": {
+        "error": "Entre na sua conta."
+      }
+    },
+    {
+      "name": "Ataque D: localização, IP e header falsificados",
+      "status": 200,
+      "details": {
+        "sent": {
+          "country": "XX",
+          "region": "Falsa",
+          "city": "Inventada"
+        },
+        "forwardedFor": "8.8.8.8",
+        "response": {
+          "clientDeclarationIgnored": true,
+          "observed": {
+            "ip": "150.162.60.21",
+            "country": "BR",
+            "region": "Santa Catarina",
+            "city": "Florianopolis",
+            "latitude": -27.59627,
+            "longitude": -48.549171,
+            "asn": null,
+            "organization": null,
+            "kind": "public",
+            "source": "server-demo"
+          },
+          "decision": {
+            "allowed": true,
+            "reason": "KNOWN_CONTEXT",
+            "location": {
+              "ip": "150.162.60.21",
+              "country": "BR",
+              "region": "Santa Catarina",
+              "city": "Florianopolis",
+              "latitude": -27.59627,
+              "longitude": -48.549171,
+              "asn": null,
+              "organization": null,
+              "kind": "public",
+              "source": "server-demo"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "Quantidade inválida",
+      "status": 400,
+      "details": {
+        "error": "Confira os produtos e as quantidades.",
+        "reason": "INVALID_ITEMS"
+      }
+    },
+    {
+      "name": "Compra real: preço, usuário e localização definidos no servidor",
+      "status": 200,
+      "details": {
+        "payment": {
+          "order_id": "ORD-ad8f731e-e5da-416b-a97d-04f977d9fd65",
+          "nonce": "d99f98f26ea2f8302f8504cbbb159bcfe6324fc2299c3344762d15a86d0f102f",
+          "status": "APPROVED",
+          "timestamp": 1792007826,
+          "total_cents": 10000
+        },
+        "order": {
+          "id": "ORD-ad8f731e-e5da-416b-a97d-04f977d9fd65",
+          "user_id": "a2e759bd-8bd5-4cab-befe-681b072b57c3",
+          "total_cents": 10000,
+          "status": "APPROVED",
+          "reason": null,
+          "created_at": 1792007826129,
+          "order_id": "ORD-ad8f731e-e5da-416b-a97d-04f977d9fd65",
+          "total": 100,
+          "items": [
+            {
+              "product_id": "P01",
+              "quantity": 2,
+              "unit_price": 50,
+              "unit_price_cents": 5000
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Ataque A: replay do envelope capturado exatamente",
+      "status": 409,
+      "details": {
+        "request": {
+          "version": 1,
+          "salt": "DDP1fD5Fbbf5jE6b/bK1qMBzhmA1E72BHZ6vf7klJrY=",
+          "ciphertext": "QZKVISmzdr0NbRFf8E/VC/TjtB12+U6bmS8hrKK9CuNbpkXBt5XpnmArlixJrU2Yk8sybb14qiBNbhEWfJRKuiRt5g2t0854Couc3UgsHsZwR2KIZ62x/Lh8pAse64cvH3p1ym51KoBXb8OrO78vJFSwqgnNd5+hZb8rCIA0egp7X3uQTBZ3AyHiIZXXXAHgC+fxTGwY1eJlcPEdu3UeyZ1yzSW/AWGL3J4jaH+00Q5cjXFKf9ZXFJBWmXEUaAylOm1ibIjCe9p1GQEAoJD2f73amJ6DRD3Zn4+n3ikEcB3EQFOMwtLZklkPNhFzr22MwWKWXXUxAa81oQNIYrXjEjXRh0E4vnXOVzDONlVAeGFkJn1qq/QNaS3TzM/O7oDHZ9JXi81avVs8e9K8vOmmQHDlJZoBzvhRfrfW+UIX4ECl5MfXlnex6n4hRgddJO8NFeXNcPUxxGQLkfdJ6GAfhkOVE+Jarx63B6CqEW/EuhqoHvX1RJYKgdcePoLflUThaqqtsKmi2ajmATWc6pBaFWAnUdBldlW+GRGHMmCkRxIjeNs8xJU3DblYWMieFnMb4str6jE33qpHvPdv5BZcTZbLEkJ0lbN+m3C2svk9lKSZuLu5EfOmoRuEZsj2LUEOhFkonvFtazfaVwtDBvuLIsbEyA4oFZ2RBiUaAfOM9W4s84d4a1JVlAgKf5HUIX3F+bKdv18QY4SuKjC6fcVv3sqfFu93ZHh/Q5BWWdtR9qFrYPB7Q5nMEgY6a/i5DePyPeWcWhZ3JV1EEQGXeliwXiGpiZHuxf+eFaTjdh/s7Yo/QJm+QFJ29INpryVAckSkOMRb2SG199GARcRAZLmxV2UlOcyDL6xZZDdicla3ifSTDi4H/C56axReHhmQJxidX3a8i4Cmk4mYSHHj293JK8eOLKb6pIU36VMiI80zfmoBbrNIzEuqmRC75GMF/K9LV7kQMUialPiowCiPe1tQU2Je4g3oB/49Q44uqr6jUDrFU8IprOqgmEwJwggWMkZT7nTscjvFZjlKl65mJkRDdWoY6/BKi6eGkJxTky3wdHtoyZV1DzpquCEEbLZhDqB07zVcQKMPsRPfs6O2sp1A40v2RfOCkFxrCemliYKLCgPxfuIxc5plejkOEFr2jpEatoOZ0h5Y8kyGv5VTK1FpIm7goEpuQKhtVIqacojxMNNZEScsd/8vJr/nrTdFzXrVfceSOkt5SJ4Pp0QxDRTt1KB/79X4BF/1zjYds0w=",
+          "tag": "q0P+keNcCyWayYM2Q+S7mQ=="
+        },
+        "response": {
+          "order_id": "ORD-ad8f731e-e5da-416b-a97d-04f977d9fd65",
+          "nonce": "d99f98f26ea2f8302f8504cbbb159bcfe6324fc2299c3344762d15a86d0f102f",
+          "status": "BLOCKED",
+          "timestamp": 1792007827,
+          "reason": "INVALID_NONCE"
+        }
+      }
+    },
+    {
+      "name": "Ataque B: R$ 100 → R$ 1000 no ciphertext (100 → 1e3)",
+      "status": 400,
+      "details": {
+        "action": "tamper",
+        "modification": {
+          "from": 100,
+          "attempted": 1000,
+          "encoding": "1e3",
+          "offset": 113,
+          "tagUnchanged": true
+        },
+        "request": {
+          "version": 1,
+          "salt": "DDP1fD5Fbbf5jE6b/bK1qMBzhmA1E72BHZ6vf7klJrY=",
+          "ciphertext": "QZKVISmzdr0NbRFf8E/VC/TjtB12+U6bmS8hrKK9CuNbpkXBt5XpnmArlixJrU2Yk8sybb14qiBNbhEWfJRKuiRt5g2t0854Couc3UgsHsZwR2KIZ62x/Lh8pAse64cvH3p1ym51KoBXb8OrO78vJFSw/wrNd5+hZb8rCIA0egp7X3uQTBZ3AyHiIZXXXAHgC+fxTGwY1eJlcPEdu3UeyZ1yzSW/AWGL3J4jaH+00Q5cjXFKf9ZXFJBWmXEUaAylOm1ibIjCe9p1GQEAoJD2f73amJ6DRD3Zn4+n3ikEcB3EQFOMwtLZklkPNhFzr22MwWKWXXUxAa81oQNIYrXjEjXRh0E4vnXOVzDONlVAeGFkJn1qq/QNaS3TzM/O7oDHZ9JXi81avVs8e9K8vOmmQHDlJZoBzvhRfrfW+UIX4ECl5MfXlnex6n4hRgddJO8NFeXNcPUxxGQLkfdJ6GAfhkOVE+Jarx63B6CqEW/EuhqoHvX1RJYKgdcePoLflUThaqqtsKmi2ajmATWc6pBaFWAnUdBldlW+GRGHMmCkRxIjeNs8xJU3DblYWMieFnMb4str6jE33qpHvPdv5BZcTZbLEkJ0lbN+m3C2svk9lKSZuLu5EfOmoRuEZsj2LUEOhFkonvFtazfaVwtDBvuLIsbEyA4oFZ2RBiUaAfOM9W4s84d4a1JVlAgKf5HUIX3F+bKdv18QY4SuKjC6fcVv3sqfFu93ZHh/Q5BWWdtR9qFrYPB7Q5nMEgY6a/i5DePyPeWcWhZ3JV1EEQGXeliwXiGpiZHuxf+eFaTjdh/s7Yo/QJm+QFJ29INpryVAckSkOMRb2SG199GARcRAZLmxV2UlOcyDL6xZZDdicla3ifSTDi4H/C56axReHhmQJxidX3a8i4Cmk4mYSHHj293JK8eOLKb6pIU36VMiI80zfmoBbrNIzEuqmRC75GMF/K9LV7kQMUialPiowCiPe1tQU2Je4g3oB/49Q44uqr6jUDrFU8IprOqgmEwJwggWMkZT7nTscjvFZjlKl65mJkRDdWoY6/BKi6eGkJxTky3wdHtoyZV1DzpquCEEbLZhDqB07zVcQKMPsRPfs6O2sp1A40v2RfOCkFxrCemliYKLCgPxfuIxc5plejkOEFr2jpEatoOZ0h5Y8kyGv5VTK1FpIm7goEpuQKhtVIqacojxMNNZEScsd/8vJr/nrTdFzXrVfceSOkt5SJ4Pp0QxDRTt1KB/79X4BF/1zjYds0w=",
+          "tag": "q0P+keNcCyWayYM2Q+S7mQ=="
+        },
+        "response": {
+          "httpStatus": 400,
+          "result": {
+            "status": "BLOCKED",
+            "reason": "INVALID_AUTH_TAG"
+          },
+          "wire": {
+            "status": "BLOCKED",
+            "reason": "INVALID_AUTH_TAG"
+          },
+          "authenticated": false
+        }
+      }
+    },
+    {
+      "name": "expired",
+      "status": 409,
+      "details": {
+        "order_id": "ORD-c2c9d134-42d8-43e0-8d02-224952bd122b",
+        "nonce": "c46d171d4ad4069c2f0f3618e1a5e078011f593728c7068e2e0684ea1f2143b1",
+        "status": "BLOCKED",
+        "timestamp": 1792007827,
+        "reason": "INVALID_TIMESTAMP"
+      }
+    },
+    {
+      "name": "inconsistent",
+      "status": 409,
+      "details": {
+        "order_id": "ORD-6e28916c-7358-452a-aee8-af8e6bb68d7d",
+        "nonce": "be6dcfd042b2f801714a6d046dfd16f6dcd7d3eba17be79dc387c2419b9965fe",
+        "status": "BLOCKED",
+        "timestamp": 1792007828,
+        "reason": "INCONSISTENT_ORDER"
+      }
+    },
+    {
+      "name": "Timestamp futuro",
+      "status": 409,
+      "details": {
+        "order_id": "ORD-dc4bf55a-c68b-4eac-9c92-28102174d655",
+        "nonce": "317db8e3b3f27389c8b285cc9241879baddad231fa1a7d55dcdc40d1f979aa13",
+        "status": "BLOCKED",
+        "timestamp": 1792007829,
+        "reason": "INVALID_TIMESTAMP"
+      }
+    },
+    {
+      "name": "Gateway exige prova de 2FA",
+      "status": 409,
+      "details": {
+        "order_id": "ORD-8a00780c-6761-4ea1-8528-31b0fecb33a7",
+        "nonce": "ed91acc6ccda6183ec602c5d65beba64f221418709a823ff200fda8e32573937",
+        "status": "BLOCKED",
+        "timestamp": 1792007829,
+        "reason": "INVALID_TOTP"
+      }
+    },
+    {
+      "name": "Gateway exige usuário autenticado",
+      "status": 409,
+      "details": {
+        "order_id": "ORD-8f54ef1e-b58a-45c0-8e85-2ed6b2e895c1",
+        "nonce": "c2cd988fd3631f991bd9bf149f46a5a47929e25e307b38625cd82324860e1693",
+        "status": "BLOCKED",
+        "timestamp": 1792007830,
+        "reason": "UNAUTHENTICATED"
+      }
+    },
+    {
+      "name": "Mesmo pedido com nonce novo",
+      "status": 409,
+      "details": {
+        "order_id": "ORD-ad8f731e-e5da-416b-a97d-04f977d9fd65",
+        "nonce": "3204302eebf053f19ac63108ce24515fdfba4c8b9164e340336355d29865f8e5",
+        "status": "BLOCKED",
+        "timestamp": 1792007831,
+        "reason": "ORDER_ALREADY_PAID"
+      }
+    },
+    {
+      "name": "Gateway consulta novamente a base DB5",
+      "status": 409,
+      "details": {
+        "order_id": "ORD-53481175-65b9-4acf-b2b4-39f88a07ff06",
+        "nonce": "49e3f4f58a1bce60bb984e1e279e150bceea01e95e0ffda9a074dd2807b3cb96",
+        "status": "BLOCKED",
+        "timestamp": 1792007831,
+        "reason": "INVALID_CONTEXT"
+      }
+    },
+    {
+      "name": "Mesmo nonce em duas requisições simultâneas",
+      "status": "200/409",
+      "details": [
+        {
+          "status": 409,
+          "data": {
+            "order_id": "ORD-d28c0a51-a25e-4a8c-aedd-4de293e1c739",
+            "nonce": "cfcf440863eb01c25e5bfc72f0bec2e71dc5d2b3090dde6046a326299d8c3a6a",
+            "status": "BLOCKED",
+            "timestamp": 1792007832,
+            "reason": "INVALID_NONCE"
+          }
+        },
+        {
+          "status": 200,
+          "data": {
+            "order_id": "ORD-d28c0a51-a25e-4a8c-aedd-4de293e1c739",
+            "nonce": "cfcf440863eb01c25e5bfc72f0bec2e71dc5d2b3090dde6046a326299d8c3a6a",
+            "status": "APPROVED",
+            "timestamp": 1792007832
+          }
+        }
+      ]
+    },
+    {
+      "name": "Salt/AAD adulterado",
+      "status": 400,
+      "details": {
+        "status": "BLOCKED",
+        "reason": "INVALID_AUTH_TAG"
+      }
+    },
+    {
+      "name": "Replay após reiniciar gateway",
+      "status": 409,
+      "details": {
+        "order_id": "ORD-ad8f731e-e5da-416b-a97d-04f977d9fd65",
+        "nonce": "d99f98f26ea2f8302f8504cbbb159bcfe6324fc2299c3344762d15a86d0f102f",
+        "status": "BLOCKED",
+        "timestamp": 1792007833,
+        "reason": "INVALID_NONCE"
+      }
+    },
+    {
+      "name": "Cadastro, sessão, pedido e novo login persistem após reinício",
+      "status": 200,
+      "details": {
+        "totpCounter": 59733595,
+        "usedPlusOneWindow": true
+      }
+    },
+    {
+      "name": "Logout revoga sessão",
+      "status": 200,
+      "details": {
+        "meAfterLogout": 401
+      }
+    },
+    {
+      "name": "Origem externa",
+      "status": 403,
+      "details": {
+        "error": "Origem não permitida."
+      }
+    },
+    {
+      "name": "Mudança de país bloqueia login apesar de TOTP válido",
+      "status": 403,
+      "details": {
+        "error": "Acesso bloqueado pelo contexto da conexão.",
+        "reason": "COUNTRY_CHANGED"
+      }
+    },
+    {
+      "name": "Rotas de demonstração inexistentes no modo normal",
+      "status": 404,
+      "details": "HTTP 404"
+    },
+    {
+      "name": "Modo normal ignora IP forjado e reconhece loopback",
+      "status": 200,
+      "details": {
+        "clientDeclarationIgnored": true,
+        "observed": {
+          "ip": "127.0.0.1",
+          "country": null,
+          "region": null,
+          "city": null,
+          "latitude": null,
+          "longitude": null,
+          "asn": null,
+          "organization": null,
+          "kind": "local",
+          "source": "socket"
+        },
+        "decision": {
+          "allowed": true,
+          "reason": "LOCAL_CONNECTION",
+          "location": {
+            "ip": "127.0.0.1",
+            "country": null,
+            "region": null,
+            "city": null,
+            "latitude": null,
+            "longitude": null,
+            "asn": null,
+            "organization": null,
+            "kind": "local",
+            "source": "socket"
+          }
+        }
+      }
+    },
+    {
+      "name": "Gateway indisponível nunca aprova pedido",
+      "status": 502,
+      "details": {
+        "error": "Não foi possível confirmar o pagamento. Confira seus pedidos antes de tentar novamente.",
+        "order_id": "ORD-14f1eb9c-e95f-402d-ae08-86dd4a6d5ff2",
+        "status": "ERROR",
+        "reason": "GATEWAY_UNAVAILABLE"
+      }
+    },
+    {
+      "name": "Resposta APPROVED em claro/falsa não aprova pedido",
+      "status": 502,
+      "details": {
+        "error": "Não foi possível confirmar o pagamento. Confira seus pedidos antes de tentar novamente.",
+        "order_id": "ORD-50ac7512-cef0-465e-9686-d1353464e51e",
+        "status": "ERROR",
+        "reason": "GATEWAY_UNAVAILABLE"
+      }
+    },
+    {
+      "name": "Resposta BLOCKED em claro não confirma bloqueio do pedido",
+      "status": 502,
+      "details": {
+        "error": "Não foi possível confirmar o pagamento. Confira seus pedidos antes de tentar novamente.",
+        "order_id": "ORD-5dc89ddb-6e0d-4b9b-acc5-548b6c434839",
+        "status": "ERROR",
+        "reason": "GATEWAY_UNAVAILABLE"
+      }
+    },
+    {
+      "name": "Tag adulterada da resposta do gateway",
+      "status": 502,
+      "details": {
+        "error": "Não foi possível confirmar o pagamento. Confira seus pedidos antes de tentar novamente.",
+        "order_id": "ORD-74645fd2-ea31-48f5-a3dc-5e71c0b2504c",
+        "status": "ERROR",
+        "reason": "GATEWAY_UNAVAILABLE"
+      }
+    },
+    {
+      "name": "Resposta autenticada de outro pedido",
+      "status": 502,
+      "details": {
+        "error": "Não foi possível confirmar o pagamento. Confira seus pedidos antes de tentar novamente.",
+        "order_id": "ORD-9550810f-f5b0-42b1-a2a4-e9aa20fee6da",
+        "status": "ERROR",
+        "reason": "GATEWAY_UNAVAILABLE"
+      }
+    },
+    {
+      "name": "SQLite sem senha, segredo TOTP ou token de sessão em claro",
+      "status": "PASS",
+      "details": {
+        "users": 2,
+        "checkedEncryptedTotp": true
+      }
+    },
+    {
+      "name": "Senha de cofre incorreta impede inicialização",
+      "status": "1",
+      "details": "Processo encerrou sem abrir a API"
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { dirname } from 'node:path';
+import { seal, open } from './encryption.js';
+import { decode } from './encoding.js';
+
+export async function writeVault(
+  path: string,
+  password: Buffer,
+  sharedSecret: Buffer,
+  role: 'shop' | 'gateway',
+): Promise<void> {
+  const envelope = await seal(
+    { sharedSecret: sharedSecret.toString('base64') },
+    password,
+    `vault:${role}`,
+  );
+  mkdirSync(dirname(path), { recursive: true });
+  writeFileSync(path, JSON.stringify(envelope, null, 2), { flag: 'wx', mode: 0o600 });
+}
+
+export async function unlockVault(
+  path: string,
+  password: Buffer,
+  role: 'shop' | 'gateway',
+): Promise<Buffer> {
+  const payload = await open<{ sharedSecret: string }>(
+    JSON.parse(readFileSync(path, 'utf8')),
+    password,
+    `vault:${role}`,
+  );
+  return decode(payload.sharedSecret, 32);
+}
+
+/** Inicialização via pipe/terminal: senha não passa em argumentos nem variáveis de ambiente. */
+export async function secretFromStdin(path: string, role: 'shop' | 'gateway'): Promise<Buffer> {
+  let password = Buffer.alloc(0);
+  for await (const chunk of process.stdin) {
+    password = Buffer.concat([password, Buffer.from(chunk)]);
+    if (password.length > 1024) throw new Error('Senha de desbloqueio muito longa.');
+  }
+  try {
+    return await unlockVault(path, password, role);
+  } catch {
+    throw new Error(
+      `Não foi possível abrir o cofre ${role}. Execute pnpm run setup e confira a senha de desbloqueio.`,
+    );
+  } finally {
+    password.fill(0);
+  }
+}
