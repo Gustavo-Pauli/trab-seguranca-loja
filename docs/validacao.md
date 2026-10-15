@@ -1,6 +1,6 @@
 # Validação
 
-Última conferência: 15/10/2026, no Windows com Node 22.14 e pnpm 10.15.1.
+Conferência de 15/10/2026, no Windows com Node 22.14 e pnpm 10.15.1.
 Datas, escopos e resultados estão em
 [evidencias-verificacao.json](evidencias-verificacao.json).
 
@@ -8,60 +8,57 @@ Datas, escopos e resultados estão em
 
 | Verificação | Resultado |
 |---|---|
-| `pnpm typecheck` | Exit 0. |
-| `pnpm build` | Exit 0; build Vite gerada. |
-| `pnpm test:security` | 37 verificações aprovadas. |
+| `pnpm typecheck` | Exit 0 na pasta original e na cópia extraída. |
+| `pnpm build` | Exit 0 nas duas pastas. |
+| `pnpm test:security` | 38 verificações aprovadas nas duas pastas. |
 | `pnpm examples:java --attachments <pasta dos anexos>` | 13 exemplos compilados/executados, todos com exit 0. |
-| Casos focados do cliente HTTP e conferência dos cofres | 10 verificações aprovadas com dados sintéticos. |
-| Comparação das validações com a versão anterior | 641 casos mantiveram os mesmos resultados. |
+| Cenários HTTP na instalação limpa | 18 grupos de asserções aprovados, além de seis casos de requisição malformada. |
+| Banco e setup incompleto | Migração preservou registro antigo; setup com apenas um cofre abortou sem alterá-lo. |
+| Cliente HTTP e cofres | 10 verificações aprovadas com dados sintéticos. |
 
-A suíte de segurança cobre cadastro/QR, senha/TOTP, sessão, catálogo, compra,
-preços confiáveis, contexto DB5 e os quatro ataques. Também verifica timestamps,
-limite de tentativas, reutilização de TOTP, concorrência de nonce, reinícios,
-logout, mudança de país e ausência de rotas de ataque no modo normal.
-Respostas de pagamento em claro, com tag adulterada ou de outro pedido são rejeitadas.
-Os resultados completos estão em [evidencias-http.json](evidencias-http.json).
+A suíte cobre cadastro/QR, senha/TOTP, sessão, catálogo, compra, preços confiáveis,
+contexto DB5 e os quatro ataques. Verifica também timestamps, tentativas e reuso
+de TOTP, concorrência de nonce, reinícios, logout, mudança de país e modo normal.
+Respostas em claro, com tag adulterada ou de outro pedido são rejeitadas.
+Resultados completos: [evidencias-http.json](evidencias-http.json).
 
-Nos casos focados, foram distinguidas falhas de rede, JSON inválido e erros HTTP;
-respostas nulas ou sem mensagem textual receberam uma mensagem padrão.
-Cofres compatíveis foram aceitos; segredo incompatível, senha incorreta e falha
-ao abrir o segundo cofre foram rejeitados. Esses casos foram executados por um
-script local de conferência, sem acrescentar framework ou comando à aplicação.
+A revisão encontrou JSON inválido e payload excessivo retornando 500 no gateway.
+O tratamento foi corrigido para 400 `INVALID_JSON` e 413 `PAYLOAD_TOO_LARGE`,
+com regressão incorporada à suíte. Nenhuma verificação criptográfica foi relaxada.
 
-Os exemplos Java usam as fontes originais dos anexos. A exceção do exemplo
-AES-GCM após adulteração é esperada e tratada pelo próprio programa com exit 0.
-[evidencias-java.json](evidencias-java.json) conserva stdout/stderr, sem semente
-ou QR do exemplo TOTP.
+Os exemplos Java usam as fontes originais dos anexos. A exceção após adulteração
+no exemplo AES-GCM é esperada; exit 0 não significa ausência dessa exceção.
+[evidencias-java.json](evidencias-java.json) registra as saídas, sem semente/QR TOTP.
 
-A comparação com a versão anterior cobriu validação de pagamento (416 casos),
-catálogo (45), localização (36) e política de contexto (144), incluindo limites
-de timestamp, sessão, TOTP e quantidade. Foi uma conferência local com a versão
-preservada do código, sem novo framework. Nesta revisão foram repetidos
-typecheck, build, a suíte de segurança e a instalação do pacote; os registros
-dos exemplos Java e das demais conferências mantêm suas datas e escopos.
+## Instalação e execução do zero
 
-## Instalação e execução
+O ZIP foi extraído em uma pasta nova, sem dependências, BIN, cofres ou bancos.
+`pnpm install --frozen-lockfile` criou `node_modules`, reutilizando o cache local.
+Sem DB5, o setup falhou antes de pedir senha. Com a base dos anexos, copiou o
+arquivo e criou os dois cofres por senha/confirmação interativas. O setup repetido
+conferiu os cofres sem alterar seus arquivos.
 
-Uma nova extração do pacote, sem dependências, BIN, cofres ou bancos, passou em
-`pnpm install --frozen-lockfile --offline`, typecheck e build. As dependências
-vieram do cache local; a BIN continua sendo obtida dos anexos da professora.
+O launcher iniciou dois processos independentes em demo e normal. O binding
+SQLite abriu; as tabelas, os campos de sessão e a integridade dos bancos foram
+conferidos. Uma base antiga sintética recebeu os campos novos sem perder o registro.
 
-Em outro diretório de dados isolado, o setup criou cofres novos, conferiu esses
-cofres em uma segunda execução e `pnpm demo` iniciou os dois processos Express.
-Os endpoints de saúde da loja e do gateway responderam HTTP 200.
+Os cenários adicionais conferiram APIs sem sessão, JSON de formato incorreto,
+cadastro duplicado, senha/TOTP incorretos, carrinhos inválidos, preço/usuário
+forjados, compra de R$100 e isolamento entre contas. Os erros de carrinho não
+criaram pedidos. Reiniciar preservou conta, sessão, TOTP e pedido; novo login
+continuou exigindo segundo fator. No normal, endpoints de ataque ficaram ausentes,
+o IP forjado foi ignorado e a mudança de contexto bloqueou checkout sem novo pedido.
 
-No Chrome, foram conferidos login/cadastro e TOTP no desktop/celular, catálogo,
-quantidades, compra aprovada, histórico, sessão após recarregar, logout e novo
-login com senha/TOTP. A conta era sintética; o código foi calculado a partir
-da chave manual, sem leitura física do QR. A aparência foi preservada.
+O Chrome carregou o formulário de login da cópia limpa. Nesta revisão, cadastro,
+TOTP e compra foram verificados por HTTP; não houve leitura física do QR.
 
-## Limites e conferência da equipe
+## Conferência da equipe
 
-Os testes usam bancos/cofres isolados em `.data/`, sem reinicializar os dados existentes.
-Não houve teste em outro computador, instalação sem cache, pagamento bancário,
-deploy ou auditoria externa. O modo demo consulta a DB5 com o IP de cenário
-configurado no servidor; esse IP não representa o endereço real do navegador.
+Os dados são sintéticos e isolados em `.data/`; os dados da instalação original
+foram preservados. O demo consulta a DB5 com IP de cenário definido no servidor,
+que não representa o endereço real do navegador.
 
-Continuam pendentes a leitura do QR pelo celular, a revisão pessoal do código
-e o ensaio coletivo. Registrem essas atividades e a identificação da equipe no
-relatório antes de enviar ao Moodle.
+Não houve instalação em outro computador ou sem cache, deploy, pagamento bancário
+ou auditoria externa. Antes de enviar ao Moodle, preencham identificação e revisão
+humana no relatório, leiam o QR com um celular e ensaiem com todos os integrantes.
+Depois das edições manuais, gerem novamente o ZIP com `pnpm.cmd zip`.

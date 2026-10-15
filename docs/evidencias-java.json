@@ -1,5 +1,5 @@
 {
-  "executedAt": "2026-10-15T03:47:04.408Z",
+  "executedAt": "2026-10-15T04:22:53.719Z",
   "java": "openjdk version \"25.0.1\" 2025-10-21 LTS\r\nOpenJDK Runtime Environment Temurin-25.0.1+8 (build 25.0.1+8-LTS)\r\nOpenJDK 64-Bit Server VM Temurin-25.0.1+8 (build 25.0.1+8-LTS, mixed mode, sharing)\r\n",
   "sourcesUnmodified": true,
   "results": [
@@ -7,7 +7,7 @@
       "name": "HMAC",
       "compiled": true,
       "exit": 0,
-      "stdout": "Digite a msg: \r\nHMAC calculado em array de bytes = 3dc7e6870daba854145a644a7d8864163c5f517ca9415812c5b3f4a8d6036478\r\nHMAC calculado = 3dc7e6870daba854145a644a7d8864163c5f517ca9415812c5b3f4a8d6036478\r\nNome do algoritmo = HMacSHA256\r\nTamanho do MAC = 32\r\n\nDigite Mensagem 1 \r\nDigite Mensagem 2 \r\nMensagem 1 = mensagens-iguais\r\nChave 1 = d8469f52b8f8688dcebfe4a0b4f7f0d6\r\nHMAC da Mensagem 1 = 73cb2789a60d8051e14eff7d2c6b43c2ad707c1067d25a6a87e9df6dbf8b1342\r\nMensagem 2 = mensagens-iguais\r\nChave 2 = d8469f52b8f8688dcebfe4a0b4f7f0d6\r\nHMAC da Mensagem 2 = 73cb2789a60d8051e14eff7d2c6b43c2ad707c1067d25a6a87e9df6dbf8b1342\r\nHMACs iguais\r\n\n\nCom chaves diferentes, HMACs diferentes\r\nMensagem 1 = mensagens-iguais\r\nChave 1 = d8469f52b8f8688dcebfe4a0b4f7f0d6\r\nHMAC da Mensagem 1 = 73cb2789a60d8051e14eff7d2c6b43c2ad707c1067d25a6a87e9df6dbf8b1342\r\nMensagem 2 = mensagens-iguais\r\nChave 2 = 0123456789abcdef\r\nHMAC da Mensagem 2 = b5d14e264a9cb3d4a313f1c3bca4223eaa6ff4fda95128f07dbae356ae9b2be4\r\n",
+      "stdout": "Digite a msg: \r\nHMAC calculado em array de bytes = ad0607c3e749d29c784d508edab87bf6b52a7a72175c0a70140a34350fb09ec5\r\nHMAC calculado = ad0607c3e749d29c784d508edab87bf6b52a7a72175c0a70140a34350fb09ec5\r\nNome do algoritmo = HMacSHA256\r\nTamanho do MAC = 32\r\n\nDigite Mensagem 1 \r\nDigite Mensagem 2 \r\nMensagem 1 = mensagens-iguais\r\nChave 1 = d8469f52b8f8688dcebfe4a0b4f7f0d6\r\nHMAC da Mensagem 1 = 73cb2789a60d8051e14eff7d2c6b43c2ad707c1067d25a6a87e9df6dbf8b1342\r\nMensagem 2 = mensagens-iguais\r\nChave 2 = d8469f52b8f8688dcebfe4a0b4f7f0d6\r\nHMAC da Mensagem 2 = 73cb2789a60d8051e14eff7d2c6b43c2ad707c1067d25a6a87e9df6dbf8b1342\r\nHMACs iguais\r\n\n\nCom chaves diferentes, HMACs diferentes\r\nMensagem 1 = mensagens-iguais\r\nChave 1 = d8469f52b8f8688dcebfe4a0b4f7f0d6\r\nHMAC da Mensagem 1 = 73cb2789a60d8051e14eff7d2c6b43c2ad707c1067d25a6a87e9df6dbf8b1342\r\nMensagem 2 = mensagens-iguais\r\nChave 2 = 0123456789abcdef\r\nHMAC da Mensagem 2 = b5d14e264a9cb3d4a313f1c3bca4223eaa6ff4fda95128f07dbae356ae9b2be4\r\n",
       "stderr": ""
     },
     {
@@ -43,7 +43,7 @@
       "compiled": true,
       "exit": 0,
       "stdout": "Teste de GCM com AES usando BCFIPS\r\nBouncy Castle provider esta disponivel\r\nMsg = Transferir 0000100 para CC 1234-5678\r\nMsg cifrada = df6e92bb12b41e9038541e56b54154d6d2ad05ffcba356331897b2b19d576ff5a5bab5e57f01e692bb865fb8fef5bd5094863c4b\r\nMsg decifrada = Transferir 0000100 para CC 1234-5678\r\nAtaque -> Tentativa de modificar msg cifrada... \r\nResultado -> GCM detecta mudanca na tag e causa exception\r\n",
-      "stderr": "out. 15, 2026 12:46:53 AM AESTesteGCMFIPS main\r\nGRAVE: null\r\njavax.crypto.AEADBadTagException: Error finalising cipher data: mac check in GCM failed\r\n\tat java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62)\r\n\tat java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499)\r\n\tat java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:483)\r\n\tat org.bouncycastle.jcajce.provider.ClassUtil.throwBadTagException(Unknown Source)\r\n\tat org.bouncycastle.jcajce.provider.BaseCipher.engineDoFinal(Unknown Source)\r\n\tat java.base/javax.crypto.Cipher.doFinal(Cipher.java:2260)\r\n\tat AESTesteGCMFIPS.gcmTest2(AESTesteGCMFIPS.java:170)\r\n\tat AESTesteGCMFIPS.main(AESTesteGCMFIPS.java:194)\r\n\r\n"
+      "stderr": "out. 15, 2026 1:22:43 AM AESTesteGCMFIPS main\r\nGRAVE: null\r\njavax.crypto.AEADBadTagException: Error finalising cipher data: mac check in GCM failed\r\n\tat java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62)\r\n\tat java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499)\r\n\tat java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:483)\r\n\tat org.bouncycastle.jcajce.provider.ClassUtil.throwBadTagException(Unknown Source)\r\n\tat org.bouncycastle.jcajce.provider.BaseCipher.engineDoFinal(Unknown Source)\r\n\tat java.base/javax.crypto.Cipher.doFinal(Cipher.java:2260)\r\n\tat AESTesteGCMFIPS.gcmTest2(AESTesteGCMFIPS.java:170)\r\n\tat AESTesteGCMFIPS.main(AESTesteGCMFIPS.java:194)\r\n\r\n"
     },
     {
       "name": "PBKDF2",
@@ -56,14 +56,14 @@
       "name": "Scrypt BC",
       "compiled": true,
       "exit": 0,
-      "stdout": "Bouncy Castle provider esta disponivel\r\nDigite a senha: \r\nChave derivada usando scrypt: \r\n7ede239be30650cd2edbc2e2166a553f4837dda4d4d119c4dbb1e6c1df13d37d\r\n",
+      "stdout": "Bouncy Castle provider esta disponivel\r\nDigite a senha: \r\nChave derivada usando scrypt: \r\n2689c6c8e0b2d5f3c1ce23c50be10599bd7ae3af65eb548ce772c4a453e1c097\r\n",
       "stderr": ""
     },
     {
       "name": "Scrypt FIPS",
       "compiled": true,
       "exit": 0,
-      "stdout": "Bouncy Castle provider esta disponivel\r\nDigite a senha: \r\nChave derivada usando scrypt: \r\nce892bb830301651c8f41a000a59cac9abf3274985f40df38f41525a5a20eb76\r\n",
+      "stdout": "Bouncy Castle provider esta disponivel\r\nDigite a senha: \r\nChave derivada usando scrypt: \r\n9e684c1c233231a643b0fb79416103603432de7a3090fa9fd325756ef401bec4\r\n",
       "stderr": ""
     },
     {
@@ -77,7 +77,7 @@
       "name": "AES KW",
       "compiled": true,
       "exit": 0,
-      "stdout": "Bouncy Castle provider esta disponivel\r\nGerando chave AES -> Chave = 45d32ebe482f9516e0257d1160a1f593\r\nGerando chave Blowfish \t-> Chave Blowfish \t= e1be24efaa5c4c6d\r\nkey: Blowfish\r\n   : true\r\nGerando chave AES para ser wrapped -> Chave = 45d32ebe482f9516e0257d1160a1f593\r\nkey: AES\r\n   : true\r\n",
+      "stdout": "Bouncy Castle provider esta disponivel\r\nGerando chave AES -> Chave = 44c445ba6f4d45ac65c3e499a6981b45\r\nGerando chave Blowfish \t-> Chave Blowfish \t= 93784f746309549b\r\nkey: Blowfish\r\n   : true\r\nGerando chave AES para ser wrapped -> Chave = 44c445ba6f4d45ac65c3e499a6981b45\r\nkey: AES\r\n   : true\r\n",
       "stderr": ""
     },
     {

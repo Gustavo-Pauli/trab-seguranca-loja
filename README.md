@@ -117,7 +117,7 @@ pnpm.cmd test:security
 pnpm.cmd zip
 ```
 
-A suíte executa 37 verificações em 3301/4400, com bancos/cofres novos em
+A suíte executa 38 verificações em 3301/4400, com bancos/cofres novos em
 `.data/test-*`, e encerra seus processos. Evidência: [docs/evidencias-http.json](docs/evidencias-http.json).
 O ZIP fica em `output/`, sem dados privados, cofres, BINs, dependências ou build.
 

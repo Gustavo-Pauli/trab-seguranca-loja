@@ -190,11 +190,12 @@ pedido inconsistente, produzido com tag válida pelo emissor de teste, recebe
 ## 9. Resultados dos testes
 
 Na revisão final, `pnpm typecheck` e `pnpm build` passaram, e `pnpm test:security`
-concluiu **37 verificações**. Incluem cadastro/QR, senha/TOTP, contexto, catálogo,
+concluiu **38 verificações**. Incluem cadastro/QR, senha/TOTP, contexto, catálogo,
 compra, quatro ataques, timestamps vencido/futuro, contador reutilizado, limite
 de tentativas, concorrência do nonce, reinícios, logout e falhas de resposta.
 As verificações de resposta rejeitam aprovação/bloqueio em claro, tag alterada e
 resultado autenticado de outro pedido. Os vetores HOTP/TOTP conhecidos também passaram.
+JSON malformado e requisição acima do limite retornam 400 e 413 no gateway.
 
 Os **13 exemplos Java** foram novamente compilados/executados a partir dos
 anexos. A exceção de integridade do exemplo AES-GCM após adulteração é esperada
@@ -203,6 +204,12 @@ Os testes usam dados sintéticos isolados e não apagam usuários/cofres existen
 Resultados, ambiente e conferência da instalação limpa estão em
 [validacao.md](validacao.md), [evidência HTTP](evidencias-http.json) e
 [evidência Java](evidencias-java.json).
+
+Em uma cópia extraída sem dependências, BIN, cofres ou bancos, foram executados
+instalação, setup interativo, build, suíte de segurança e cenários HTTP adicionais.
+O binding SQLite abriu, as tabelas foram criadas e a migração de uma sessão de
+formato antigo preservou seu registro. O setup repetido manteve os cofres intactos.
+Cadastro, compra e novo login também foram conferidos após reiniciar os serviços.
 
 Limites: execução local no Windows, sem pagamento bancário, deploy, auditoria
 externa ou teste em dois computadores físicos. A leitura do QR por telefone e
@@ -223,6 +230,8 @@ ponta. Confira pedidos antes de repetir. Capturas de demo/desafios não persiste
   em funções menores, preservando os mecanismos existentes.
   Foram fornecidos o PDF, os anexos e os requisitos
   detalhados de stack, mecanismos e demonstrações.
+  Exemplos de trechos dos prompts recebidos: “Não crie outro projeto e não mude a stack”;
+  “use tailwind instead on this project”; “faça um teste do zero também, não só rodando de novo”.
 - **Código gerado/alterado:** autenticação, protocolo, contexto, fluxo de pedidos,
   gateway, frontend modular, scripts e documentação receberam assistência de IA.
   As primitivas são de `node:crypto`; os exemplos Java foram estudados/executados

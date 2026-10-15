@@ -10,6 +10,15 @@ export function createGatewayApp(secret: Buffer) {
   app.use('/payments', paymentRoutes(secret));
 
   const errors: ErrorRequestHandler = (error, _req, res, _next) => {
+    const status = (error as { status?: number })?.status;
+
+    if (status === 400 || status === 413) {
+      const reason = status === 413 ? 'PAYLOAD_TOO_LARGE' : 'INVALID_JSON';
+      res.status(status).json({ status: 'BLOCKED', reason });
+
+      return;
+    }
+
     console.error('[gateway]', error instanceof Error ? error.message : 'Falha interna');
     res.status(500).json({ status: 'BLOCKED', reason: 'GATEWAY_ERROR' });
   };

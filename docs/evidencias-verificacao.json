@@ -1,9 +1,10 @@
 {
-  "executedAt": "2026-10-14T19:57:19.9249623Z",
+  "executedAt": "2026-10-15T04:32:04.888211+00:00",
+  "baselineCommit": "0023205",
   "environment": {
-    "node": "v22.14.0",
+    "node": "22.14.0",
     "pnpm": "10.15.1",
-    "system": "Windows"
+    "os": "Windows"
   },
   "sourceChecks": [
     {
@@ -17,468 +18,253 @@
     {
       "command": "pnpm test:security",
       "exitCode": 0
+    },
+    {
+      "command": "pnpm examples:java --attachments <teacher attachments>",
+      "exitCode": 0
     }
   ],
   "security": {
+    "executedAt": "2026-10-15T04:29:07.026Z",
     "completed": true,
-    "passed": 37
+    "passed": 38
   },
   "java": {
-    "executedAt": "2026-10-14T19:39:46.695Z",
-    "examples": 13,
-    "compiled": 13,
-    "exits": [
+    "executedAt": "2026-10-15T04:22:53.719Z",
+    "compiledAndExecuted": 13,
+    "allExitCodesZero": true,
+    "expectedGcmTamperException": true
+  },
+  "cleanInstallation": {
+    "executedAt": "2026-10-15T04:23:46.5503134Z",
+    "checks": [
       {
-        "name": "HMAC",
-        "exit": 0
+        "command": "pnpm install --frozen-lockfile",
+        "exitCode": 0
       },
       {
-        "name": "Tampering sem MAC",
-        "exit": 0
+        "command": "pnpm typecheck",
+        "exitCode": 0
       },
       {
-        "name": "Digest preservado",
-        "exit": 0
+        "command": "pnpm build",
+        "exitCode": 0
+      }
+    ],
+    "directory": ".data/entrega-clean-20261015-012332",
+    "command": "pnpm install --frozen-lockfile",
+    "dependencies": "Fresh node_modules; pnpm reused its existing package cache.",
+    "startedWithoutDependenciesBinVaultsOrDatabases": true,
+    "runtimeAndConfigFilesMatching": 94,
+    "sourceChecksAfterGatewayFix": [
+      {
+        "command": "pnpm typecheck",
+        "exitCode": 0
       },
       {
-        "name": "Digest substituido",
-        "exit": 0
+        "command": "pnpm build",
+        "exitCode": 0
       },
       {
-        "name": "Tampering com HMAC",
-        "exit": 0
+        "command": "pnpm test:security",
+        "exitCode": 0
+      }
+    ],
+    "securityExecutedAt": "2026-10-15T04:30:18.921Z",
+    "securityPassed": 38,
+    "setup": {
+      "withoutBin": "Exit 1 before requesting password",
+      "withTeacherBin": "Copied BIN; interactive password and confirmation; created both encrypted vaults",
+      "repeatedSetup": "Verified existing pair; SHA-256 of both vault files remained identical",
+      "launcher": "pnpm demo, restart pnpm demo, then pnpm start; interactive unlock; ports 3517/4517"
+    }
+  },
+  "additionalHttpScenarios": {
+    "executedAt": "2026-10-15T04:27:58.582Z",
+    "checks": [
+      {
+        "name": "Native SQLite binding, schema, session migrations and empty databases",
+        "details": "PASS"
       },
       {
-        "name": "AES GCM",
-        "exit": 0
+        "name": "Repeated setup preserved both encrypted vaults byte for byte",
+        "details": "PASS"
       },
       {
-        "name": "PBKDF2",
-        "exit": 0
+        "name": "Compiled frontend, client routes and JavaScript/CSS assets served",
+        "details": "PASS"
       },
       {
-        "name": "Scrypt BC",
-        "exit": 0
+        "name": "Protected APIs reject missing sessions",
+        "details": "PASS"
       },
       {
-        "name": "Scrypt FIPS",
-        "exit": 0
+        "name": "Missing fields, wrong JSON shapes, short credentials and unknown API route",
+        "details": "PASS"
       },
       {
-        "name": "GCM AAD",
-        "exit": 0
+        "name": "Fresh registration creates QR and no session; duplicate account and wrong password rejected",
+        "details": "PASS"
       },
       {
-        "name": "AES KW",
-        "exit": 0
+        "name": "Server TOTP rejection and activation; DB5 context BR; session cookie created only after 2FA",
+        "details": "PASS"
       },
       {
-        "name": "TOTP",
-        "exit": 0
+        "name": "Invalid carts and quantities return 400 without creating orders",
+        "details": "PASS"
       },
       {
-        "name": "IP2Location",
-        "exit": 0
+        "name": "Checkout ignores forged price, amount, currency, user and location; approves R$100",
+        "details": "PASS"
+      },
+      {
+        "name": "Attack replay blocked",
+        "details": {
+          "status": 409,
+          "reason": "INVALID_NONCE"
+        }
+      },
+      {
+        "name": "Attack tamper blocked",
+        "details": {
+          "status": 400,
+          "reason": "INVALID_AUTH_TAG"
+        }
+      },
+      {
+        "name": "Attack expired blocked",
+        "details": {
+          "status": 409,
+          "reason": "INVALID_TIMESTAMP"
+        }
+      },
+      {
+        "name": "Forged IP, location and forwarded header ignored in demo",
+        "details": "PASS"
+      },
+      {
+        "name": "A second account cannot read the first account orders or captured payment",
+        "details": "PASS"
+      },
+      {
+        "name": "Users, session, TOTP seed and approved order survive full launcher restart",
+        "details": "PASS"
+      },
+      {
+        "name": "Login after restart requires fresh TOTP and no longer exposes enrollment material",
+        "details": "PASS"
+      },
+      {
+        "name": "Normal startup hides demo routes, ignores forged IP and blocks downgrade from public to local context",
+        "details": "PASS"
+      },
+      {
+        "name": "Context-blocked checkout creates no extra order; logout revokes persisted session",
+        "details": "PASS"
+      }
+    ],
+    "completedPhases": [
+      "initial",
+      "restart",
+      "normal"
+    ]
+  },
+  "malformedRequests": {
+    "executedAt": "2026-10-15T04:27:58.185Z",
+    "results": [
+      {
+        "name": "Shop malformed JSON",
+        "expected": 400,
+        "actual": 400,
+        "data": {
+          "error": "JSON inválido."
+        },
+        "passed": true
+      },
+      {
+        "name": "Gateway malformed JSON",
+        "expected": 400,
+        "actual": 400,
+        "data": {
+          "status": "BLOCKED",
+          "reason": "INVALID_JSON"
+        },
+        "passed": true
+      },
+      {
+        "name": "Shop oversized JSON",
+        "expected": 413,
+        "actual": 413,
+        "data": {
+          "error": "Requisição muito grande."
+        },
+        "passed": true
+      },
+      {
+        "name": "Gateway oversized JSON",
+        "expected": 413,
+        "actual": 413,
+        "data": {
+          "status": "BLOCKED",
+          "reason": "PAYLOAD_TOO_LARGE"
+        },
+        "passed": true
+      },
+      {
+        "name": "Shop wrong content type",
+        "expected": 415,
+        "actual": 415,
+        "data": {
+          "error": "Envie JSON."
+        },
+        "passed": true
+      },
+      {
+        "name": "Gateway empty envelope",
+        "expected": 400,
+        "actual": 400,
+        "data": {
+          "status": "BLOCKED",
+          "reason": "INVALID_AUTH_TAG"
+        },
+        "passed": true
       }
     ]
   },
-  "cleanInstallation": {
-    "completedAt": "2026-10-14T20:06:45.306437+00:00",
-    "directory": ".data/entrega-limpa-20261014-164950/loja-segura-final",
-    "dependencySource": "local pnpm cache, offline",
-    "startedWithoutDependenciesBinVaultsOrDatabases": true,
-    "installation": {
-      "command": "pnpm install --frozen-lockfile --offline",
-      "exitCode": 0
-    },
-    "setup": {
-      "command": "pnpm run setup --bin ../trabalho-seguranca-anexos/ip2location/ip2location/IP2LOCATION-LITE-DB5.BIN",
-      "interactive": true,
-      "newIndependentVaults": true
-    },
-    "checks": {
-      "checks": [
-        {
-          "command": "pnpm typecheck",
-          "exitCode": 0
-        },
-        {
-          "command": "pnpm build",
-          "exitCode": 0
-        },
-        {
-          "command": "pnpm test:security",
-          "exitCode": 0
-        }
-      ],
-      "securityPassed": 37,
-      "completed": true
-    },
-    "launcher": "pnpm demo",
-    "httpFlow": {
-      "executedAt": "2026-10-14T20:00:21.689Z",
-      "checks": [
-        {
-          "name": "Shop/gateway health",
-          "shop": 200,
-          "gateway": 200
-        },
-        {
-          "name": "Frontend HTML and compiled asset",
-          "status": 200
-        },
-        {
-          "name": "Registration and QR",
-          "status": 201,
-          "sessionCreated": false
-        },
-        {
-          "name": "Invalid TOTP",
-          "status": 401
-        },
-        {
-          "name": "Valid TOTP and DB5",
-          "status": 200,
-          "context": {
-            "allowed": true,
-            "reason": "FIRST_CONTEXT",
-            "location": {
-              "ip": "150.162.60.21",
-              "country": "BR",
-              "region": "Santa Catarina",
-              "city": "Florianopolis",
-              "latitude": -27.59627,
-              "longitude": -48.549171,
-              "asn": null,
-              "organization": null,
-              "kind": "public",
-              "source": "server-demo"
-            }
-          }
-        },
-        {
-          "name": "Purchase after setup",
-          "status": 200,
-          "total_cents": 10000
-        },
-        {
-          "name": "replay",
-          "gatewayStatus": 409,
-          "reason": "INVALID_NONCE"
-        },
-        {
-          "name": "tamper",
-          "gatewayStatus": 400,
-          "reason": "INVALID_AUTH_TAG"
-        },
-        {
-          "name": "expired",
-          "gatewayStatus": 409,
-          "reason": "INVALID_TIMESTAMP"
-        },
-        {
-          "name": "Forged location ignored",
-          "status": 200,
-          "observed": {
-            "ip": "150.162.60.21",
-            "country": "BR",
-            "region": "Santa Catarina",
-            "city": "Florianopolis",
-            "latitude": -27.59627,
-            "longitude": -48.549171,
-            "asn": null,
-            "organization": null,
-            "kind": "public",
-            "source": "server-demo"
-          }
-        },
-        {
-          "name": "Password login followed by TOTP",
-          "status": 200
-        }
-      ],
-      "completed": true,
-      "totpMethod": "Synthetic seed, computed code; no physical QR scan"
-    },
-    "browser": {
-      "url": "http://127.0.0.1:3001/login",
-      "title": "Loja Segura",
-      "emailFields": 1,
-      "passwordFields": 1,
-      "loginButtons": 1
-    },
-    "developmentLauncher": {
-      "command": "pnpm dev:demo",
-      "checks": [
-        {
-          "url": "http://127.0.0.1:3001/api/health",
-          "response": {
-            "status": "ok",
-            "service": "shop",
-            "demoMode": true
-          }
-        },
-        {
-          "url": "http://127.0.0.1:4000/health",
-          "response": {
-            "status": "ok",
-            "service": "gateway"
-          }
-        },
-        {
-          "url": "http://127.0.0.1:5173/api/health",
-          "response": {
-            "status": "ok",
-            "service": "shop",
-            "demoMode": true
-          }
-        },
-        {
-          "url": "http://127.0.0.1:5173/login",
-          "status": 200
-        },
-        {
-          "url": "http://127.0.0.1:5173/src/main.tsx",
-          "status": 200
-        }
-      ]
-    },
-    "runtimeAndConfigFilesMatching": 91,
-    "originalDataPreserved": true,
-    "physicalPhoneQrScan": false,
-    "scope": "Pre-Tailwind package; not a claim about the new frontend lockfile."
+  "databaseAndPartialSetup": {
+    "executedAt": "2026-10-15T04:30:44.781Z",
+    "checks": [
+      "Legacy session schema receives context_json and totp_counter without deleting its existing row; integrity_check ok",
+      "Setup with only one vault aborts before password entry, preserves it and does not create a second vault"
+    ]
   },
-  "scope": "Earlier audit records remain dated; latest revalidation is in validationRefactor.",
-  "tailwindMigration": {
-    "completedAt": "2026-10-15T03:03:00.872941+00:00",
-    "tailwind": "4.3.3",
-    "sourceChecks": [
-      {
-        "command": "pnpm typecheck",
-        "exitCode": 0
-      },
-      {
-        "command": "pnpm build",
-        "exitCode": 0
-      },
-      {
-        "command": "pnpm test:security",
-        "exitCode": 0
-      }
-    ],
-    "securityExecutedAt": "2026-10-15T02:56:36.421Z",
-    "securityPassed": 37,
-    "cleanInstallation": {
-      "checks": [
-        {
-          "command": "pnpm install --frozen-lockfile --offline",
-          "exitCode": 0
-        },
-        {
-          "command": "pnpm typecheck",
-          "exitCode": 0
-        },
-        {
-          "command": "pnpm build",
-          "exitCode": 0
-        }
-      ],
-      "completedAt": "2026-10-15T03:01:18.6994393Z",
-      "directory": ".data/tailwind-clean-20261015-000041",
-      "dependencySource": "local pnpm cache, offline",
-      "startedWithoutDependenciesBinVaultsOrDatabases": true,
-      "runtimeAndConfigFilesMatching": 91
-    },
-    "browser": {
-      "browser": "Chrome",
-      "url": "http://127.0.0.1:3503",
-      "data": "isolated synthetic accounts; server-demo IP",
-      "responsive": [
-        "390px: one catalog column",
-        "800px: two catalog columns",
-        "desktop: four columns"
-      ],
-      "flows": [
-        "Registration and QR enrollment",
-        "TOTP activation using the manual seed",
-        "Logout, password login and a new TOTP",
-        "Cart quantity controls",
-        "Approved simulated checkout",
-        "Order history",
-        "Replay: HTTP 409 INVALID_NONCE",
-        "Tamper: HTTP 400 INVALID_AUTH_TAG",
-        "Invalid TOTP: HTTP 401",
-        "Forged location: HTTP 200, client declaration ignored"
-      ],
-      "physicalPhoneQrScan": false
-    },
-    "backendGatewayProtocolModified": false
+  "httpClientAndVaultChecks": {
+    "executedAt": "2026-10-15T04:30:47.039Z",
+    "passed": 10,
+    "checks": [
+      "Falha de conexão tem mensagem própria",
+      "JSON inválido não é confundido com falha de conexão",
+      "Erro HTTP preserva status e mensagem do servidor",
+      "Resposta de erro nula recebe mensagem padrão",
+      "Mensagem não textual recebe mensagem padrão",
+      "Resposta válida continua disponível",
+      "Par de cofres compatível é aceito",
+      "Par de cofres incompatível é rejeitado",
+      "Senha incorreta continua rejeitada",
+      "Falha ao abrir o segundo cofre é rejeitada"
+    ]
   },
-  "readabilityReview": {
-    "completedAt": "2026-10-15T03:49:32.578083+00:00",
-    "baselineCommit": "d15c066",
-    "sourceChecks": [
-      {
-        "command": "pnpm typecheck",
-        "exitCode": 0
-      },
-      {
-        "command": "pnpm build",
-        "exitCode": 0
-      },
-      {
-        "command": "pnpm test:security",
-        "exitCode": 0
-      },
-      {
-        "command": "pnpm examples:java --attachments <teacher attachments>",
-        "exitCode": 0
-      }
-    ],
-    "securityExecutedAt": "2026-10-15T03:45:53.856Z",
-    "securityPassed": 37,
-    "focusedChecks": {
-      "executedAt": "2026-10-15T03:43:25.130Z",
-      "passed": 10,
-      "checks": [
-        "Falha de conexão tem mensagem própria",
-        "JSON inválido não é confundido com falha de conexão",
-        "Erro HTTP preserva status e mensagem do servidor",
-        "Resposta de erro nula recebe mensagem padrão",
-        "Mensagem não textual recebe mensagem padrão",
-        "Resposta válida continua disponível",
-        "Par de cofres compatível é aceito",
-        "Par de cofres incompatível é rejeitado",
-        "Senha incorreta continua rejeitada",
-        "Falha ao abrir o segundo cofre é rejeitada"
-      ]
-    },
-    "cleanInstallation": {
-      "checks": [
-        {
-          "command": "pnpm install --frozen-lockfile --offline",
-          "exitCode": 0
-        },
-        {
-          "command": "pnpm typecheck",
-          "exitCode": 0
-        },
-        {
-          "command": "pnpm build",
-          "exitCode": 0
-        }
-      ],
-      "completedAt": "2026-10-15T03:48:23.5172950Z",
-      "directory": ".data/tailwind-clean-20261015-004809",
-      "dependencySource": "local pnpm cache, offline",
-      "startedWithoutDependenciesBinVaultsOrDatabases": true,
-      "runtimeAndConfigFilesMatching": 93
-    },
-    "interactiveLauncher": {
-      "existingVaultsSetup": true,
-      "gateway": {
-        "status": "ok",
-        "service": "gateway"
-      },
-      "shop": {
-        "status": "ok",
-        "service": "shop",
-        "demoMode": true
-      },
-      "launcher": "pnpm demo",
-      "newSetup": true,
-      "executedAt": "2026-10-15T03:48:07.2444186Z"
-    },
-    "browser": {
-      "browser": "Chrome",
-      "url": "http://127.0.0.1:3515",
-      "data": "isolated synthetic accounts; server-demo IP",
-      "viewport": "Desktop and 390x844 emulation; override reset",
-      "flows": [
-        "Registration and QR enrollment",
-        "TOTP activation using manual seed",
-        "Catalog, quantity controls and approved checkout",
-        "Order history",
-        "Session restored after page reload",
-        "Logout and password/TOTP login"
-      ],
-      "physicalPhoneQrScan": false
-    },
-    "newDependencies": false,
-    "newChangesCommitted": false,
-    "pushed": false
+  "fixedIssue": "Gateway mapped malformed JSON and oversized requests to 500; now returns 400 INVALID_JSON and 413 PAYLOAD_TOO_LARGE; regression added to existing suite.",
+  "browser": {
+    "browser": "Chrome",
+    "url": "http://127.0.0.1:3517/login",
+    "scope": "Read-only loading check of the clean build: login form rendered. Registration/TOTP/purchase in this review used HTTP assertions.",
+    "physicalPhoneQrScan": false
   },
-  "validationRefactor": {
-    "completedAt": "2026-10-15T04:07:35.124190+00:00",
-    "baselineCommit": "6d0ddf7",
-    "sourceChecks": [
-      {
-        "command": "pnpm typecheck",
-        "exitCode": 0
-      },
-      {
-        "command": "pnpm build",
-        "exitCode": 0
-      },
-      {
-        "command": "pnpm test:security",
-        "exitCode": 0
-      }
-    ],
-    "securityExecutedAt": "2026-10-15T04:02:56.047Z",
-    "securityPassed": 37,
-    "behavioralComparison": {
-      "executedAt": "2026-10-15T04:02:07.189Z",
-      "baselineCommit": "6d0ddf7",
-      "completed": true,
-      "counts": {
-        "payment": 416,
-        "catalog": 45,
-        "location": 36,
-        "policy": 144
-      },
-      "total": 641,
-      "coveredBoundaries": [
-        "timestamp ±120/121 seconds",
-        "TOTP counter ±1/2",
-        "session 12h/12h+1",
-        "expired/future session",
-        "quantity 0/1/2/10/11",
-        "first rejection reason",
-        "strict location comparison"
-      ]
-    },
-    "cleanInstallation": {
-      "checks": [
-        {
-          "command": "pnpm install --frozen-lockfile --offline",
-          "exitCode": 0
-        },
-        {
-          "command": "pnpm typecheck",
-          "exitCode": 0
-        },
-        {
-          "command": "pnpm build",
-          "exitCode": 0
-        }
-      ],
-      "completedAt": "2026-10-15T04:07:01.3229792Z",
-      "directory": ".data/tailwind-clean-20261015-010647",
-      "dependencySource": "local pnpm cache, offline",
-      "startedWithoutDependenciesBinVaultsOrDatabases": true,
-      "runtimeAndConfigFilesMatching": 94
-    },
-    "browser": {
-      "browser": "Chrome",
-      "requestedUrl": "http://127.0.0.1:3515/orders",
-      "observedUrl": "http://127.0.0.1:3515/login",
-      "observed": "Protected route redirects to login; email, password, submit and registration link rendered.",
-      "scope": "Read-only loading check; no new account or checkout through the browser in this run.",
-      "physicalPhoneQrScan": false
-    },
-    "newDependencies": false,
-    "newChangesCommitted": false,
-    "pushed": false
-  }
+  "limitations": [
+    "Same Windows computer and existing pnpm cache; no cold-cache or second-PC installation.",
+    "Physical phone QR scan and team rehearsal remain pending.",
+    "No production, bank integration or external security audit."
+  ]
 }

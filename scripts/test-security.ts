@@ -156,6 +156,26 @@ try {
     ready('http://127.0.0.1:4400/health', gateway),
   ]);
 
+  const malformedJson = await fetch('http://127.0.0.1:4400/payments', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: '{',
+  });
+  assert.equal(malformedJson.status, 400);
+  assert.equal((await malformedJson.json()).reason, 'INVALID_JSON');
+
+  const oversizedJson = await fetch('http://127.0.0.1:4400/payments', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ data: 'a'.repeat(40_000) }),
+  });
+  assert.equal(oversizedJson.status, 413);
+  assert.equal((await oversizedJson.json()).reason, 'PAYLOAD_TOO_LARGE');
+  record('Gateway rejeita JSON inválido e payload acima do limite', '400/413', {
+    malformedJson: 'INVALID_JSON',
+    oversizedJson: 'PAYLOAD_TOO_LARGE',
+  });
+
   const email = `teste-${randomUUID()}@example.test`;
   const registration = await request(
     '/auth/register',
