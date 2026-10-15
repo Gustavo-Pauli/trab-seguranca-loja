@@ -10,7 +10,7 @@ documentação; a demonstração será realizada na apresentação da equipe.
 
 ## 1. Arquitetura da aplicação
 
-O frontend usa React, Vite e TypeScript. A loja é uma API Express na porta 3001;
+O frontend usa React, Vite, TypeScript e Tailwind CSS. A loja é uma API Express na porta 3001;
 o gateway é outro processo Express, na porta 4000. `server/index.ts` e
 `gateway/index.ts` inicializam seus respectivos serviços. Rotas, regras e
 persistência estão separadas nos módulos, sem ORM ou framework de autenticação.
@@ -215,10 +215,11 @@ ponta. Confira pedidos antes de repetir. Capturas de demo/desafios não persiste
 
 - **Ferramentas:** ChatGPT na etapa inicial, conforme o histórico informado, e
   Codex para implementação, revisão, verificações e documentação.
-- **Prompts:** consolidados em três objetivos: corrigir a inicialização e completar
+- **Prompts:** consolidados em quatro objetivos: corrigir a inicialização e completar
   o enunciado; refatorar a Loja Segura para módulos didáticos preservando segurança;
   realizar esta revisão final sem nova reestruturação, com relatório conciso e
-  teste da instalação/pacote. Foram fornecidos o PDF, os anexos e os requisitos
+  teste da instalação/pacote; migrar os estilos para Tailwind preservando a interface.
+  Foram fornecidos o PDF, os anexos e os requisitos
   detalhados de stack, mecanismos e demonstrações.
 - **Código gerado/alterado:** autenticação, protocolo, contexto, fluxo de pedidos,
   gateway, frontend modular, scripts e documentação receberam assistência de IA.

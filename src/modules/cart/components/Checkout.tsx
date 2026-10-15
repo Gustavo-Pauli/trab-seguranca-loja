@@ -36,7 +36,7 @@ export default function Checkout() {
   }
 
   return (
-    <div className="checkout-layout">
+    <div className="mt-6 max-w-[560px]">
       {loading && <p role="status">Carregando…</p>}
       <Cart
         products={products}
@@ -47,7 +47,7 @@ export default function Checkout() {
         onQuantityChange={changeQuantity}
         onCheckout={checkout}
       />
-      <Link className="text-button" to="/orders">
+      <Link className="text-button mt-4 inline-block" to="/orders">
         Ver meus pedidos
       </Link>
     </div>

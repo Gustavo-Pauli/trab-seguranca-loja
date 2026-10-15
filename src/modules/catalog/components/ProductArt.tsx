@@ -1,7 +1,22 @@
 export default function ProductArt({ kind }: { kind: string }) {
+  const backgrounds: Record<string, string> = {
+    notebook: 'bg-[#f3f0e9] text-[#71665a]',
+    mug: 'bg-[#edf1ee] text-[#657469]',
+    bag: 'bg-[#f6f2e9] text-[#8a7a62]',
+    bottle: 'bg-[#edf0f4] text-[#657589]',
+  };
+
   return (
-    <div className={`product-art ${kind}`}>
-      <svg viewBox="0 0 240 170" fill="none" aria-hidden="true">
+    <div
+      className={`grid h-[184px] place-items-center max-tablet:h-[158px]
+        ${backgrounds[kind] ?? backgrounds.notebook}`}
+    >
+      <svg
+        className="h-[168px] w-full max-w-[250px] max-tablet:h-[150px]"
+        viewBox="0 0 240 170"
+        fill="none"
+        aria-hidden="true"
+      >
         <ellipse cx="120" cy="143" rx="52" ry="6" fill="currentColor" opacity=".08" />
         {kind === 'notebook' && (
           <g stroke="currentColor" strokeWidth="1.6">

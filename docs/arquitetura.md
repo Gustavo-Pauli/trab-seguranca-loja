@@ -11,7 +11,8 @@ encadeamento das funções está em [COMO_FUNCIONA.md](COMO_FUNCIONA.md).
 | `src/modules/cart/` | Seleção entre páginas, quantidades e checkout. |
 | `src/modules/orders/` | Chamadas e apresentação do histórico. |
 | `src/modules/security-demo/` | Quatro testes, formulário TOTP incorreto e resultados. |
-| `src/lib/api.ts`, `styles/` | Transporte JSON e estilos legíveis. |
+| `src/lib/api.ts` | Transporte JSON do frontend. |
+| `src/styles/tailwind.css` | Tailwind, tipografia, controles comuns e breakpoints; layouts no JSX. |
 | `server/index.ts`, `app.ts`, `lib/` | Cofre/startup, Express, proteção HTTP, erros e SQLite da loja. |
 | `server/modules/auth/` | Rotas, cadastro/senha, segundo fator, desafios, sessões, Scrypt/TOTP e SQL. |
 | `server/modules/context/` | IP da conexão e referência contextual persistida da conta. |
@@ -35,3 +36,9 @@ O carrinho fica em memória; sessão, usuários, pedidos, contexto e nonces pers
 As APIs normais mantêm `/api/auth/*`, `/api/products`, `/api/orders`,
 `/api/checkout` e `/api/context`. `/api/demo/*` só é montada no demo;
 `/payments` pertence ao gateway.
+
+O plugin `@tailwindcss/vite` gera o CSS durante o desenvolvimento/build.
+`src/styles/tailwind.css` importa Tailwind e define controles repetidos com `@apply`.
+Layouts e estados visuais ficam nas classes do JSX; mapas de cores usam classes completas
+para que o compilador as encontre. Os breakpoints `phone`, `tablet` e `desktop`
+preservam as mudanças de layout em 420, 720 e 950 px.

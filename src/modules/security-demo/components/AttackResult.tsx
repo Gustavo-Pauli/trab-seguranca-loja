@@ -15,7 +15,11 @@ export default function AttackResult({ evidence }: { evidence: Evidence }) {
   const status = outer.response?.httpStatus ?? evidence.httpStatus;
 
   return (
-    <section className="attack-result" aria-label="Resultado do teste" role="status">
+    <section
+      className="rounded-[9px] border border-zinc-200 bg-white p-[22px] text-sm leading-[1.8]"
+      aria-label="Resultado do teste"
+      role="status"
+    >
       <p>
         <strong>HTTP {status}</strong>
         {result.status && ` · ${result.status}`}
@@ -34,9 +38,11 @@ export default function AttackResult({ evidence }: { evidence: Evidence }) {
           <p>Declaração do cliente ignorada: {String(result.clientDeclarationIgnored)}</p>
         </>
       )}
-      <details className="wire-details">
+      <details className="mt-6 text-[13px] text-zinc-600">
         <summary>Requisição e resposta completas</summary>
-        <pre>{JSON.stringify(evidence, null, 2)}</pre>
+        <pre className="mt-6 max-h-[550px] overflow-auto rounded-lg border border-zinc-200 bg-white p-5 text-xs">
+          {JSON.stringify(evidence, null, 2)}
+        </pre>
       </details>
     </section>
   );

@@ -245,6 +245,73 @@
     },
     "runtimeAndConfigFilesMatching": 91,
     "originalDataPreserved": true,
-    "physicalPhoneQrScan": false
+    "physicalPhoneQrScan": false,
+    "scope": "Pre-Tailwind package; not a claim about the new frontend lockfile."
+  },
+  "scope": "Technical audit before Tailwind migration; latest revalidation is in tailwindMigration.",
+  "tailwindMigration": {
+    "completedAt": "2026-10-15T03:03:00.872941+00:00",
+    "tailwind": "4.3.3",
+    "sourceChecks": [
+      {
+        "command": "pnpm typecheck",
+        "exitCode": 0
+      },
+      {
+        "command": "pnpm build",
+        "exitCode": 0
+      },
+      {
+        "command": "pnpm test:security",
+        "exitCode": 0
+      }
+    ],
+    "securityExecutedAt": "2026-10-15T02:56:36.421Z",
+    "securityPassed": 37,
+    "cleanInstallation": {
+      "checks": [
+        {
+          "command": "pnpm install --frozen-lockfile --offline",
+          "exitCode": 0
+        },
+        {
+          "command": "pnpm typecheck",
+          "exitCode": 0
+        },
+        {
+          "command": "pnpm build",
+          "exitCode": 0
+        }
+      ],
+      "completedAt": "2026-10-15T03:01:18.6994393Z",
+      "directory": ".data/tailwind-clean-20261015-000041",
+      "dependencySource": "local pnpm cache, offline",
+      "startedWithoutDependenciesBinVaultsOrDatabases": true,
+      "runtimeAndConfigFilesMatching": 91
+    },
+    "browser": {
+      "browser": "Chrome",
+      "url": "http://127.0.0.1:3503",
+      "data": "isolated synthetic accounts; server-demo IP",
+      "responsive": [
+        "390px: one catalog column",
+        "800px: two catalog columns",
+        "desktop: four columns"
+      ],
+      "flows": [
+        "Registration and QR enrollment",
+        "TOTP activation using the manual seed",
+        "Logout, password login and a new TOTP",
+        "Cart quantity controls",
+        "Approved simulated checkout",
+        "Order history",
+        "Replay: HTTP 409 INVALID_NONCE",
+        "Tamper: HTTP 400 INVALID_AUTH_TAG",
+        "Invalid TOTP: HTTP 401",
+        "Forged location: HTTP 200, client declaration ignored"
+      ],
+      "physicalPhoneQrScan": false
+    },
+    "backendGatewayProtocolModified": false
   }
 }

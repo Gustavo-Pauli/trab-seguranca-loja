@@ -36,10 +36,17 @@ export default function CredentialsForm({ mode }: { mode: 'login' | 'register' }
   }
 
   return (
-    <main className="auth-shell">
-      <section className="auth-card" aria-label="Autenticação">
-        <h1>{registering ? 'Crie sua conta' : 'Entre na sua conta'}</h1>
-        <form onSubmit={submit}>
+    <main
+      className="flex min-h-[calc(100svh-72px)] items-center justify-center px-5 py-12
+        max-tablet:min-h-[calc(100svh-64px)] max-tablet:py-8"
+    >
+      <section
+        className="w-[390px] max-w-full rounded-xl border border-zinc-200 bg-white p-8
+          shadow-[0_2px_4px_#18181b03] max-tablet:p-[27px]"
+        aria-label="Autenticação"
+      >
+        <h1 className="text-[22px]">{registering ? 'Crie sua conta' : 'Entre na sua conta'}</h1>
+        <form className="mt-[26px] flex flex-col" onSubmit={submit}>
           {registering && (
             <>
               <label htmlFor="name">Nome</label>
@@ -80,13 +87,13 @@ export default function CredentialsForm({ mode }: { mode: 'login' | 'register' }
               {error}
             </p>
           )}
-          <button className="primary full" disabled={busy}>
+          <button className="primary w-full" disabled={busy}>
             {submitLabel}
           </button>
         </form>
-        <p className="auth-switch">
+        <p className="mt-[23px] text-center text-[13px] text-zinc-500">
           {registering ? 'Já tem uma conta?' : 'Ainda não tem conta?'}{' '}
-          <Link className="text-button" to={registering ? '/login' : '/register'}>
+          <Link className="text-button ml-1 font-medium" to={registering ? '/login' : '/register'}>
             {registering ? 'Entrar' : 'Criar conta'}
           </Link>
         </p>

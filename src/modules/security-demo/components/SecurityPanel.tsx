@@ -40,10 +40,10 @@ export default function SecurityPanel({ user }: { user: User }) {
   }
 
   return (
-    <main className="demo-shell">
+    <main className="mx-auto max-w-[1000px] px-6 py-10">
       <h1>Testes de segurança</h1>
       <p className="subtitle">Para replay e alteração de valor, compre 2 cadernos (R$ 100).</p>
-      <div className="demo-buttons" aria-label="Quatro ataques obrigatórios">
+      <div className="my-6 flex flex-wrap gap-2.5" aria-label="Quatro ataques obrigatórios">
         {mainAttacks.map(({ action, label }) => (
           <button
             className="secondary"
@@ -77,9 +77,9 @@ export default function SecurityPanel({ user }: { user: User }) {
       )}
       {evidence && <AttackResult evidence={evidence} />}
 
-      <details className="extra-tests">
+      <details className="mt-6 text-[13px] text-zinc-600">
         <summary>Testes adicionais</summary>
-        <div className="demo-buttons">
+        <div className="my-6 flex flex-wrap gap-2.5">
           <button className="secondary" disabled={busy} onClick={() => runAttack('expired')}>
             Timestamp vencido
           </button>

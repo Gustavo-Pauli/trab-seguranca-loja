@@ -31,8 +31,13 @@ export default function InvalidTotpTest({ email, busy, onBusy, onEvidence, onErr
   }
 
   return (
-    <form className="totp-test-form" onSubmit={submit}>
-      <p className="subtitle">Use sua senha e um código diferente dos códigos do autenticador.</p>
+    <form
+      className="my-6 flex max-w-[390px] flex-col rounded-[9px] border border-zinc-200 bg-white p-[22px]"
+      onSubmit={submit}
+    >
+      <p className="subtitle mt-0 mb-[18px]">
+        Use sua senha e um código diferente dos códigos do autenticador.
+      </p>
       <label htmlFor="test-email">E-mail</label>
       <input id="test-email" type="email" value={email} readOnly autoComplete="username" />
       <label htmlFor="test-password">Senha</label>

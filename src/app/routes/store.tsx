@@ -6,8 +6,8 @@ export default function Store() {
   const { products, quantities, changeQuantity, loading, error } = useCart();
   const count = Object.values(quantities).reduce((sum, quantity) => sum + quantity, 0);
   return (
-    <main className="store-shell">
-      <div className="store-heading">
+    <main className="mx-auto max-w-[1168px] px-8 pt-10 pb-16 max-tablet:px-5 max-tablet:pt-7 max-tablet:pb-10">
+      <div className="mb-6 flex items-center justify-between">
         <h1>Produtos</h1>
         <Link className="secondary" to="/checkout">
           Carrinho ({count})
@@ -19,7 +19,10 @@ export default function Store() {
           {error}
         </p>
       )}
-      <section className="product-grid" aria-label="Produtos">
+      <section
+        className="grid grid-cols-4 gap-5 max-desktop:grid-cols-2 max-desktop:gap-4 max-phone:grid-cols-1"
+        aria-label="Produtos"
+      >
         {products.map((product) => (
           <ProductCard
             key={product.id}

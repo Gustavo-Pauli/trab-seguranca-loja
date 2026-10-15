@@ -12,13 +12,23 @@ export default function Layout() {
 
   return (
     <>
-      <header className="topbar">
-        <div className="header-inner">
-          <Link className="brand" to={user ? '/store' : '/login'}>
+      <header className="h-[72px] border-b border-zinc-200 bg-white max-tablet:h-auto max-tablet:min-h-16">
+        <div
+          className="mx-auto flex h-full max-w-[1168px] items-center justify-between gap-4 px-8
+          max-tablet:min-h-16 max-tablet:flex-wrap max-tablet:px-5 max-tablet:py-3.5"
+        >
+          <Link
+            className="text-lg font-[650] tracking-[-0.5px] max-tablet:text-[17px]"
+            to={user ? '/store' : '/login'}
+          >
             Loja Segura
           </Link>
           {user && (
-            <nav aria-label="Navegação principal">
+            <nav
+              className="flex items-center gap-6 text-[13px] [&_a.active]:font-semibold
+                max-tablet:flex-wrap max-tablet:gap-3.5"
+              aria-label="Navegação principal"
+            >
               <NavLink to="/store">Loja</NavLink>
               <NavLink to="/checkout">Carrinho</NavLink>
               <NavLink to="/orders">Pedidos</NavLink>
@@ -31,12 +41,15 @@ export default function Layout() {
         </div>
       </header>
       {error && (
-        <p className="error session-error" role="alert">
+        <p className="error mx-auto my-5 max-w-[1104px]" role="alert">
           {error}
         </p>
       )}
       {loading ? (
-        <main className="auth-shell">
+        <main
+          className="flex min-h-[calc(100svh-72px)] items-center justify-center px-5 py-12
+        max-tablet:min-h-[calc(100svh-64px)] max-tablet:py-8"
+        >
           <p role="status">Carregando…</p>
         </main>
       ) : (

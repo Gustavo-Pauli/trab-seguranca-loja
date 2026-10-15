@@ -1,7 +1,7 @@
 # Validação final
 
-Os resultados desta entrega são registrados por execução, sem reutilizar evidências
-históricas como prova. Versões e códigos de saída estão em
+Os resultados são registrados por execução. A auditoria técnica e a revalidação
+da migração Tailwind são identificadas separadamente; versões e códigos de saída estão em
 [evidencias-verificacao.json](evidencias-verificacao.json).
 
 ## Código e segurança
@@ -49,8 +49,27 @@ cofres novos e distintos. `pnpm demo` passou em **11 verificações HTTP** de he
 HTML/asset, cadastro/QR, TOTP, DB5, compra, ataques e novo login. O Chrome renderizou
 o formulário de `/login`; `pnpm dev:demo` iniciou os dois Express e o Vite, com
 health via proxy e módulo frontend respondendo 200. Os serviços de teste foram
-encerrados. O código/configuração/lockfile da extração coincidem com o pacote final;
-somente documentação/evidência foram atualizadas após a conferência.
+encerrados. Essa conferência corresponde ao pacote anterior à migração Tailwind;
+a nova instalação dos estilos está registrada abaixo, sem atribuir novos testes
+de setup ou de Java a essa etapa.
+
+## Migração para Tailwind CSS
+
+Tailwind 4 e o plugin Vite substituem os quatro estilos anteriores, mantendo
+layout, navegação e contratos HTTP. Após a mudança, `pnpm typecheck`, `pnpm build`
+e as **37 verificações** de `pnpm test:security` passaram novamente.
+
+Uma nova extração sem dependências/BIN/cofres/bancos passou em
+`pnpm install --frozen-lockfile --offline`, typecheck e build usando o cache local.
+Essa etapa verifica instalação/compilação do novo lockfile; o setup completo
+permanece documentado na auditoria anterior. Backend, gateway e protocolo não mudaram.
+
+No Chrome, foram conferidos catálogo em uma, duas e quatro colunas (390/800/desktop),
+carrinho, quantidades, compra aprovada e pedidos; replay retornou `INVALID_NONCE`,
+adulteração retornou `INVALID_AUTH_TAG`, e localização falsa foi ignorada.
+Cadastro/QR, ativação TOTP, logout, login com senha/TOTP e o formulário de TOTP
+inválido (HTTP 401) também foram exercitados em conta sintética isolada.
+O código TOTP foi calculado a partir da chave manual, sem escanear o QR em telefone.
 
 ## Limites e verificação humana
 

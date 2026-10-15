@@ -1,6 +1,6 @@
 # Loja Segura — INE5680 / UFSC
 
-Loja acadêmica com React/Vite, API Express e gateway Express independente.
+Loja acadêmica com React/Vite, Tailwind CSS, API Express e gateway Express independente.
 Pagamentos simulados; SQLite, Scrypt/TOTP, IP2Location DB5 e AES-GCM.
 
 ## 1. Pré-requisitos
