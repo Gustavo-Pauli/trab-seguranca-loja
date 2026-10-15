@@ -73,7 +73,9 @@ export function verifyGatewayResponse(payment: Payment, result: PaymentResult, h
 export async function pay(payment: Payment, secret: Buffer) {
   const envelope = await seal(payment, secret, 'payment');
   const response = await sendToGateway(envelope, secret);
-  if (!response.authenticated) throw new Error('UNAUTHENTICATED_GATEWAY_RESPONSE');
+  if (!response.authenticated) {
+    throw new Error('UNAUTHENTICATED_GATEWAY_RESPONSE');
+  }
   verifyGatewayResponse(payment, response.result, response.httpStatus);
   return { envelope, result: response.result };
 }

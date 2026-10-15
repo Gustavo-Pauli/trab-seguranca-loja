@@ -8,6 +8,7 @@ import Store from './routes/store';
 import Checkout from './routes/checkout';
 import Orders from './routes/orders';
 import Security from './routes/security';
+import Page from '../components/Page';
 
 export default function App() {
   return (
@@ -30,12 +31,9 @@ export default function App() {
             <Route
               path="*"
               element={
-                <main
-                  className="mx-auto max-w-[1168px] px-8 pt-10 pb-16
-                    max-tablet:px-5 max-tablet:pt-7 max-tablet:pb-10"
-                >
+                <Page>
                   <h1>Página não encontrada</h1>
-                </main>
+                </Page>
               }
             />
           </Route>

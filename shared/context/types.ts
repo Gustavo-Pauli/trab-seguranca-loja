@@ -10,4 +10,5 @@ export type Location = {
   kind: 'public' | 'local' | 'unknown';
   source: 'socket' | 'server-demo';
 };
+
 export type Decision = { allowed: boolean; reason: string; location: Location };

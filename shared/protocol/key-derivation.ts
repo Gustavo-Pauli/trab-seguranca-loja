@@ -1,6 +1,7 @@
 import { pbkdf2 } from 'node:crypto';
 import { promisify } from 'node:util';
 import type { Purpose } from './types.js';
+
 const derive = promisify(pbkdf2);
 const ITERATIONS = 210_000;
 

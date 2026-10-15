@@ -6,6 +6,7 @@ type AuthState = ReturnType<typeof useSession> & {
   challenge: AuthChallenge | null;
   setChallenge: (challenge: AuthChallenge | null) => void;
 };
+
 const AuthContext = createContext<AuthState | null>(null);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
@@ -21,6 +22,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
 export function useAuth() {
   const auth = useContext(AuthContext);
-  if (!auth) throw new Error('AuthProvider ausente.');
+  if (!auth) {
+    throw new Error('AuthProvider ausente.');
+  }
   return auth;
 }

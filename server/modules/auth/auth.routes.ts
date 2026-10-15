@@ -8,6 +8,7 @@ import { checkLoginRateLimit, cleanChallenges } from './challenges.js';
 import { requireSession, setSession, revokeSession, cleanSessions } from './session.js';
 
 export const authRoutes = Router();
+
 authRoutes.post('/register', async (req, res) => {
   checkLoginRateLimit(`register:${req.socket.remoteAddress}`);
   const { name, email, password } = req.body ?? {};

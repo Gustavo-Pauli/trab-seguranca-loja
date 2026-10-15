@@ -10,7 +10,9 @@ export function verifySecondFactor(challengeToken: string, code: string, locatio
   const challenge = takeAttempt(challengeToken);
   const counter = verifyTotp(challenge.secret, code);
   if (counter === null) {
-    if (challenge.attempts >= 5) discardChallenge(challengeToken);
+    if (challenge.attempts >= 5) {
+      discardChallenge(challengeToken);
+    }
     throw new HttpError(401, 'TOTP inválido ou expirado.');
   }
   const decision = decide(location, baselineFor(challenge.userId));
@@ -27,7 +29,9 @@ export function verifySecondFactor(challengeToken: string, code: string, locatio
   }
   discardUserChallenges(challenge.userId);
   const user = getUserById(challenge.userId);
-  if (!user) throw new HttpError(401, 'Usuário não encontrado.');
+  if (!user) {
+    throw new HttpError(401, 'Usuário não encontrado.');
+  }
   rememberBaseline(user.id, location);
   return { user: { id: user.id, name: user.name, email: user.email }, counter, decision };
 }

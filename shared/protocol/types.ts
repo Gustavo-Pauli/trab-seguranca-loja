@@ -10,6 +10,7 @@ export type Authorization = {
   expires_at: number;
   baseline: Location | null;
 };
+
 export type Payment = {
   order_id: string;
   user_id: string;
@@ -22,6 +23,7 @@ export type Payment = {
   location: Location;
   authorization: Authorization;
 };
+
 export type PaymentResult = {
   order_id: string | null;
   nonce: string | null;
@@ -31,4 +33,5 @@ export type PaymentResult = {
 };
 
 export type Purpose = 'payment' | 'response' | 'vault:shop' | 'vault:gateway';
+
 export type Envelope = { version: 1; salt: string; ciphertext: string; tag: string };

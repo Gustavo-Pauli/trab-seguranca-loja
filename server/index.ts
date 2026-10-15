@@ -13,6 +13,7 @@ const port = Number(process.env.PORT ?? 3001);
 const server = app.listen(port, '127.0.0.1', () => {
   console.log(`[loja] API e build em http://127.0.0.1:${port}`);
 });
+
 function close() {
   server.close(() => {
     secret.fill(0);
@@ -20,5 +21,6 @@ function close() {
     process.exit(0);
   });
 }
+
 process.once('SIGTERM', close);
 process.once('SIGINT', close);

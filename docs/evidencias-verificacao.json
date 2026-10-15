@@ -248,7 +248,7 @@
     "physicalPhoneQrScan": false,
     "scope": "Pre-Tailwind package; not a claim about the new frontend lockfile."
   },
-  "scope": "Technical audit before Tailwind migration; latest revalidation is in tailwindMigration.",
+  "scope": "Earlier audit records remain dated; latest revalidation is in readabilityReview.",
   "tailwindMigration": {
     "completedAt": "2026-10-15T03:03:00.872941+00:00",
     "tailwind": "4.3.3",
@@ -313,5 +313,99 @@
       "physicalPhoneQrScan": false
     },
     "backendGatewayProtocolModified": false
+  },
+  "readabilityReview": {
+    "completedAt": "2026-10-15T03:49:32.578083+00:00",
+    "baselineCommit": "d15c066",
+    "sourceChecks": [
+      {
+        "command": "pnpm typecheck",
+        "exitCode": 0
+      },
+      {
+        "command": "pnpm build",
+        "exitCode": 0
+      },
+      {
+        "command": "pnpm test:security",
+        "exitCode": 0
+      },
+      {
+        "command": "pnpm examples:java --attachments <teacher attachments>",
+        "exitCode": 0
+      }
+    ],
+    "securityExecutedAt": "2026-10-15T03:45:53.856Z",
+    "securityPassed": 37,
+    "focusedChecks": {
+      "executedAt": "2026-10-15T03:43:25.130Z",
+      "passed": 10,
+      "checks": [
+        "Falha de conexão tem mensagem própria",
+        "JSON inválido não é confundido com falha de conexão",
+        "Erro HTTP preserva status e mensagem do servidor",
+        "Resposta de erro nula recebe mensagem padrão",
+        "Mensagem não textual recebe mensagem padrão",
+        "Resposta válida continua disponível",
+        "Par de cofres compatível é aceito",
+        "Par de cofres incompatível é rejeitado",
+        "Senha incorreta continua rejeitada",
+        "Falha ao abrir o segundo cofre é rejeitada"
+      ]
+    },
+    "cleanInstallation": {
+      "checks": [
+        {
+          "command": "pnpm install --frozen-lockfile --offline",
+          "exitCode": 0
+        },
+        {
+          "command": "pnpm typecheck",
+          "exitCode": 0
+        },
+        {
+          "command": "pnpm build",
+          "exitCode": 0
+        }
+      ],
+      "completedAt": "2026-10-15T03:48:23.5172950Z",
+      "directory": ".data/tailwind-clean-20261015-004809",
+      "dependencySource": "local pnpm cache, offline",
+      "startedWithoutDependenciesBinVaultsOrDatabases": true,
+      "runtimeAndConfigFilesMatching": 93
+    },
+    "interactiveLauncher": {
+      "existingVaultsSetup": true,
+      "gateway": {
+        "status": "ok",
+        "service": "gateway"
+      },
+      "shop": {
+        "status": "ok",
+        "service": "shop",
+        "demoMode": true
+      },
+      "launcher": "pnpm demo",
+      "newSetup": true,
+      "executedAt": "2026-10-15T03:48:07.2444186Z"
+    },
+    "browser": {
+      "browser": "Chrome",
+      "url": "http://127.0.0.1:3515",
+      "data": "isolated synthetic accounts; server-demo IP",
+      "viewport": "Desktop and 390x844 emulation; override reset",
+      "flows": [
+        "Registration and QR enrollment",
+        "TOTP activation using manual seed",
+        "Catalog, quantity controls and approved checkout",
+        "Order history",
+        "Session restored after page reload",
+        "Logout and password/TOTP login"
+      ],
+      "physicalPhoneQrScan": false
+    },
+    "newDependencies": false,
+    "newChangesCommitted": false,
+    "pushed": false
   }
 }

@@ -6,7 +6,9 @@ encadeamento das funções está em [COMO_FUNCIONA.md](COMO_FUNCIONA.md).
 | Pasta/arquivo | Responsabilidade |
 |---|---|
 | `src/app/app.tsx`, `layout.tsx`, `routes/` | URLs, layout e encaminhamento entre páginas. |
+| `src/components/Page.tsx` | Estrutura visual comum das páginas da loja. |
 | `src/modules/auth/` | Formulários de senha/cadastro/TOTP, chamadas HTTP e estado da sessão. |
+| `src/modules/auth/components/AuthPanel.tsx` | Estrutura comum de login, cadastro e segundo fator. |
 | `src/modules/catalog/` | Catálogo, tipos e cartões de produto. |
 | `src/modules/cart/` | Seleção entre páginas, quantidades e checkout. |
 | `src/modules/orders/` | Chamadas e apresentação do histórico. |

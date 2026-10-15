@@ -1,4 +1,5 @@
 import type { RequestHandler } from 'express';
+
 const port = Number(process.env.PORT ?? 3001);
 
 export const checkApiRequest: RequestHandler = (req, res, next) => {

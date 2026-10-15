@@ -28,6 +28,7 @@ implementam regras e repositórios fazem SQL. Cada processo tem seu banco/cofre.
    aleatório e envia cookie HttpOnly/SameSite=Strict, válido por 12 horas.
    Os desafios da conta são descartados. Senha correta sozinha não cria sessão.
 7. `readSession` exige sessão vigente e 2FA persistida. `revokeSession` faz logout.
+   As duas funções usam `readSessionToken` para ler e validar o cookie.
 
 ```mermaid
 sequenceDiagram
@@ -98,6 +99,10 @@ usa segredo + salt novo + domínio; `seal`/`open` mantêm chave/IV apenas durant
 operação e zeram o buffer derivado. `open` só usa plaintext depois de verificar a
 tag em `decipher.final()`. O segredo de derivação precisa estar na memória do
 processo durante sua operação; não é enviado ao React.
+
+O setup e o launcher usam `verifyVaultPair` para conferir se os dois cofres
+contêm o mesmo segredo. Essa função só verifica o provisionamento e limpa os
+buffers ao terminar; cada serviço continua abrindo seu próprio cofre.
 
 ## Os quatro ataques
 

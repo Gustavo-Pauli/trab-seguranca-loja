@@ -7,26 +7,35 @@ const index = process.argv.indexOf('--attachments');
 const root = resolve(
   index < 0 ? join(homedir(), 'Downloads/trabalho-seguranca-anexos') : process.argv[index + 1],
 );
-const examples = join(root, 'exemplosFIPS2'),
-  deps = resolve('.data/java-deps'),
-  output = resolve('.data/java-examples');
+const examples = join(root, 'exemplosFIPS2');
+const deps = resolve('.data/java-deps');
+const output = resolve('.data/java-examples');
+
 mkdirSync(deps, { recursive: true });
 mkdirSync(output, { recursive: true });
+
 const artifacts = [
   'com/ip2location/ip2location-java/8.13.0/ip2location-java-8.13.0.jar',
   'de/taimos/totp/1.0/totp-1.0.jar',
   'com/google/zxing/core/3.2.1/core-3.2.1.jar',
   'com/google/zxing/javase/3.2.1/javase-3.2.1.jar',
 ];
+
 for (const artifact of artifacts) {
   const target = join(deps, artifact.split('/').at(-1)!);
-  if (existsSync(target)) continue;
-  if (!process.argv.includes('--download'))
+  if (existsSync(target)) {
+    continue;
+  }
+  if (!process.argv.includes('--download')) {
     throw new Error(`Dependência ausente: ${target}. Use --download uma vez com internet.`);
+  }
   const response = await fetch(`https://repo.maven.apache.org/maven2/${artifact}`);
-  if (!response.ok) throw new Error(`Download falhou: HTTP ${response.status} ${artifact}`);
+  if (!response.ok) {
+    throw new Error(`Download falhou: HTTP ${response.status} ${artifact}`);
+  }
   writeFileSync(target, Buffer.from(await response.arrayBuffer()));
 }
+
 const jars = ['bc-fips-1.0.2.jar', 'bcprov-jdk15on-169.jar', 'commons-codec-1.10.jar'].map((jar) =>
   join(examples, 'fips', jar),
 );
@@ -96,6 +105,7 @@ const jobs = [
   ['IP2Location', 'iplocation.ContextoIP', '@ip'],
 ];
 const results: unknown[] = [];
+
 for (let i = 0; i < jobs.length; i++) {
   const [name, main, ...sources] = jobs[i];
   // BC padrão e BCFIPS possuem classes com o mesmo nome: nunca carregar os dois juntos.
@@ -125,11 +135,12 @@ for (let i = 0; i < jobs.length; i++) {
     continue;
   }
   // O exemplo usa caminho relativo da DB5; link/cópia só dentro de .data, sem alterar os anexos.
-  if (name === 'IP2Location')
+  if (name === 'IP2Location') {
     writeFileSync(
       join(directory, 'IP2LOCATION-LITE-DB5.BIN'),
       readFileSync(join(root, 'ip2location/ip2location/IP2LOCATION-LITE-DB5.BIN')),
     );
+  }
   const run = await new Promise<{ exit: number | null; stdout: string; stderr: string }>(
     (resolveRun) => {
       const child = spawn(
@@ -144,10 +155,10 @@ for (let i = 0; i < jobs.length; i++) {
         ],
         { cwd: directory, stdio: ['pipe', 'pipe', 'pipe'], windowsHide: true },
       );
-      let stdout = '',
-        stderr = '',
-        submitted = false,
-        hmacStage = 0;
+      let stdout = '';
+      let stderr = '';
+      let submitted = false;
+      let hmacStage = 0;
       const timeout = setTimeout(() => child.kill(), 20_000);
       child.stdout.on('data', (data) => {
         stdout += String(data);
@@ -176,7 +187,9 @@ for (let i = 0; i < jobs.length; i++) {
       child.stderr.on('data', (data) => {
         stderr += String(data);
       });
-      if (name !== 'TOTP' && name !== 'HMAC') child.stdin.end('senha-do-exemplo\n');
+      if (name !== 'TOTP' && name !== 'HMAC') {
+        child.stdin.end('senha-do-exemplo\n');
+      }
       child.on('error', (error) => {
         stderr += error.message;
       });
@@ -199,6 +212,7 @@ for (let i = 0; i < jobs.length; i++) {
     `EXECUTADO ${name}: exit=${run.exit}${run.stderr ? ' (ver stderr na evidência)' : ''}`,
   );
 }
+
 writeFileSync(
   'docs/evidencias-java.json',
   JSON.stringify(

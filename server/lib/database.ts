@@ -3,8 +3,11 @@ import { mkdirSync } from 'node:fs';
 import { resolve } from 'node:path';
 
 const directory = resolve(process.env.DATA_DIR ?? '.data');
+
 mkdirSync(directory, { recursive: true });
+
 export const db = new Database(resolve(directory, 'loja.sqlite'));
+
 db.pragma('journal_mode = WAL');
 db.pragma('foreign_keys = ON');
 db.pragma('busy_timeout = 5000');
@@ -43,7 +46,11 @@ CREATE TABLE IF NOT EXISTS orders (
 
 // Instalações existentes podem não ter os campos de contexto e TOTP na sessão.
 const columns = db.prepare('PRAGMA table_info(sessions)').all() as { name: string }[];
-if (!columns.some((c) => c.name === 'context_json'))
+
+if (!columns.some((column) => column.name === 'context_json')) {
   db.exec('ALTER TABLE sessions ADD COLUMN context_json TEXT');
-if (!columns.some((c) => c.name === 'totp_counter'))
+}
+
+if (!columns.some((column) => column.name === 'totp_counter')) {
   db.exec('ALTER TABLE sessions ADD COLUMN totp_counter INTEGER');
+}

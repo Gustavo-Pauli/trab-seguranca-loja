@@ -1,6 +1,8 @@
 /** Entrada sem eco, sem senha em argumento CLI ou arquivo de configuração. */
 export async function passwordPrompt(label: string): Promise<Buffer> {
-  if (!process.stdin.isTTY) throw new Error('Abra um terminal interativo para informar a senha.');
+  if (!process.stdin.isTTY) {
+    throw new Error('Abra um terminal interativo para informar a senha.');
+  }
   process.stdout.write(label);
   process.stdin.setRawMode(true);
   process.stdin.resume();
@@ -27,8 +29,11 @@ export async function passwordPrompt(label: string): Promise<Buffer> {
           resolve(result);
           return;
         }
-        if (char === '\u007f' || char === '\b') value = value.slice(0, -1);
-        else if (char >= ' ' && value.length < 256) value += char;
+        if (char === '\u007f' || char === '\b') {
+          value = value.slice(0, -1);
+        } else if (char >= ' ' && value.length < 256) {
+          value += char;
+        }
       }
     }
     process.stdin.on('data', onData);

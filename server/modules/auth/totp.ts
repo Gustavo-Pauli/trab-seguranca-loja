@@ -16,7 +16,9 @@ function toBase32(bytes: Buffer): string {
       result += BASE32[(acc >>> bits) & 31];
     }
   }
-  if (bits > 0) result += BASE32[(acc << (5 - bits)) & 31];
+  if (bits > 0) {
+    result += BASE32[(acc << (5 - bits)) & 31];
+  }
   return result;
 }
 
@@ -26,7 +28,9 @@ function fromBase32(value: string): Buffer {
   const bytes: number[] = [];
   for (const character of value.toUpperCase().replace(/=+$/g, '')) {
     const digit = BASE32.indexOf(character);
-    if (digit === -1) throw new Error('Segredo Base32 inválido');
+    if (digit === -1) {
+      throw new Error('Segredo Base32 inválido');
+    }
     acc = (acc << 5) | digit;
     bits += 5;
     if (bits >= 8) {
@@ -58,14 +62,20 @@ export function codeForCounter(secretBase32: string, counter: number): string {
 
 /** Retorna o contador aceito, para impedir a reutilização do mesmo TOTP. */
 export function verifyTotp(secret: string, code: string, now = Date.now()): number | null {
-  if (!/^\d{6}$/.test(code)) return null;
+  if (!/^\d{6}$/.test(code)) {
+    return null;
+  }
   const current = Math.floor(now / 1000 / PERIOD_SECONDS);
   for (const delta of [-1, 0, 1]) {
     const counter = current + delta;
-    if (counter < 0) continue;
+    if (counter < 0) {
+      continue;
+    }
     const expected = Buffer.from(codeForCounter(secret, counter), 'utf8');
     const submitted = Buffer.from(code, 'utf8');
-    if (timingSafeEqual(expected, submitted)) return counter;
+    if (timingSafeEqual(expected, submitted)) {
+      return counter;
+    }
   }
   return null;
 }

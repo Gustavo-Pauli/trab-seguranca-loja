@@ -12,15 +12,22 @@ import { codeForCounter, verifyTotp } from '../server/modules/auth/totp.js';
 import type { Payment, PaymentResult } from '../shared/protocol/types.js';
 
 const bin = resolve(process.env.IP2LOCATION_BIN ?? 'data/IP2LOCATION-LITE-DB5.BIN');
-if (!existsSync(bin))
+
+if (!existsSync(bin)) {
   throw new Error('Base DB5 ausente. Execute pnpm run setup --bin "caminho da DB5.BIN".');
+}
+
 const directory = resolve(`.data/test-${Date.now()}`);
+
 mkdirSync(directory, { recursive: true });
-const password = randomBytes(32),
-  shared = randomBytes(32),
-  accountPassword = randomBytes(24).toString('base64');
+
+const password = randomBytes(32);
+const shared = randomBytes(32);
+const accountPassword = randomBytes(24).toString('base64');
+
 await writeVault(resolve(directory, 'loja-segredo.json'), password, shared, 'shop');
 await writeVault(resolve(directory, 'gateway-segredo.json'), password, shared, 'gateway');
+
 const env = {
   ...process.env,
   PORT: '3301',
@@ -33,6 +40,7 @@ const env = {
 };
 const children = new Set<ChildProcess>();
 const logs: string[] = [];
+
 function start(file: string, overrides: Record<string, string> = {}, unlock = password) {
   const child = spawn(process.execPath, ['--import', 'tsx', file], {
     env: { ...env, ...overrides },
@@ -46,29 +54,41 @@ function start(file: string, overrides: Record<string, string> = {}, unlock = pa
   child.stdin!.end(unlock);
   return child;
 }
+
 async function stop(child: ChildProcess) {
-  if (child.exitCode !== null || child.signalCode !== null) return;
+  if (child.exitCode !== null || child.signalCode !== null) {
+    return;
+  }
   await new Promise<void>((resolveStop) => {
     child.once('exit', () => resolveStop());
     child.kill();
   });
 }
+
 async function ready(url: string, child: ChildProcess) {
   for (let tries = 0; tries < 100; tries++) {
-    if (child.exitCode !== null) throw new Error(`Servidor falhou: ${logs.slice(-6).join('')}`);
+    if (child.exitCode !== null) {
+      throw new Error(`Servidor falhou: ${logs.slice(-6).join('')}`);
+    }
     try {
-      if ((await fetch(url)).ok) return;
+      if ((await fetch(url)).ok) {
+        return;
+      }
     } catch {}
     await new Promise((resolveWait) => setTimeout(resolveWait, 100));
   }
   throw new Error(`Timeout: ${url}\n${logs.slice(-6).join('')}`);
 }
+
 const evidence: { name: string; status: number | string; details: unknown }[] = [];
+
 function record(name: string, status: number | string, details: unknown) {
   evidence.push({ name, status, details });
   console.log(`OK ${name} (${status})`);
 }
+
 let cookie = '';
+
 async function request(
   path: string,
   body?: unknown,
@@ -90,6 +110,7 @@ async function request(
     setCookie: response.headers.get('set-cookie'),
   };
 }
+
 async function paymentRequest(envelope: Envelope) {
   const response = await fetch('http://127.0.0.1:4400/payments', {
     method: 'POST',
@@ -100,8 +121,11 @@ async function paymentRequest(envelope: Envelope) {
   const data = 'version' in wire ? await open<PaymentResult>(wire, shared, 'response') : wire;
   return { status: response.status, data, wire };
 }
-let shop: ChildProcess | undefined, gateway: ChildProcess | undefined;
+
+let shop: ChildProcess | undefined;
+let gateway: ChildProcess | undefined;
 let completed = false;
+
 try {
   const vectorSecret = 'GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ';
   [
@@ -144,8 +168,9 @@ try {
   assert.equal(wrongPassword.setCookie, null);
   record('Senha incorreta', wrongPassword.status, wrongPassword.data);
   let invalid = '000000';
-  while (verifyTotp(secret, invalid) !== null)
+  while (verifyTotp(secret, invalid) !== null) {
     invalid = String(Number(invalid) + 1).padStart(6, '0');
+  }
   const challengeToken = registration.data.challengeToken;
   const limitedLogin = await request('/auth/login', { email, password: accountPassword }, false);
   assert.equal(limitedLogin.status, 200);
@@ -448,7 +473,9 @@ try {
     }
     // Emissor controlado só no teste: conhece o pedido, mas a loja ainda deve autenticar a resposta.
     const chunks: Buffer[] = [];
-    for await (const chunk of incoming) chunks.push(Buffer.from(chunk));
+    for await (const chunk of incoming) {
+      chunks.push(Buffer.from(chunk));
+    }
     const sent = await open<Payment>(
       JSON.parse(Buffer.concat(chunks).toString()),
       shared,
@@ -467,7 +494,9 @@ try {
       );
       return;
     }
-    if (fakeMode === 'wrong-order') result.order_id = `ORD-${randomUUID()}`;
+    if (fakeMode === 'wrong-order') {
+      result.order_id = `ORD-${randomUUID()}`;
+    }
     const reply = await seal(result, shared, 'response');
     if (fakeMode === 'bad-tag') {
       const tag = Buffer.from(reply.tag, 'base64');

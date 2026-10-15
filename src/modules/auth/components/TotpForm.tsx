@@ -3,6 +3,7 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthProvider';
 import { confirmTotp } from '../api';
 import { errorMessage } from '../../../lib/api';
+import AuthPanel from './AuthPanel';
 
 export default function TotpForm() {
   const [code, setCode] = useState('');
@@ -13,7 +14,9 @@ export default function TotpForm() {
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (!challenge) return;
+    if (!challenge) {
+      return;
+    }
     setBusy(true);
     setError('');
     try {
@@ -33,69 +36,62 @@ export default function TotpForm() {
     setChallenge(null);
     navigate('/login', { replace: true });
   }
-  if (!challenge) return <Navigate to="/login" replace />;
+  if (!challenge) {
+    return <Navigate to="/login" replace />;
+  }
   const enrolling = challenge.mode === 'enroll';
 
   return (
-    <main
-      className="flex min-h-[calc(100svh-72px)] items-center justify-center px-5 py-12
-        max-tablet:min-h-[calc(100svh-64px)] max-tablet:py-8"
+    <AuthPanel
+      label="Segundo fator"
+      title={enrolling ? 'Configure seu autenticador' : 'Confirme seu acesso'}
     >
-      <section
-        className="w-[390px] max-w-full rounded-xl border border-zinc-200 bg-white p-8
-          shadow-[0_2px_4px_#18181b03] max-tablet:p-[27px]"
-        aria-label="Segundo fator"
-      >
-        <h1 className="text-[22px]">
-          {enrolling ? 'Configure seu autenticador' : 'Confirme seu acesso'}
-        </h1>
-        <p className="subtitle">
-          {enrolling ? 'Escaneie o QR code e digite o código.' : 'Digite o código do autenticador.'}
-        </p>
-        {enrolling && (
-          <div className="mt-3.5 text-center">
-            <img
-              className="mx-auto block h-auto max-w-full"
-              src={challenge.qrCodeDataUrl}
-              width="220"
-              height="220"
-              alt="QR code para configurar o autenticador"
-            />
-            <details className="mt-1 text-xs text-zinc-500">
-              <summary>Usar chave manual</summary>
-              <code className="mt-2 block rounded-md bg-zinc-100 p-3 break-all text-zinc-800">
-                {challenge.manualSecret}
-              </code>
-            </details>
-          </div>
-        )}
-        <form className="mt-[26px] flex flex-col" onSubmit={submit}>
-          <label htmlFor="code">Código de verificação</label>
-          <input
-            id="code"
-            className="pl-[19px] text-center text-[22px] tracking-[7px]"
-            autoFocus
-            autoComplete="one-time-code"
-            inputMode="numeric"
-            pattern="[0-9]{6}"
-            maxLength={6}
-            value={code}
-            required
-            onChange={(event) => setCode(event.target.value.replace(/\D/g, ''))}
+      <p className="subtitle">
+        {enrolling ? 'Escaneie o QR code e digite o código.' : 'Digite o código do autenticador.'}
+      </p>
+      {enrolling && (
+        <div className="mt-3.5 text-center">
+          <img
+            className="mx-auto block h-auto max-w-full"
+            src={challenge.qrCodeDataUrl}
+            width="220"
+            height="220"
+            alt="QR code para configurar o autenticador"
           />
-          {error && (
-            <p className="error" role="alert">
-              {error}
-            </p>
-          )}
-          <button className="primary w-full" disabled={busy || code.length !== 6}>
-            {busy ? 'Verificando…' : 'Confirmar'}
-          </button>
-        </form>
-        <button className="text-button mx-auto mt-[17px] block" onClick={goBack} disabled={busy}>
-          Voltar ao login
+          <details className="mt-1 text-xs text-zinc-500">
+            <summary>Usar chave manual</summary>
+            <code className="mt-2 block rounded-md bg-zinc-100 p-3 break-all text-zinc-800">
+              {challenge.manualSecret}
+            </code>
+          </details>
+        </div>
+      )}
+      <form className="mt-[26px] flex flex-col" onSubmit={submit}>
+        <label htmlFor="code">Código de verificação</label>
+        <input
+          id="code"
+          className="pl-[19px] text-center text-[22px] tracking-[7px]"
+          autoFocus
+          autoComplete="one-time-code"
+          inputMode="numeric"
+          pattern="[0-9]{6}"
+          maxLength={6}
+          value={code}
+          required
+          onChange={(event) => setCode(event.target.value.replace(/\D/g, ''))}
+        />
+        {error && (
+          <p className="error" role="alert">
+            {error}
+          </p>
+        )}
+        <button className="primary w-full" disabled={busy || code.length !== 6}>
+          {busy ? 'Verificando…' : 'Confirmar'}
         </button>
-      </section>
-    </main>
+      </form>
+      <button className="text-button mx-auto mt-[17px] block" onClick={goBack} disabled={busy}>
+        Voltar ao login
+      </button>
+    </AuthPanel>
   );
 }

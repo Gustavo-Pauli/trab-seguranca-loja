@@ -15,6 +15,21 @@ export type SessionUser = {
 };
 
 const SESSION_MAX_AGE_MS = 12 * 60 * 60 * 1000;
+
+function readSessionToken(req: Request): string | null {
+  const cookie = req.headers.cookie
+    ?.split(';')
+    .map((part) => part.trim())
+    .find((part) => part.startsWith('session='));
+  const token = cookie?.slice('session='.length);
+
+  if (!token || !/^[a-f\d]{64}$/.test(token)) {
+    return null;
+  }
+
+  return token;
+}
+
 export function setSession(
   res: Response,
   userId: string,
@@ -44,12 +59,10 @@ export function setSession(
 }
 
 export function readSession(req: Request): SessionUser | null {
-  const cookie = req.headers.cookie
-    ?.split(';')
-    .map((piece) => piece.trim())
-    .find((piece) => piece.startsWith('session='));
-  const token = cookie?.slice('session='.length);
-  if (!token || !/^[a-f\d]{64}$/.test(token)) return null;
+  const token = readSessionToken(req);
+  if (!token) {
+    return null;
+  }
   const row = db
     .prepare(
       `SELECT u.id AS userId, u.name, u.email, s.created_at, s.expires_at, s.context_json, s.totp_counter
@@ -63,17 +76,15 @@ export function readSession(req: Request): SessionUser | null {
 
 export function requireSession(req: Request): SessionUser {
   const user = readSession(req);
-  if (!user) throw new HttpError(401, 'Entre na sua conta.');
+  if (!user) {
+    throw new HttpError(401, 'Entre na sua conta.');
+  }
   return user;
 }
 
 export function revokeSession(req: Request, res: Response) {
-  const token = req.headers.cookie
-    ?.split(';')
-    .map((part) => part.trim())
-    .find((part) => part.startsWith('session='))
-    ?.slice('session='.length);
-  if (token && /^[a-f\d]{64}$/.test(token)) {
+  const token = readSessionToken(req);
+  if (token) {
     db.prepare('DELETE FROM sessions WHERE token_hash = ?').run(digestToken(token));
   }
   res.clearCookie('session', { path: '/' });

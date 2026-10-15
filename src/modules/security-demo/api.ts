@@ -23,8 +23,9 @@ export async function testTotpRequest(
   code: string,
 ): Promise<Evidence> {
   const login = await request<AuthChallenge>('/auth/login', { email, password });
-  if (!login.ok)
+  if (!login.ok) {
     return { route: '/api/auth/login', httpStatus: login.httpStatus, result: login.data };
+  }
   const response = await request('/auth/verify-totp', {
     challengeToken: login.data.challengeToken,
     code,

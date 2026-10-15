@@ -19,7 +19,9 @@ async function prepareChallenge(
     challengeToken: newChallenge(userId, secret, enroll ? 'enroll' : 'login', ip),
     message: enroll ? 'Configure seu autenticador.' : 'Informe o código do seu autenticador.',
   };
-  if (!enroll) return payload;
+  if (!enroll) {
+    return payload;
+  }
   return {
     ...payload,
     qrCodeDataUrl: await QRCode.toDataURL(createOtpAuthUri(email, secret), {
@@ -76,7 +78,9 @@ export async function loginWithPassword(email: string, password: string, ip: str
   const user = getUserByEmail(email.trim().toLowerCase());
   const passwordValid =
     user && (await verifyPassword(password, user.password_salt, user.password_hash));
-  if (!user || !passwordValid) throw new HttpError(401, 'E-mail ou senha inválidos.');
+  if (!user || !passwordValid) {
+    throw new HttpError(401, 'E-mail ou senha inválidos.');
+  }
   let secret: string;
   try {
     secret = await decryptTotp(

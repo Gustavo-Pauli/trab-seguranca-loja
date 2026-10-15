@@ -28,6 +28,7 @@ export const products = [
     illustration: 'bottle',
   },
 ] as const;
+
 export type Item = {
   product_id: string;
   quantity: number;
@@ -37,19 +38,21 @@ export type Item = {
 
 // Preços vêm do catálogo do servidor, não da requisição.
 export function orderItems(input: unknown): Item[] {
-  if (!Array.isArray(input) || input.length < 1 || input.length > products.length)
+  if (!Array.isArray(input) || input.length < 1 || input.length > products.length) {
     throw new Error('INVALID_ITEMS');
+  }
   const seen = new Set<string>();
   return input.map((item) => {
-    const product = products.find((p) => p.id === item?.product_id);
+    const product = products.find((candidate) => candidate.id === item?.product_id);
     if (
       !product ||
       !Number.isInteger(item.quantity) ||
       item.quantity < 1 ||
       item.quantity > 10 ||
       seen.has(product.id)
-    )
+    ) {
       throw new Error('INVALID_ITEMS');
+    }
     seen.add(product.id);
     return {
       product_id: product.id,
@@ -59,6 +62,7 @@ export function orderItems(input: unknown): Item[] {
     };
   });
 }
+
 export function totalCents(items: Item[]): number {
   return items.reduce((sum, item) => sum + item.quantity * item.unit_price_cents, 0);
 }

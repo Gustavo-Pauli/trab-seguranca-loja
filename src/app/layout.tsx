@@ -2,10 +2,12 @@ import { Link, NavLink, Navigate, Outlet, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useAuth } from '../modules/auth/AuthProvider';
 import { CartProvider } from '../modules/cart/CartProvider';
+import { AuthShell } from '../modules/auth/components/AuthPanel';
 
 export default function Layout() {
   const { user, demoMode, loading, logout, loggingOut, error } = useAuth();
   const location = useLocation();
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location.pathname]);
@@ -46,12 +48,9 @@ export default function Layout() {
         </p>
       )}
       {loading ? (
-        <main
-          className="flex min-h-[calc(100svh-72px)] items-center justify-center px-5 py-12
-        max-tablet:min-h-[calc(100svh-64px)] max-tablet:py-8"
-        >
+        <AuthShell>
           <p role="status">Carregando…</p>
-        </main>
+        </AuthShell>
       ) : (
         <Outlet />
       )}
@@ -62,9 +61,12 @@ export default function Layout() {
 export function PublicOnly() {
   return useAuth().user ? <Navigate to="/store" replace /> : <Outlet />;
 }
+
 export function PrivateLayout() {
   const { user } = useAuth();
-  if (!user) return <Navigate to="/login" replace />;
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
   return (
     <CartProvider key={user.id}>
       <Outlet />

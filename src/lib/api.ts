@@ -17,9 +17,11 @@ export async function request<T>(path: string, body?: unknown) {
     options.body = JSON.stringify(body);
   }
 
-  const response = await fetch(`/api${path}`, options);
-  const data: T = await response.json().catch(() => {
+  const response = await fetch(`/api${path}`, options).catch(() => {
     throw new Error('Não foi possível conectar à loja.');
+  });
+  const data: T = await response.json().catch(() => {
+    throw new Error('A loja retornou uma resposta inválida.');
   });
 
   return { httpStatus: response.status, ok: response.ok, data };
@@ -29,8 +31,9 @@ export async function api<T>(path: string, body?: unknown): Promise<T> {
   const response = await request<T>(path, body);
 
   if (!response.ok) {
-    const payload = response.data as { error?: string };
-    const error = payload.error ?? 'Não foi possível concluir a operação.';
+    const payload = response.data as { error?: unknown } | null;
+    const error =
+      typeof payload?.error === 'string' ? payload.error : 'Não foi possível concluir a operação.';
     throw new ApiError(error, response.httpStatus);
   }
 

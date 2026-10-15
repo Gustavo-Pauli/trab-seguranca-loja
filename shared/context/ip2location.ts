@@ -5,21 +5,30 @@ import { isIP } from 'node:net';
 import type { Location } from './types.js';
 
 const binPath = resolve(process.env.IP2LOCATION_BIN ?? 'data/IP2LOCATION-LITE-DB5.BIN');
-if (!existsSync(binPath))
+
+if (!existsSync(binPath)) {
   throw new Error(
     `Base IP2Location DB5 ausente: ${binPath}. Execute pnpm run setup --bin <caminho>.`,
   );
+}
+
 const reader = new IP2Location();
+
 reader.open(binPath);
+
 // Impede aceitar uma base diferente sem latitude/longitude.
 const header = Buffer.alloc(1);
 const binDescriptor = openSync(binPath, 'r');
+
 try {
   readSync(binDescriptor, header, 0, 1, 0);
 } finally {
   closeSync(binDescriptor);
 }
-if (header[0] !== 5) throw new Error('É necessária a base IP2Location DB5.');
+
+if (header[0] !== 5) {
+  throw new Error('É necessária a base IP2Location DB5.');
+}
 
 function localIp(ip: string): boolean {
   if (
@@ -28,8 +37,9 @@ function localIp(ip: string): boolean {
     ip.startsWith('fc') ||
     ip.startsWith('fd') ||
     ip.startsWith('fe80:')
-  )
+  ) {
     return true;
+  }
   const octets = ip.split('.').map(Number);
   return (
     octets.length === 4 &&
@@ -55,22 +65,28 @@ export function locate(rawIp: string, source: Location['source'] = 'socket'): Lo
     kind: 'unknown',
     source,
   };
-  if (!isIP(ip)) return empty;
-  if (localIp(ip)) return { ...empty, kind: 'local' };
+  if (!isIP(ip)) {
+    return empty;
+  }
+  if (localIp(ip)) {
+    return { ...empty, kind: 'local' };
+  }
   const result = reader.getAll(ip);
-  if (!/^[A-Z]{2}$/.test(result.countryShort)) return empty;
-  const field = (value: string) =>
+  if (!/^[A-Z]{2}$/.test(result.countryShort)) {
+    return empty;
+  }
+  const optionalText = (value: string) =>
     value && value !== '-' && !value.includes('unavailable') ? value : null;
-  const number = (value: string | number) =>
+  const optionalNumber = (value: string | number) =>
     Number.isFinite(Number(value)) && value !== '-' ? Number(value) : null;
   return {
     ...empty,
     kind: 'public',
     country: result.countryShort,
-    region: field(result.region),
-    city: field(result.city),
-    latitude: number(result.latitude),
-    longitude: number(result.longitude),
+    region: optionalText(result.region),
+    city: optionalText(result.city),
+    latitude: optionalNumber(result.latitude),
+    longitude: optionalNumber(result.longitude),
     asn: null,
     organization: null,
   }; // DB5 não contém ASN/organização.

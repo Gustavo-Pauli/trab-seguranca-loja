@@ -219,7 +219,7 @@ ponta. Confira pedidos antes de repetir. Capturas de demo/desafios não persiste
   o enunciado; refatorar a Loja Segura para módulos didáticos preservando segurança;
   realizar esta revisão final sem nova reestruturação, com relatório conciso e
   teste da instalação/pacote; migrar os estilos para Tailwind preservando a interface;
-  pesquisar critérios de revisão e enxugar comentários e textos redundantes.
+  pesquisar critérios de revisão, enxugar comentários e simplificar trechos repetidos.
   Foram fornecidos o PDF, os anexos e os requisitos
   detalhados de stack, mecanismos e demonstrações.
 - **Código gerado/alterado:** autenticação, protocolo, contexto, fluxo de pedidos,

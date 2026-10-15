@@ -12,6 +12,7 @@ const app = createGatewayApp(secret);
 const server = app.listen(Number(process.env.GATEWAY_PORT ?? 4000), '127.0.0.1', () => {
   console.log('[gateway] Pronto.');
 });
+
 function close() {
   server.close(() => {
     secret.fill(0);
@@ -19,5 +20,6 @@ function close() {
     process.exit(0);
   });
 }
+
 process.once('SIGTERM', close);
 process.once('SIGINT', close);

@@ -35,7 +35,9 @@ export async function checkout(
   try {
     const { envelope, result } = await pay(payment, secret);
     confirmOrder(payment.order_id, result);
-    if (result.status === 'APPROVED') rememberCapture(user.userId, payment, envelope);
+    if (result.status === 'APPROVED') {
+      rememberCapture(user.userId, payment, envelope);
+    }
     return {
       httpStatus: result.status === 'APPROVED' ? 200 : 409,
       body: { ...result, total_cents: payment.amount_cents },

@@ -28,11 +28,15 @@ export async function seal(value: unknown, secret: Buffer, purpose: Purpose): Pr
 
 export async function open<T>(input: unknown, secret: Buffer, purpose: Purpose): Promise<T> {
   const envelope = input as Envelope | null;
-  if (!envelope || envelope.version !== 1) throw new Error('INVALID_ENVELOPE');
+  if (!envelope || envelope.version !== 1) {
+    throw new Error('INVALID_ENVELOPE');
+  }
   const salt = decode(envelope.salt, 32);
   const tag = decode(envelope.tag, 16);
   const ciphertext = decode(envelope.ciphertext);
-  if (ciphertext.length > 32_000) throw new Error('INVALID_ENVELOPE');
+  if (ciphertext.length > 32_000) {
+    throw new Error('INVALID_ENVELOPE');
+  }
   const bytes = await material(secret, salt, purpose);
   try {
     const decipher = createDecipheriv('aes-256-gcm', bytes.subarray(0, 32), bytes.subarray(32), {

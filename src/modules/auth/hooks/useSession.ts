@@ -10,23 +10,44 @@ export function useSession() {
   const [error, setError] = useState('');
 
   useEffect(() => {
+    let active = true;
+
     async function loadSession() {
       try {
         const response = await api<{ user: User; demoMode: boolean }>('/auth/me');
+        if (!active) {
+          return;
+        }
         setUser(response.user);
         setDemoMode(response.demoMode);
       } catch (cause) {
         const missingSession = cause instanceof ApiError && cause.status === 401;
-        if (!missingSession) setError(errorMessage(cause));
+        if (active && !missingSession) {
+          setError(errorMessage(cause));
+        }
       } finally {
-        setLoading(false);
+        if (active) {
+          setLoading(false);
+        }
       }
     }
 
     void loadSession();
     api<{ demoMode: boolean }>('/health')
-      .then((response) => setDemoMode(response.demoMode))
-      .catch(() => {});
+      .then((response) => {
+        if (active) {
+          setDemoMode(response.demoMode);
+        }
+      })
+      .catch((cause) => {
+        if (active) {
+          setError(errorMessage(cause));
+        }
+      });
+
+    return () => {
+      active = false;
+    };
   }, []);
 
   function acceptSession(authenticatedUser: User) {

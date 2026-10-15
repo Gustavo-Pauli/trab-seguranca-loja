@@ -21,7 +21,9 @@ export function createShopApp(secret: Buffer) {
   app.use('/api/products', catalogRoutes);
   app.use('/api/context', contextRoutes);
   app.use('/api', ordersRoutes(secret));
-  if (demoMode) app.use('/api/demo', securityDemoRoutes(secret));
+  if (demoMode) {
+    app.use('/api/demo', securityDemoRoutes(secret));
+  }
   app.use('/api', (_req, res) => res.status(404).json({ error: 'Endpoint não encontrado.' }));
   const buildPath = resolve('dist');
   if (existsSync(buildPath)) {

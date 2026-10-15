@@ -12,6 +12,7 @@ type CartState = {
   changeQuantity: (id: string, quantity: number) => void;
   clearCart: () => void;
 };
+
 const CartContext = createContext<CartState | null>(null);
 
 export function CartProvider({ children }: { children: ReactNode }) {
@@ -24,13 +25,19 @@ export function CartProvider({ children }: { children: ReactNode }) {
     let active = true;
     fetchProducts()
       .then((catalog) => {
-        if (active) setProducts(catalog);
+        if (active) {
+          setProducts(catalog);
+        }
       })
       .catch((cause) => {
-        if (active) setError(errorMessage(cause));
+        if (active) {
+          setError(errorMessage(cause));
+        }
       })
       .finally(() => {
-        if (active) setLoading(false);
+        if (active) {
+          setLoading(false);
+        }
       });
     return () => {
       active = false;
@@ -57,8 +64,11 @@ export function CartProvider({ children }: { children: ReactNode }) {
     </CartContext.Provider>
   );
 }
+
 export function useCart() {
   const cart = useContext(CartContext);
-  if (!cart) throw new Error('CartProvider ausente.');
+  if (!cart) {
+    throw new Error('CartProvider ausente.');
+  }
   return cart;
 }

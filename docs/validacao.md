@@ -1,83 +1,59 @@
-# Validação final
+# Validação
 
-Os resultados são registrados por execução. A auditoria técnica e a revalidação
-da migração Tailwind são identificadas separadamente; versões e códigos de saída estão em
+Última conferência: 15/10/2026, no Windows com Node 22.14 e pnpm 10.15.1.
+Datas, escopos e resultados estão em
 [evidencias-verificacao.json](evidencias-verificacao.json).
 
-## Código e segurança
+## Verificações executadas
 
-`pnpm typecheck`, `pnpm build` e `pnpm test:security` passaram na revisão final.
-A suíte concluiu **37 verificações**, detalhadas em
-[evidencias-http.json](evidencias-http.json). Abrange cadastro/QR, senha, TOTP,
-sessão, catálogo, pedido, preços confiáveis, contexto DB5, quatro ataques,
-timestamps vencido/futuro, limite de tentativas e reutilização de TOTP.
+| Verificação | Resultado |
+|---|---|
+| `pnpm typecheck` | Exit 0. |
+| `pnpm build` | Exit 0; build Vite gerada. |
+| `pnpm test:security` | 37 verificações aprovadas. |
+| `pnpm examples:java --attachments <pasta dos anexos>` | 13 exemplos compilados/executados, todos com exit 0. |
+| Casos focados do cliente HTTP e conferência dos cofres | 10 verificações aprovadas com dados sintéticos. |
 
-Também verifica concorrência do nonce, repetição após reinício do gateway,
-cadastro/sessão/pedido após reinício da loja, logout, mudança de país e ausência
-de rotas demo no normal. Respostas de aprovação/bloqueio em claro, tag de resposta
-adulterada e resposta autenticada de outro pedido são rejeitadas; o pedido permanece
-`ERROR`, nunca confirmado por dados não autenticados. Essa última proteção foi
-corrigida após reproduzir a aceitação indevida de um bloqueio em claro.
+A suíte de segurança cobre cadastro/QR, senha/TOTP, sessão, catálogo, compra,
+preços confiáveis, contexto DB5 e os quatro ataques. Também verifica timestamps,
+limite de tentativas, reutilização de TOTP, concorrência de nonce, reinícios,
+logout, mudança de país e ausência de rotas de ataque no modo normal.
+Respostas de pagamento em claro, com tag adulterada ou de outro pedido são rejeitadas.
+Os resultados completos estão em [evidencias-http.json](evidencias-http.json).
 
-Na instalação extraída, a abertura direta de `/login` falhou porque o caminho
-absoluto de `sendFile` continha uma pasta oculta. O fallback passou a servir
-`index.html` com raiz limitada a `dist`, mantendo a proteção de arquivos ocultos.
-O teste do launcher verifica HTML/asset e o fluxo após essa correção.
+Nos casos focados, foram distinguidas falhas de rede, JSON inválido e erros HTTP;
+respostas nulas ou sem mensagem textual receberam uma mensagem padrão.
+Cofres compatíveis foram aceitos; segredo incompatível, senha incorreta e falha
+ao abrir o segundo cofre foram rejeitados. Esses casos foram executados por um
+script local de conferência, sem acrescentar framework ou comando à aplicação.
 
-Os bancos/cofres da suíte ficam em `.data/test-*`, separados dos dados existentes.
-Senhas, seeds TOTP e cookies não são gravados na evidência pública. A localização
-falsa retorna HTTP 200 porque a declaração é ignorada e a consulta confiável é
-exibida; não significa aceitação da localização falsificada.
+Os exemplos Java usam as fontes originais dos anexos. A exceção do exemplo
+AES-GCM após adulteração é esperada e tratada pelo próprio programa com exit 0.
+[evidencias-java.json](evidencias-java.json) conserva stdout/stderr, sem semente
+ou QR do exemplo TOTP.
 
-## Exemplos e instalação
+## Instalação e execução
 
-`examples:java` recompilou e executou os **13 exemplos originais**, sem modificar
-os anexos. [evidencias-java.json](evidencias-java.json) preserva stdout/stderr;
-semente/QR do exemplo TOTP foram removidos. AES-GCM produz a exceção esperada após
-adulteração, tratada pelo próprio exemplo com exit 0.
+Uma nova extração do pacote, sem dependências, BIN, cofres ou bancos, passou em
+`pnpm install --frozen-lockfile --offline`, typecheck e build. As dependências
+vieram do cache local; a BIN continua sendo obtida dos anexos da professora.
 
-A seção `cleanInstallation` da evidência de verificação registra a extração
-isolada do pacote: instalação com lockfile, preparação da BIN dos anexos,
-setup de cofres novos, build, inicialização, fluxo HTTP e repetição da suíte.
-Dependências obtidas do cache local são identificadas; o cache é fonte de
-pacotes, não de bancos, cofres ou usuários. A DB5 não faz parte do ZIP.
-Não houve uso dos segredos ou bancos da instalação original nessa conferência.
+Em outro diretório de dados isolado, o setup criou cofres novos, conferiu esses
+cofres em uma segunda execução e `pnpm demo` iniciou os dois processos Express.
+Os endpoints de saúde da loja e do gateway responderam HTTP 200.
 
-A extração corrigida passou em instalação, typecheck, build e **37 checks**.
-O setup foi executado interativamente pelo caminho relativo do README, criando
-cofres novos e distintos. `pnpm demo` passou em **11 verificações HTTP** de health,
-HTML/asset, cadastro/QR, TOTP, DB5, compra, ataques e novo login. O Chrome renderizou
-o formulário de `/login`; `pnpm dev:demo` iniciou os dois Express e o Vite, com
-health via proxy e módulo frontend respondendo 200. Os serviços de teste foram
-encerrados. Essa conferência corresponde ao pacote anterior à migração Tailwind;
-a nova instalação dos estilos está registrada abaixo, sem atribuir novos testes
-de setup ou de Java a essa etapa.
+No Chrome, foram conferidos login/cadastro e TOTP no desktop/celular, catálogo,
+quantidades, compra aprovada, histórico, sessão após recarregar, logout e novo
+login com senha/TOTP. A conta era sintética; o código foi calculado a partir
+da chave manual, sem leitura física do QR. A aparência foi preservada.
 
-## Migração para Tailwind CSS
+## Limites e conferência da equipe
 
-Tailwind 4 e o plugin Vite substituem os quatro estilos anteriores, mantendo
-layout, navegação e contratos HTTP. Após a mudança, `pnpm typecheck`, `pnpm build`
-e as **37 verificações** de `pnpm test:security` passaram novamente.
+Os testes usam bancos/cofres isolados em `.data/`, sem reinicializar os dados existentes.
+Não houve teste em outro computador, instalação sem cache, pagamento bancário,
+deploy ou auditoria externa. O modo demo consulta a DB5 com o IP de cenário
+configurado no servidor; esse IP não representa o endereço real do navegador.
 
-Uma nova extração sem dependências/BIN/cofres/bancos passou em
-`pnpm install --frozen-lockfile --offline`, typecheck e build usando o cache local.
-Essa etapa verifica instalação/compilação do novo lockfile; o setup completo
-permanece documentado na auditoria anterior. Backend, gateway e protocolo não mudaram.
-
-No Chrome, foram conferidos catálogo em uma, duas e quatro colunas (390/800/desktop),
-carrinho, quantidades, compra aprovada e pedidos; replay retornou `INVALID_NONCE`,
-adulteração retornou `INVALID_AUTH_TAG`, e localização falsa foi ignorada.
-Cadastro/QR, ativação TOTP, logout, login com senha/TOTP e o formulário de TOTP
-inválido (HTTP 401) também foram exercitados em conta sintética isolada.
-O código TOTP foi calculado a partir da chave manual, sem escanear o QR em telefone.
-
-## Limites e verificação humana
-
-Os testes foram executados no Windows desta máquina. Instalação limpa significa
-diretório e dados novos, não validação em outro computador ou download inicial
-sem cache. Não houve pagamento bancário, deploy, benchmark ou auditoria externa.
-
-Asserções HTTP calculam TOTP de contas sintéticas e verificam QR PNG e vetores
-conhecidos. A leitura física do QR pelo celular, revisão pessoal do código e
-ensaio coletivo devem ser feitos pelos integrantes. Registrem esses fatos e a
-identificação da equipe no relatório antes de enviar ao Moodle.
+Continuam pendentes a leitura do QR pelo celular, a revisão pessoal do código
+e o ensaio coletivo. Registrem essas atividades e a identificação da equipe no
+relatório antes de enviar ao Moodle.

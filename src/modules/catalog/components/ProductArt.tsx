@@ -1,11 +1,11 @@
-export default function ProductArt({ kind }: { kind: string }) {
-  const backgrounds: Record<string, string> = {
-    notebook: 'bg-[#f3f0e9] text-[#71665a]',
-    mug: 'bg-[#edf1ee] text-[#657469]',
-    bag: 'bg-[#f6f2e9] text-[#8a7a62]',
-    bottle: 'bg-[#edf0f4] text-[#657589]',
-  };
+const backgrounds: Record<string, string> = {
+  notebook: 'bg-[#f3f0e9] text-[#71665a]',
+  mug: 'bg-[#edf1ee] text-[#657469]',
+  bag: 'bg-[#f6f2e9] text-[#8a7a62]',
+  bottle: 'bg-[#edf0f4] text-[#657589]',
+};
 
+export default function ProductArt({ kind }: { kind: string }) {
   return (
     <div
       className={`grid h-[184px] place-items-center max-tablet:h-[158px]

@@ -1,12 +1,13 @@
 import { Link } from 'react-router-dom';
 import ProductCard from '../../modules/catalog/components/ProductCard';
 import { useCart } from '../../modules/cart/CartProvider';
+import Page from '../../components/Page';
 
 export default function Store() {
   const { products, quantities, changeQuantity, loading, error } = useCart();
   const count = Object.values(quantities).reduce((sum, quantity) => sum + quantity, 0);
   return (
-    <main className="mx-auto max-w-[1168px] px-8 pt-10 pb-16 max-tablet:px-5 max-tablet:pt-7 max-tablet:pb-10">
+    <Page>
       <div className="mb-6 flex items-center justify-between">
         <h1>Produtos</h1>
         <Link className="secondary" to="/checkout">
@@ -33,6 +34,6 @@ export default function Store() {
           />
         ))}
       </section>
-    </main>
+    </Page>
   );
 }

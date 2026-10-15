@@ -5,12 +5,14 @@ import {
   scrypt as scryptCallback,
   timingSafeEqual,
 } from 'node:crypto';
-const COST = { N: 16384, r: 8, p: 1, maxmem: 32 * 1024 * 1024 } as const;
+
+const SCRYPT_OPTIONS = { N: 16384, r: 8, p: 1, maxmem: 32 * 1024 * 1024 } as const;
+
 function scrypt(
   password: string,
   salt: Buffer,
   length: number,
-  options: typeof COST,
+  options: typeof SCRYPT_OPTIONS,
 ): Promise<Buffer> {
   return new Promise((resolve, reject) =>
     scryptCallback(password, salt, length, options, (error, key) =>
@@ -21,7 +23,7 @@ function scrypt(
 
 export async function hashPassword(password: string): Promise<{ salt: string; hash: string }> {
   const salt = randomBytes(16);
-  const derived = (await scrypt(password, salt, 64, COST)) as Buffer;
+  const derived = await scrypt(password, salt, 64, SCRYPT_OPTIONS);
   try {
     return { salt: salt.toString('base64'), hash: derived.toString('base64') };
   } finally {
@@ -36,8 +38,10 @@ export async function verifyPassword(
 ): Promise<boolean> {
   const expected = Buffer.from(hashB64, 'base64');
   const salt = Buffer.from(saltB64, 'base64');
-  if (expected.length !== 64 || salt.length !== 16) return false;
-  const actual = await scrypt(password, salt, 64, COST);
+  if (expected.length !== 64 || salt.length !== 16) {
+    return false;
+  }
+  const actual = await scrypt(password, salt, 64, SCRYPT_OPTIONS);
   try {
     return timingSafeEqual(expected, actual);
   } finally {
@@ -58,7 +62,7 @@ export async function encryptTotp(
   userId: string,
 ): Promise<EncryptedTotp> {
   const salt = randomBytes(16);
-  const derived = (await scrypt(`totp:${password}`, salt, 44, COST)) as Buffer;
+  const derived = await scrypt(`totp:${password}`, salt, 44, SCRYPT_OPTIONS);
   try {
     const cipher = createCipheriv(
       'aes-256-gcm',
@@ -83,10 +87,12 @@ export async function decryptTotp(
   password: string,
   userId: string,
 ): Promise<string> {
-  const salt = Buffer.from(data.salt, 'base64'),
-    tag = Buffer.from(data.tag, 'base64');
-  if (salt.length !== 16 || tag.length !== 16) throw new Error('Parâmetros TOTP inválidos');
-  const derived = await scrypt(`totp:${password}`, salt, 44, COST);
+  const salt = Buffer.from(data.salt, 'base64');
+  const tag = Buffer.from(data.tag, 'base64');
+  if (salt.length !== 16 || tag.length !== 16) {
+    throw new Error('Parâmetros TOTP inválidos');
+  }
+  const derived = await scrypt(`totp:${password}`, salt, 44, SCRYPT_OPTIONS);
   try {
     const decipher = createDecipheriv(
       'aes-256-gcm',
