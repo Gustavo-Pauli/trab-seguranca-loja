@@ -1,15 +1,18 @@
 import { db } from '../../lib/database.js';
 import type { Location } from '../../../shared/context/types.js';
 
+// Recupera a localização de referência usada para comparar os próximos acessos.
 export function baselineFor(userId: string): Location | null {
   const row = db
     .prepare('SELECT location_json FROM access_contexts WHERE user_id = ?')
     .get(userId) as { location_json: string } | undefined;
+
   return row ? (JSON.parse(row.location_json) as Location) : null;
 }
 
 export function rememberBaseline(userId: string, location: Location): void {
   const baseline = baselineFor(userId);
+
   if (!baseline || (baseline.kind === 'local' && location.kind === 'public')) {
     db.prepare(
       `INSERT INTO access_contexts VALUES (?, ?)

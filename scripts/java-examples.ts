@@ -23,16 +23,21 @@ const artifacts = [
 
 for (const artifact of artifacts) {
   const target = join(deps, artifact.split('/').at(-1)!);
+
   if (existsSync(target)) {
     continue;
   }
+
   if (!process.argv.includes('--download')) {
     throw new Error(`Dependência ausente: ${target}. Use --download uma vez com internet.`);
   }
+
   const response = await fetch(`https://repo.maven.apache.org/maven2/${artifact}`);
+
   if (!response.ok) {
     throw new Error(`Download falhou: HTTP ${response.status} ${artifact}`);
   }
+
   writeFileSync(target, Buffer.from(await response.arrayBuffer()));
 }
 
@@ -108,7 +113,7 @@ const results: unknown[] = [];
 
 for (let i = 0; i < jobs.length; i++) {
   const [name, main, ...sources] = jobs[i];
-  // BC padrão e BCFIPS possuem classes com o mesmo nome: nunca carregar os dois juntos.
+  // Seleciona apenas um provedor BC para evitar conflito entre classes de mesmo nome.
   const classpath = [
     ...jars.filter((path) =>
       name === 'Scrypt BC'
@@ -119,6 +124,7 @@ for (let i = 0; i < jobs.length; i++) {
   ].join(';');
   const directory = join(output, String(i));
   mkdirSync(directory, { recursive: true });
+
   const paths = sources.map((path) =>
     path === '@ip'
       ? join(root, 'ip2location/ip2location/src/main/java/iplocation/ContextoIP.java')
@@ -129,18 +135,21 @@ for (let i = 0; i < jobs.length; i++) {
     ['-encoding', 'UTF-8', '-cp', classpath, '-d', directory, ...paths],
     { encoding: 'utf8', windowsHide: true },
   );
+
   if (compile.status !== 0) {
     results.push({ name, compiled: false, error: compile.stderr ?? compile.error?.message });
     console.log(`FALHA compilação: ${name}`);
     continue;
   }
-  // O exemplo usa caminho relativo da DB5; link/cópia só dentro de .data, sem alterar os anexos.
+
+  // Copia a DB5 para o diretório em que o exemplo Java procura o arquivo.
   if (name === 'IP2Location') {
     writeFileSync(
       join(directory, 'IP2LOCATION-LITE-DB5.BIN'),
       readFileSync(join(root, 'ip2location/ip2location/IP2LOCATION-LITE-DB5.BIN')),
     );
   }
+
   const run = await new Promise<{ exit: number | null; stdout: string; stderr: string }>(
     (resolveRun) => {
       const child = spawn(
@@ -162,22 +171,27 @@ for (let i = 0; i < jobs.length; i++) {
       const timeout = setTimeout(() => child.kill(), 20_000);
       child.stdout.on('data', (data) => {
         stdout += String(data);
+
         if (name === 'HMAC') {
           if (hmacStage === 0 && stdout.includes('Digite a msg')) {
             child.stdin.write('mensagem-de-teste\n');
             hmacStage = 1;
           }
+
           if (hmacStage === 1 && stdout.includes('Digite Mensagem 1')) {
             child.stdin.write('mensagens-iguais\n');
             hmacStage = 2;
           }
+
           if (hmacStage === 2 && stdout.includes('Digite Mensagem 2')) {
             child.stdin.end('mensagens-iguais\n');
             hmacStage = 3;
           }
         }
+
         if (name === 'TOTP' && !submitted && stdout.includes('Entre o c')) {
           const code = stdout.match(/TOTP Code = (\d{6})/)?.[1];
+
           if (code) {
             child.stdin.end(`${code}\n`);
             submitted = true;
@@ -187,9 +201,11 @@ for (let i = 0; i < jobs.length; i++) {
       child.stderr.on('data', (data) => {
         stderr += String(data);
       });
+
       if (name !== 'TOTP' && name !== 'HMAC') {
         child.stdin.end('senha-do-exemplo\n');
       }
+
       child.on('error', (error) => {
         stderr += error.message;
       });
@@ -199,7 +215,7 @@ for (let i = 0; i < jobs.length; i++) {
       });
     },
   );
-  // Segredo e QR de teste ficam somente em .data; evidência pública remove esse material.
+  // Remove a semente e o QR do TOTP antes de salvar a saída na evidência.
   const sanitized =
     name === 'TOTP'
       ? run.stdout

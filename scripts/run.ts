@@ -21,20 +21,24 @@ function stop(code = 0) {
   if (stopping) {
     return;
   }
+
   stopping = true;
+
   for (const child of children) {
     child.kill('SIGTERM');
   }
+
   process.exitCode = code;
 }
 
 try {
-  // Falha antes de abrir portas quando a senha ou provisionamento estão incorretos.
+  // Abre os dois cofres e compara os segredos antes de iniciar loja e gateway.
   await verifyVaultPair(
     resolve(directory, 'loja-segredo.json'),
     resolve(directory, 'gateway-segredo.json'),
     password,
   );
+
   const env = {
     ...process.env,
     DEMO_MODE: String(demo),
@@ -60,9 +64,11 @@ try {
   }
   start(['--import', 'tsx', 'gateway/index.ts'], true);
   start(['--import', 'tsx', 'server/index.ts'], true);
+
   if (dev) {
     start(['node_modules/vite/bin/vite.js', '--host', '127.0.0.1']);
   }
+
   console.log(
     demo
       ? `[demo] IP de cenário definido no servidor: ${ip}`

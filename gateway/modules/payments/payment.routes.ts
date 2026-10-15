@@ -7,5 +7,6 @@ export function paymentRoutes(secret: Buffer) {
     const { httpStatus, body } = await processPayment(req.body, secret);
     res.status(httpStatus).json(body);
   });
+
   return router;
 }

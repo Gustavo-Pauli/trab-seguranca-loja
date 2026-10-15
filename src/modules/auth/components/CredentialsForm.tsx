@@ -16,6 +16,7 @@ export default function CredentialsForm({ mode }: { mode: 'login' | 'register' }
   const registering = mode === 'register';
 
   let submitLabel = registering ? 'Criar conta' : 'Entrar';
+
   if (busy) {
     submitLabel = 'Aguarde…';
   }
@@ -24,6 +25,7 @@ export default function CredentialsForm({ mode }: { mode: 'login' | 'register' }
     event.preventDefault();
     setBusy(true);
     setError('');
+
     try {
       const challenge = registering
         ? await register(name, email, password)

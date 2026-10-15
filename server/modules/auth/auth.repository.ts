@@ -34,8 +34,8 @@ export function insertUser(user: UserRow): void {
   ).run(user);
 }
 
-/** Atualização atômica: mesmo TOTP não pode autorizar sessões diferentes. */
 export function useTotpCounter(userId: string, counter: number): boolean {
+  // O UPDATE só avança o contador; duas tentativas com o mesmo código não passam juntas.
   const result = db
     .prepare(
       `UPDATE users
@@ -43,5 +43,6 @@ export function useTotpCounter(userId: string, counter: number): boolean {
     WHERE id = ? AND totp_last_counter < ?`,
     )
     .run(counter, userId, counter);
+
   return result.changes === 1;
 }

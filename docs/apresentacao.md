@@ -31,6 +31,11 @@ Faça replay imediatamente após a compra, em até dois minutos. Esperado:
 Após a janela, `INVALID_TIMESTAMP` também é um bloqueio correto. Não apague nonces
 nem aumente a janela; faça outra compra para demonstrar nonce especificamente.
 
+Ao abrir `payment.validation.ts`, siga as quatro chamadas de `validatePayment`:
+mensagem, autorização, pedido e contexto. `null` permite continuar; um motivo de
+bloqueio encerra a validação. Depois, mostre no serviço que `acceptOnce` só é
+chamado quando não houve bloqueio. Os tempos estão em `shared/protocol/limits.ts`.
+
 O IP `150.162.60.21` é cenário **configurado no servidor**, não o IP detectado do
 navegador. A DB5 é consultada de verdade. Em normal, usa-se o socket; loopback tem
 país nulo. Para mostrar mudança de país: encerre, `pnpm.cmd demo --ip 8.8.8.8`,

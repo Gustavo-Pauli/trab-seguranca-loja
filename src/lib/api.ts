@@ -7,7 +7,6 @@ export class ApiError extends Error {
   }
 }
 
-// Os testes precisam ler também o corpo das respostas 4xx/5xx.
 export async function request<T>(path: string, body?: unknown) {
   const options: RequestInit = { credentials: 'same-origin' };
 
@@ -31,6 +30,7 @@ export async function api<T>(path: string, body?: unknown): Promise<T> {
   const response = await request<T>(path, body);
 
   if (!response.ok) {
+    // request() preserva o status e o corpo; api() transforma a falha em erro para a tela.
     const payload = response.data as { error?: unknown } | null;
     const error =
       typeof payload?.error === 'string' ? payload.error : 'Não foi possível concluir a operação.';

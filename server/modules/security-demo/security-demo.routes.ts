@@ -8,5 +8,6 @@ export function securityDemoRoutes(secret: Buffer) {
   router.post('/attack', async (req, res) => {
     res.json(await runAttack(requireSession(req).userId, req.body?.action, secret));
   });
+
   return router;
 }

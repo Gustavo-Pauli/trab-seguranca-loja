@@ -9,11 +9,15 @@ const binIndex = args.indexOf('--bin');
 
 if (binIndex >= 0) {
   const source = args[binIndex + 1];
+
   if (!source || !existsSync(source)) {
     throw new Error('Informe --bin seguido do caminho da base DB5.');
   }
+
   mkdirSync('data', { recursive: true });
+
   const target = resolve('data/IP2LOCATION-LITE-DB5.BIN');
+
   if (!existsSync(target)) {
     copyFileSync(source, target);
     console.log('DB5 copiada para data/.');
@@ -40,11 +44,13 @@ try {
   if (password.toString('utf8').length < 12) {
     throw new Error('Use ao menos 12 caracteres.');
   }
+
   if (existsSync(shopVaultPath)) {
     await verifyVaultPair(shopVaultPath, gatewayVaultPath, password);
     console.log('Cofres conferidos.');
   } else {
     const confirmation = await passwordPrompt('Repita a senha: ');
+
     try {
       if (password.length !== confirmation.length || !timingSafeEqual(password, confirmation)) {
         throw new Error('Senhas diferentes.');
@@ -52,13 +58,16 @@ try {
     } finally {
       confirmation.fill(0);
     }
+
     const sharedSecret = randomBytes(32);
+
     try {
       await writeVault(shopVaultPath, password, sharedSecret, 'shop');
       await writeVault(gatewayVaultPath, password, sharedSecret, 'gateway');
     } finally {
       sharedSecret.fill(0);
     }
+
     console.log('Cofres criados. Guarde a senha de desbloqueio.');
   }
 } finally {

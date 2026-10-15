@@ -18,6 +18,7 @@ export function listOrders(userId: string) {
   FROM orders WHERE user_id = ? ORDER BY created_at DESC LIMIT 20`,
     )
     .all(userId) as StoredOrder[];
+
   return rows.map(({ items_json, ...order }) => ({
     ...order,
     order_id: order.id,

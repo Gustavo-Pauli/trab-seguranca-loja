@@ -23,6 +23,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     let active = true;
+
     fetchProducts()
       .then((catalog) => {
         if (active) {
@@ -39,6 +40,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
           setLoading(false);
         }
       });
+
     return () => {
       active = false;
     };
@@ -67,8 +69,10 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
 export function useCart() {
   const cart = useContext(CartContext);
+
   if (!cart) {
     throw new Error('CartProvider ausente.');
   }
+
   return cart;
 }

@@ -39,6 +39,7 @@ export default function OrderHistory() {
           setLoading(false);
         }
       });
+
     return () => {
       active = false;
     };

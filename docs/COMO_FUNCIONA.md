@@ -16,10 +16,11 @@ implementam regras e repositórios fazem SQL. Cada processo tem seu banco/cofre.
 
 1. `CredentialsForm.submit` chama `register` ou `login` em `modules/auth/api.ts`.
 2. `auth.routes.ts` valida os tipos/tamanhos e limita tentativas por conexão/conta.
-3. `registerUser` cria ID, `generateTotpSecret`, `hashPassword` e `encryptTotp`.
-   O repositório grava verificador/salt e semente cifrada; nunca a senha original.
+3. `registerUser` chama `validateRegistration`, `createAccount` e `prepareChallenge`.
+   `createAccount` gera ID/segredo TOTP, chama `hashPassword` e `encryptTotp`, e
+   grava verificador/salt e semente cifrada pelo repositório.
 4. `loginWithPassword` chama `verifyPassword`. Só depois decifra a semente com
-   `decryptTotp` e cria `newChallenge`, válido por cinco minutos e ligado ao IP.
+   `readTotpSecret`/`decryptTotp` e cria `newChallenge`, válido por cinco minutos e ligado ao IP.
    QR/chave manual só são retornados enquanto a habilitação estiver pendente.
 5. `TotpForm.submit` envia código e desafio. A rota obtém `requestLocation`;
    `verifySecondFactor` chama `takeAttempt`, `verifyTotp`, `decide` e `useTotpCounter`.
@@ -44,8 +45,9 @@ sequenceDiagram
 ## Compra e resposta autenticada
 
 1. O React envia **somente IDs e quantidades** a `/api/checkout`.
-2. `checkout` lê a sessão, reconsulta o contexto e exige o mesmo IP do login.
-   `orderItems` e `totalCents` obtêm preços confiáveis; o navegador não escolhe total.
+2. `checkout` recebe a sessão validada pela rota. `validateCheckoutContext` exige
+   contexto permitido e o mesmo IP do login; `readOrderItems` chama `orderItems`.
+   `totalCents` calcula o total a partir dos preços do catálogo.
 3. `preparePayment` inclui pedido, usuário, itens, reais/centavos, BRL, nonce,
    timestamp, localização e autorização construída a partir da sessão do servidor.
    `insertPendingOrder` registra `PENDING` antes da comunicação.
@@ -57,7 +59,8 @@ sequenceDiagram
    tenha sido autenticada por `open`; nem um bloqueio em claro confirma um pedido.
    A loja também chama
    `verifyGatewayResponse`: pedido, nonce, timestamp e HTTP precisam corresponder.
-7. `confirmOrder` registra aprovação/bloqueio. O React mostra o resultado e o
+7. `payAndConfirmOrder` chama `pay` e `confirmOrder` para registrar aprovação/bloqueio.
+   O React mostra o resultado e o
    histórico. Falha de comunicação vira `ERROR`/não confirmado, nunca aprovação.
 
 No histórico, `order_id`, `user_id`, `items` e `total` correspondem ao exemplo de
@@ -78,6 +81,12 @@ sequenceDiagram
 O gateway confia na loja como emissora autenticada da autorização: confere
 estado/tempos da sessão e coerência do contador TOTP. Não recebe a semente do
 usuário nem recalcula seu TOTP. Uma loja comprometida está fora dessa garantia.
+
+Em `gateway/modules/payments/payment.validation.ts`, comece por `validatePayment`.
+Ela chama, em ordem, `validateMessage`, `validateAuthorization`, `validateOrder`
+e `validateContext`. Cada etapa retorna `null` quando passa ou o motivo do bloqueio.
+Uma falha interrompe a sequência; `acceptOnce` só é chamado após todas passarem.
+As janelas de pagamento, sessão e TOTP estão nomeadas em `shared/protocol/limits.ts`.
 
 ## Conceitos que não devem ser confundidos
 

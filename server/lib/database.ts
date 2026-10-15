@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS orders (
 );
 `);
 
-// Instalações existentes podem não ter os campos de contexto e TOTP na sessão.
+// Acrescenta os campos de sessão que faltarem em bancos de instalações anteriores.
 const columns = db.prepare('PRAGMA table_info(sessions)').all() as { name: string }[];
 
 if (!columns.some((column) => column.name === 'context_json')) {

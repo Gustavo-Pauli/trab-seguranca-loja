@@ -64,9 +64,11 @@ export function PublicOnly() {
 
 export function PrivateLayout() {
   const { user } = useAuth();
+
   if (!user) {
     return <Navigate to="/login" replace />;
   }
+
   return (
     <CartProvider key={user.id}>
       <Outlet />

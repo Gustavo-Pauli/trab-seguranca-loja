@@ -24,6 +24,7 @@ function scrypt(
 export async function hashPassword(password: string): Promise<{ salt: string; hash: string }> {
   const salt = randomBytes(16);
   const derived = await scrypt(password, salt, 64, SCRYPT_OPTIONS);
+
   try {
     return { salt: salt.toString('base64'), hash: derived.toString('base64') };
   } finally {
@@ -38,10 +39,13 @@ export async function verifyPassword(
 ): Promise<boolean> {
   const expected = Buffer.from(hashB64, 'base64');
   const salt = Buffer.from(saltB64, 'base64');
+
   if (expected.length !== 64 || salt.length !== 16) {
     return false;
   }
+
   const actual = await scrypt(password, salt, 64, SCRYPT_OPTIONS);
+
   try {
     return timingSafeEqual(expected, actual);
   } finally {
@@ -55,14 +59,15 @@ export interface EncryptedTotp {
   tag: string;
 }
 
-// Chave e IV dependem do salt; recifrar a semente exige um salt novo.
 export async function encryptTotp(
   secret: string,
   password: string,
   userId: string,
 ): Promise<EncryptedTotp> {
+  // Um novo salt renova a chave e o IV a cada cifragem da semente.
   const salt = randomBytes(16);
   const derived = await scrypt(`totp:${password}`, salt, 44, SCRYPT_OPTIONS);
+
   try {
     const cipher = createCipheriv(
       'aes-256-gcm',
@@ -71,7 +76,9 @@ export async function encryptTotp(
       { authTagLength: 16 },
     );
     cipher.setAAD(Buffer.from(`user:${userId}`));
+
     const encrypted = Buffer.concat([cipher.update(secret, 'utf8'), cipher.final()]);
+
     return {
       salt: salt.toString('base64'),
       ciphertext: encrypted.toString('base64'),
@@ -89,10 +96,13 @@ export async function decryptTotp(
 ): Promise<string> {
   const salt = Buffer.from(data.salt, 'base64');
   const tag = Buffer.from(data.tag, 'base64');
+
   if (salt.length !== 16 || tag.length !== 16) {
     throw new Error('Parâmetros TOTP inválidos');
   }
+
   const derived = await scrypt(`totp:${password}`, salt, 44, SCRYPT_OPTIONS);
+
   try {
     const decipher = createDecipheriv(
       'aes-256-gcm',
@@ -102,6 +112,7 @@ export async function decryptTotp(
     );
     decipher.setAAD(Buffer.from(`user:${userId}`));
     decipher.setAuthTag(tag);
+
     return Buffer.concat([
       decipher.update(Buffer.from(data.ciphertext, 'base64')),
       decipher.final(),

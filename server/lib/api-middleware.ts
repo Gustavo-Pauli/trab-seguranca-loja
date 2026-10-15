@@ -13,14 +13,18 @@ export const checkApiRequest: RequestHandler = (req, res, next) => {
   const crossSite = req.headers['sec-fetch-site'] === 'cross-site';
   const originDenied = req.headers.origin && !origins.includes(req.headers.origin);
 
-  // JSON e origem permitida dificultam submissões de outros sites com o cookie da loja.
+  // Bloqueia POST de outro site, mesmo que o navegador envie o cookie da sessão.
   if (req.method === 'POST' && (crossSite || originDenied)) {
     res.status(403).json({ error: 'Origem não permitida.' });
+
     return;
   }
+
   if (req.method === 'POST' && !req.is('application/json')) {
     res.status(415).json({ error: 'Envie JSON.' });
+
     return;
   }
+
   next();
 };

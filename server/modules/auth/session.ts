@@ -3,6 +3,7 @@ import { db } from '../../lib/database.js';
 import { newToken, digestToken } from './tokens.js';
 import { HttpError } from '../../lib/http-error.js';
 import type { Location } from '../../../shared/context/types.js';
+import { SESSION_LIFETIME_SECONDS } from '../../../shared/protocol/limits.js';
 
 export type SessionUser = {
   userId: string;
@@ -14,7 +15,7 @@ export type SessionUser = {
   totp_counter: number;
 };
 
-const SESSION_MAX_AGE_MS = 12 * 60 * 60 * 1000;
+const SESSION_MAX_AGE_MS = SESSION_LIFETIME_SECONDS * 1000;
 
 function readSessionToken(req: Request): string | null {
   const cookie = req.headers.cookie
@@ -30,6 +31,7 @@ function readSessionToken(req: Request): string | null {
   return token;
 }
 
+// Guarda o hash do token no banco e envia o token no cookie.
 export function setSession(
   res: Response,
   userId: string,
@@ -58,11 +60,14 @@ export function setSession(
   });
 }
 
+// Busca a sessão pelo cookie; retorna null se ela não existir ou não for válida.
 export function readSession(req: Request): SessionUser | null {
   const token = readSessionToken(req);
+
   if (!token) {
     return null;
   }
+
   const row = db
     .prepare(
       `SELECT u.id AS userId, u.name, u.email, s.created_at, s.expires_at, s.context_json, s.totp_counter
@@ -71,22 +76,27 @@ export function readSession(req: Request): SessionUser | null {
       AND s.context_json IS NOT NULL AND s.totp_counter IS NOT NULL`,
     )
     .get(digestToken(token), Date.now());
+
   return (row as SessionUser | undefined) ?? null;
 }
 
 export function requireSession(req: Request): SessionUser {
   const user = readSession(req);
+
   if (!user) {
     throw new HttpError(401, 'Entre na sua conta.');
   }
+
   return user;
 }
 
 export function revokeSession(req: Request, res: Response) {
   const token = readSessionToken(req);
+
   if (token) {
     db.prepare('DELETE FROM sessions WHERE token_hash = ?').run(digestToken(token));
   }
+
   res.clearCookie('session', { path: '/' });
 }
 

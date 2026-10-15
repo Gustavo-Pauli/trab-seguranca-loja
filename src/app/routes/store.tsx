@@ -6,6 +6,7 @@ import Page from '../../components/Page';
 export default function Store() {
   const { products, quantities, changeQuantity, loading, error } = useCart();
   const count = Object.values(quantities).reduce((sum, quantity) => sum + quantity, 0);
+
   return (
     <Page>
       <div className="mb-6 flex items-center justify-between">

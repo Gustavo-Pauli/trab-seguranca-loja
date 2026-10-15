@@ -14,11 +14,14 @@ export default function TotpForm() {
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+
     if (!challenge) {
       return;
     }
+
     setBusy(true);
     setError('');
+
     try {
       const response = await confirmTotp(challenge.challengeToken, code);
       setCode('');
@@ -36,9 +39,11 @@ export default function TotpForm() {
     setChallenge(null);
     navigate('/login', { replace: true });
   }
+
   if (!challenge) {
     return <Navigate to="/login" replace />;
   }
+
   const enrolling = challenge.mode === 'enroll';
 
   return (

@@ -9,6 +9,7 @@ export async function runAttackRequest(action: string): Promise<Evidence> {
       ? { ip: '8.8.8.8', location: { country: 'XX', region: 'Falsa', city: 'Inventada' } }
       : { action };
   const response = await request(route, body);
+
   return {
     route: `/api${route}`,
     httpStatus: response.httpStatus,
@@ -23,14 +24,16 @@ export async function testTotpRequest(
   code: string,
 ): Promise<Evidence> {
   const login = await request<AuthChallenge>('/auth/login', { email, password });
+
   if (!login.ok) {
     return { route: '/api/auth/login', httpStatus: login.httpStatus, result: login.data };
   }
+
   const response = await request('/auth/verify-totp', {
     challengeToken: login.data.challengeToken,
     code,
   });
-  // Não exibir senha, token de desafio ou semente na evidência.
+
   return {
     route: '/api/auth/verify-totp',
     httpStatus: response.httpStatus,

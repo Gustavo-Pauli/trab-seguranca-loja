@@ -15,13 +15,16 @@ export function useSession() {
     async function loadSession() {
       try {
         const response = await api<{ user: User; demoMode: boolean }>('/auth/me');
+
         if (!active) {
           return;
         }
+
         setUser(response.user);
         setDemoMode(response.demoMode);
       } catch (cause) {
         const missingSession = cause instanceof ApiError && cause.status === 401;
+
         if (active && !missingSession) {
           setError(errorMessage(cause));
         }
@@ -32,18 +35,22 @@ export function useSession() {
       }
     }
 
-    void loadSession();
-    api<{ demoMode: boolean }>('/health')
-      .then((response) => {
+    async function loadDemoMode() {
+      try {
+        const response = await api<{ demoMode: boolean }>('/health');
+
         if (active) {
           setDemoMode(response.demoMode);
         }
-      })
-      .catch((cause) => {
+      } catch (cause) {
         if (active) {
           setError(errorMessage(cause));
         }
-      });
+      }
+    }
+
+    void loadSession();
+    void loadDemoMode();
 
     return () => {
       active = false;
@@ -62,9 +69,11 @@ export function useSession() {
     try {
       await api('/auth/logout', {});
       setUser(null);
+
       return true;
     } catch (cause) {
       setError(errorMessage(cause));
+
       return false;
     } finally {
       setLoggingOut(false);

@@ -36,24 +36,33 @@ export type Item = {
   unit_price_cents: number;
 };
 
-// Preços vêm do catálogo do servidor, não da requisição.
+const MAX_ITEM_QUANTITY = 10;
+
 export function orderItems(input: unknown): Item[] {
   if (!Array.isArray(input) || input.length < 1 || input.length > products.length) {
     throw new Error('INVALID_ITEMS');
   }
+
   const seen = new Set<string>();
+
   return input.map((item) => {
     const product = products.find((candidate) => candidate.id === item?.product_id);
-    if (
-      !product ||
-      !Number.isInteger(item.quantity) ||
-      item.quantity < 1 ||
-      item.quantity > 10 ||
-      seen.has(product.id)
-    ) {
+
+    if (!product) {
       throw new Error('INVALID_ITEMS');
     }
+
+    const quantityValid =
+      Number.isInteger(item.quantity) && item.quantity >= 1 && item.quantity <= MAX_ITEM_QUANTITY;
+    const repeatedProduct = seen.has(product.id);
+
+    if (!quantityValid || repeatedProduct) {
+      throw new Error('INVALID_ITEMS');
+    }
+
     seen.add(product.id);
+
+    // Mantém a quantidade recebida e busca o preço no catálogo.
     return {
       product_id: product.id,
       quantity: item.quantity,

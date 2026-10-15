@@ -248,7 +248,7 @@
     "physicalPhoneQrScan": false,
     "scope": "Pre-Tailwind package; not a claim about the new frontend lockfile."
   },
-  "scope": "Earlier audit records remain dated; latest revalidation is in readabilityReview.",
+  "scope": "Earlier audit records remain dated; latest revalidation is in validationRefactor.",
   "tailwindMigration": {
     "completedAt": "2026-10-15T03:03:00.872941+00:00",
     "tailwind": "4.3.3",
@@ -402,6 +402,79 @@
         "Session restored after page reload",
         "Logout and password/TOTP login"
       ],
+      "physicalPhoneQrScan": false
+    },
+    "newDependencies": false,
+    "newChangesCommitted": false,
+    "pushed": false
+  },
+  "validationRefactor": {
+    "completedAt": "2026-10-15T04:07:35.124190+00:00",
+    "baselineCommit": "6d0ddf7",
+    "sourceChecks": [
+      {
+        "command": "pnpm typecheck",
+        "exitCode": 0
+      },
+      {
+        "command": "pnpm build",
+        "exitCode": 0
+      },
+      {
+        "command": "pnpm test:security",
+        "exitCode": 0
+      }
+    ],
+    "securityExecutedAt": "2026-10-15T04:02:56.047Z",
+    "securityPassed": 37,
+    "behavioralComparison": {
+      "executedAt": "2026-10-15T04:02:07.189Z",
+      "baselineCommit": "6d0ddf7",
+      "completed": true,
+      "counts": {
+        "payment": 416,
+        "catalog": 45,
+        "location": 36,
+        "policy": 144
+      },
+      "total": 641,
+      "coveredBoundaries": [
+        "timestamp ±120/121 seconds",
+        "TOTP counter ±1/2",
+        "session 12h/12h+1",
+        "expired/future session",
+        "quantity 0/1/2/10/11",
+        "first rejection reason",
+        "strict location comparison"
+      ]
+    },
+    "cleanInstallation": {
+      "checks": [
+        {
+          "command": "pnpm install --frozen-lockfile --offline",
+          "exitCode": 0
+        },
+        {
+          "command": "pnpm typecheck",
+          "exitCode": 0
+        },
+        {
+          "command": "pnpm build",
+          "exitCode": 0
+        }
+      ],
+      "completedAt": "2026-10-15T04:07:01.3229792Z",
+      "directory": ".data/tailwind-clean-20261015-010647",
+      "dependencySource": "local pnpm cache, offline",
+      "startedWithoutDependenciesBinVaultsOrDatabases": true,
+      "runtimeAndConfigFilesMatching": 94
+    },
+    "browser": {
+      "browser": "Chrome",
+      "requestedUrl": "http://127.0.0.1:3515/orders",
+      "observedUrl": "http://127.0.0.1:3515/login",
+      "observed": "Protected route redirects to login; email, password, submit and registration link rendered.",
+      "scope": "Read-only loading check; no new account or checkout through the browser in this run.",
       "physicalPhoneQrScan": false
     },
     "newDependencies": false,

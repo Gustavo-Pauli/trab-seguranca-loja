@@ -16,5 +16,6 @@ export function ordersRoutes(secret: Buffer) {
     );
     res.status(httpStatus).json(body);
   });
+
   return router;
 }

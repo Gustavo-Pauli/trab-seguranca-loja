@@ -13,6 +13,7 @@ Datas, escopos e resultados estão em
 | `pnpm test:security` | 37 verificações aprovadas. |
 | `pnpm examples:java --attachments <pasta dos anexos>` | 13 exemplos compilados/executados, todos com exit 0. |
 | Casos focados do cliente HTTP e conferência dos cofres | 10 verificações aprovadas com dados sintéticos. |
+| Comparação das validações com a versão anterior | 641 casos mantiveram os mesmos resultados. |
 
 A suíte de segurança cobre cadastro/QR, senha/TOTP, sessão, catálogo, compra,
 preços confiáveis, contexto DB5 e os quatro ataques. Também verifica timestamps,
@@ -31,6 +32,13 @@ Os exemplos Java usam as fontes originais dos anexos. A exceção do exemplo
 AES-GCM após adulteração é esperada e tratada pelo próprio programa com exit 0.
 [evidencias-java.json](evidencias-java.json) conserva stdout/stderr, sem semente
 ou QR do exemplo TOTP.
+
+A comparação com a versão anterior cobriu validação de pagamento (416 casos),
+catálogo (45), localização (36) e política de contexto (144), incluindo limites
+de timestamp, sessão, TOTP e quantidade. Foi uma conferência local com a versão
+preservada do código, sem novo framework. Nesta revisão foram repetidos
+typecheck, build, a suíte de segurança e a instalação do pacote; os registros
+dos exemplos Java e das demais conferências mantêm suas datas e escopos.
 
 ## Instalação e execução
 

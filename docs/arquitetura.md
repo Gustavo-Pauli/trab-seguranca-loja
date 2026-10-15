@@ -26,6 +26,7 @@ encadeamento das funções está em [COMO_FUNCIONA.md](COMO_FUNCIONA.md).
 | `gateway/modules/payments/` | Autenticação da entrada, validações e resposta cifrada. |
 | `gateway/modules/replay/` | Consumo atômico/persistente do nonce e pagamento. |
 | `shared/protocol/` | Contratos, PBKDF2, AES-GCM, Base64 e arquivos cifrados. |
+| `shared/protocol/limits.ts` | Janelas públicas de pagamento, sessão e período TOTP usadas pelos dois serviços. |
 | `shared/context/`, `shared/catalog.ts` | Consulta/política e preços comuns, sem duplicar regras. |
 | `scripts/` | Setup, launcher, testes, exemplos Java e empacotamento. |
 

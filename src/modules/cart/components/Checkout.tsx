@@ -22,8 +22,10 @@ export default function Checkout() {
     setBusy(true);
     setError('');
     setNotice('');
+
     try {
       const result = await placeOrder(quantities);
+
       if (result.status === 'APPROVED') {
         clearCart();
         setNotice('Compra aprovada.');

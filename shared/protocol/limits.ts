@@ -1,0 +1,3 @@
+export const PAYMENT_WINDOW_SECONDS = 120;
+export const SESSION_LIFETIME_SECONDS = 12 * 60 * 60;
+export const TOTP_PERIOD_SECONDS = 30;
