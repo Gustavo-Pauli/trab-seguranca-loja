@@ -135,4 +135,4 @@ após adulteração é esperada. A aplicação não precisa de Java para funcion
 Estudo: [guia de funções](docs/COMO_FUNCIONA.md) e [mapa dos módulos](docs/arquitetura.md).
 Entrega: [relatório](docs/relatorio.md), [roteiro](docs/apresentacao.md) e
 [validação final](docs/validacao.md). Preencha identificação e revisão humana no
-relatório antes de empacotar para o Moodle; os testes do agente não substituem o ensaio da equipe.
+relatório e ensaie a demonstração antes de empacotar para o Moodle.

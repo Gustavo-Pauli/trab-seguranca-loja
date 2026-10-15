@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS orders (
 );
 `);
 
-// Migração aditiva e idempotente; não apaga cadastros da etapa anterior.
+// Instalações existentes podem não ter os campos de contexto e TOTP na sessão.
 const columns = db.prepare('PRAGMA table_info(sessions)').all() as { name: string }[];
 if (!columns.some((c) => c.name === 'context_json'))
   db.exec('ALTER TABLE sessions ADD COLUMN context_json TEXT');

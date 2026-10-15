@@ -215,10 +215,11 @@ ponta. Confira pedidos antes de repetir. Capturas de demo/desafios não persiste
 
 - **Ferramentas:** ChatGPT na etapa inicial, conforme o histórico informado, e
   Codex para implementação, revisão, verificações e documentação.
-- **Prompts:** consolidados em quatro objetivos: corrigir a inicialização e completar
+- **Prompts:** consolidados em cinco objetivos: corrigir a inicialização e completar
   o enunciado; refatorar a Loja Segura para módulos didáticos preservando segurança;
   realizar esta revisão final sem nova reestruturação, com relatório conciso e
-  teste da instalação/pacote; migrar os estilos para Tailwind preservando a interface.
+  teste da instalação/pacote; migrar os estilos para Tailwind preservando a interface;
+  pesquisar critérios de revisão e enxugar comentários e textos redundantes.
   Foram fornecidos o PDF, os anexos e os requisitos
   detalhados de stack, mecanismos e demonstrações.
 - **Código gerado/alterado:** autenticação, protocolo, contexto, fluxo de pedidos,

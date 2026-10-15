@@ -7,7 +7,7 @@ export class ApiError extends Error {
   }
 }
 
-/** O painel precisa mostrar também respostas de bloqueio, como HTTP 401. */
+// Os testes precisam ler também o corpo das respostas 4xx/5xx.
 export async function request<T>(path: string, body?: unknown) {
   const options: RequestInit = { credentials: 'same-origin' };
 
@@ -25,7 +25,6 @@ export async function request<T>(path: string, body?: unknown) {
   return { httpStatus: response.status, ok: response.ok, data };
 }
 
-/** No fluxo normal, uma resposta de erro interrompe a operação. */
 export async function api<T>(path: string, body?: unknown): Promise<T> {
   const response = await request<T>(path, body);
 

@@ -57,7 +57,7 @@ export async function sendToGateway(envelope: Envelope, secret: Buffer) {
   return { httpStatus: response.status, result, wire, authenticated };
 }
 
-/** Autenticidade sozinha não basta: resposta também precisa corresponder à compra enviada. */
+// Vincula a resposta autenticada ao pedido enviado.
 export function verifyGatewayResponse(payment: Payment, result: PaymentResult, httpStatus: number) {
   const matchesRequest = result?.order_id === payment.order_id && result?.nonce === payment.nonce;
   const validTimestamp =
@@ -73,7 +73,6 @@ export function verifyGatewayResponse(payment: Payment, result: PaymentResult, h
 export async function pay(payment: Payment, secret: Buffer) {
   const envelope = await seal(payment, secret, 'payment');
   const response = await sendToGateway(envelope, secret);
-  // Nem aprovação nem bloqueio definitivo podem vir de uma resposta não autenticada.
   if (!response.authenticated) throw new Error('UNAUTHENTICATED_GATEWAY_RESPONSE');
   verifyGatewayResponse(payment, response.result, response.httpStatus);
   return { envelope, result: response.result };

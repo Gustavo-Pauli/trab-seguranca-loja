@@ -35,7 +35,7 @@ export type Item = {
   unit_price_cents: number;
 };
 
-/** O navegador só escolhe ID e quantidade; preço vem exclusivamente do catálogo. */
+// Preços vêm do catálogo do servidor, não da requisição.
 export function orderItems(input: unknown): Item[] {
   if (!Array.isArray(input) || input.length < 1 || input.length > products.length)
     throw new Error('INVALID_ITEMS');

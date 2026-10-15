@@ -1,8 +1,8 @@
 # Como funciona a Loja Segura
 
-Leia este guia com o código aberto. Os caminhos são da versão modular final.
-O mapa completo está em [arquitetura.md](arquitetura.md); o relatório obrigatório
-está em [relatorio.md](relatorio.md). Não há pagamento bancário real.
+Este guia acompanha os fluxos de autenticação e compra no código.
+O mapa de arquivos está em [arquitetura.md](arquitetura.md) e a descrição técnica
+em [relatorio.md](relatorio.md).
 
 ## Onde começar
 
@@ -115,5 +115,4 @@ Express serve frontend e API na mesma origem. Loopback não tem país público.
 
 `decide` bloqueia país desconhecido/mudança de país; região diferente no mesmo
 país é permitida com motivo. O contexto apoia autorização; não substitui TOTP.
-Prepare o autenticador físico e ensaie com os integrantes: a validação automatizada
-e a navegação do agente não substituem a explicação do grupo.
+Para ensaiar esses fluxos, siga [apresentacao.md](apresentacao.md).

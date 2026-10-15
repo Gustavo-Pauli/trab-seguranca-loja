@@ -52,7 +52,6 @@
   }
 }
 
-/* Controles repetidos; os layouts usam utilitários diretamente no JSX. */
 @layer components {
   .primary,
   .secondary {

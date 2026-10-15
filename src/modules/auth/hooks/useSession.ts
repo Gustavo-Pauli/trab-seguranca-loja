@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { api, ApiError, errorMessage } from '../../../lib/api';
 import type { User } from '../types';
 
-/** Somente consulta/criação local do estado da sessão e logout. */
 export function useSession() {
   const [user, setUser] = useState<User | null>(null);
   const [demoMode, setDemoMode] = useState(false);

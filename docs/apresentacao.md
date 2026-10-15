@@ -57,8 +57,8 @@ Se uma aprovação se perder na rede, não há reconciliação automática.
 ## Fechar a demonstração
 
 Mostrar os resultados de `pnpm.cmd test:security` e a seção de IA do relatório.
-Cada integrante deve explicar o que revisou/executou pessoalmente. A leitura física
-do QR e o ensaio coletivo não foram substituídos pelos testes automatizados do agente.
+Cada integrante deve explicar o que revisou e executou pessoalmente. Antes da
+apresentação, confira o QR com o autenticador do celular e ensaie o fluxo completo.
 Para estudar os anexos, use `examples:java` conforme o README; a exceção GCM após
 tampering é esperada. Ctrl+C encerra os serviços. Após preencher os dados finais
 do relatório, `pnpm.cmd zip` gera o arquivo a enviar ao Moodle.

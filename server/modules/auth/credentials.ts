@@ -19,7 +19,6 @@ function scrypt(
   );
 }
 
-/** Hash derivado e salt são persistidos; a senha original jamais é armazenada. */
 export async function hashPassword(password: string): Promise<{ salt: string; hash: string }> {
   const salt = randomBytes(16);
   const derived = (await scrypt(password, salt, 64, COST)) as Buffer;
@@ -52,12 +51,7 @@ export interface EncryptedTotp {
   tag: string;
 }
 
-/**
- * Protege o segredo TOTP sob uma chave derivada da senha do usuário.
- * O material derivado inclui a chave AES (32 bytes) e o IV (12 bytes).
- * Cada usuário recebe um salt independente, gerado com CSPRNG.
- * É executada uma única cifragem por salt; recriptografar exige salt novo.
- */
+// Chave e IV dependem do salt; recifrar a semente exige um salt novo.
 export async function encryptTotp(
   secret: string,
   password: string,

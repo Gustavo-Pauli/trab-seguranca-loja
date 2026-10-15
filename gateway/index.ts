@@ -4,7 +4,6 @@ import { db } from './lib/database.js';
 import { createGatewayApp } from './app.js';
 
 const directory = resolve(process.env.DATA_DIR ?? '.data');
-// Este processo abre seu cofre; não recebe uma chave/IV pronta da loja.
 const secret = await secretFromStdin(
   resolve(process.env.GATEWAY_VAULT ?? `${directory}/gateway-segredo.json`),
   'gateway',

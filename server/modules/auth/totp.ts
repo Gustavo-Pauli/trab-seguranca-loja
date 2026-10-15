@@ -37,11 +37,11 @@ function fromBase32(value: string): Buffer {
   return Buffer.from(bytes);
 }
 
-/** TOTP RFC 6238: HOTP (RFC 4226) com contador baseado em períodos de 30s. */
 export function generateTotpSecret(): string {
   return toBase32(randomBytes(20));
 }
 
+// HOTP (RFC 4226); verifyTotp usa o tempo como contador (RFC 6238).
 export function codeForCounter(secretBase32: string, counter: number): string {
   const secret = fromBase32(secretBase32);
   const input = Buffer.alloc(8);

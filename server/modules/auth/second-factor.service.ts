@@ -6,7 +6,6 @@ import { baselineFor, rememberBaseline } from '../context/context.repository.js'
 import { decide } from '../../../shared/context/policy.js';
 import type { Location } from '../../../shared/context/types.js';
 
-/** Só retorna autorização depois de validar TOTP, contexto e consumo atômico do contador. */
 export function verifySecondFactor(challengeToken: string, code: string, location: Location) {
   const challenge = takeAttempt(challengeToken);
   const counter = verifyTotp(challenge.secret, code);

@@ -23,7 +23,6 @@ export function createShopApp(secret: Buffer) {
   app.use('/api', ordersRoutes(secret));
   if (demoMode) app.use('/api/demo', securityDemoRoutes(secret));
   app.use('/api', (_req, res) => res.status(404).json({ error: 'Endpoint não encontrado.' }));
-  // Rotas do React também funcionam ao abrir a URL diretamente na build local.
   const buildPath = resolve('dist');
   if (existsSync(buildPath)) {
     app.use(express.static(buildPath));
