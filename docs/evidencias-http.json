@@ -1,7 +1,7 @@
 {
-  "executedAt": "2026-10-15T04:29:07.026Z",
-  "node": "v22.14.0",
-  "isolatedDataDirectory": ".data/test-1792038527400",
+  "executedAt": "2026-10-17T20:02:42.938Z",
+  "node": "v24.19.0",
+  "isolatedDataDirectory": ".data/test-1792267354926",
   "completed": true,
   "passed": 38,
   "checks": [
@@ -149,20 +149,20 @@
       "status": 200,
       "details": {
         "payment": {
-          "order_id": "ORD-e0c458e7-f8d1-4c87-95cd-d8f25feb2acd",
-          "nonce": "4f64242ef85a36bec760c8fc66d9ba3ed5db5cf3b6a0273847e38863863975bf",
+          "order_id": "ORD-d8683a15-c581-48ad-b4b4-95bc6c2e30ef",
+          "nonce": "4f394dd9efb9b038d249a092380f1bab781f42da521649e10f134f2481032e3e",
           "status": "APPROVED",
-          "timestamp": 1792038530,
+          "timestamp": 1792267356,
           "total_cents": 10000
         },
         "order": {
-          "id": "ORD-e0c458e7-f8d1-4c87-95cd-d8f25feb2acd",
-          "user_id": "d5d46818-0ad7-48a9-9216-1dd3242fa641",
+          "id": "ORD-d8683a15-c581-48ad-b4b4-95bc6c2e30ef",
+          "user_id": "7c084d0c-fedf-4daf-96ae-767c25a5fc6d",
           "total_cents": 10000,
           "status": "APPROVED",
           "reason": null,
-          "created_at": 1792038529743,
-          "order_id": "ORD-e0c458e7-f8d1-4c87-95cd-d8f25feb2acd",
+          "created_at": 1792267356138,
+          "order_id": "ORD-d8683a15-c581-48ad-b4b4-95bc6c2e30ef",
           "total": 100,
           "items": [
             {
@@ -181,15 +181,15 @@
       "details": {
         "request": {
           "version": 1,
-          "salt": "S1SD63HCQ8oepNB6QZKKLpziYLS0BNGCxtMK8fUHdNQ=",
-          "ciphertext": "CDxaL6qAsp5u8Ehlvh4wDcXUzIJ7+hqEZfKf7QX3RnrPXm3bRyTgOtPJ26ksPFop+vqVRfJPSc/WCsG5zY3jmHOBub2QUB8sSi0ziWCr+HAG/YXXJLj1exReAwS5RPtAQVyYraB545tdiipe3j4Y/v0vWrvI5GZJQh8WMdyD+KwpHymeFMwRDdh5FEF3BHLvq/wNZ3W1+5kquCD/errx/ozPXCWOORD7PMpIjrsbNNsxhvo+UDM7UHrNOJKpWWf05vxnRuspB+P9OLR9vHHeeQXyrBx52Sbo7EQetIspiE7hNUkNRe/v2amsPjpq2kag3+IjemJZz1bRF0VNxsuKNmd4W5cA/q9Pbgx5iBhHF2Qjceg7NkGqJcrsdWt2D8I5jerhj6ACW6AvJBah9FdZsgvp8IcZY15z/YA1a5w9O/v3p75nAA89BLonYRpHpPFJ2lHIjW455tZxHDVbwI/Ke0ZcHgzwidM6Og/GsGU3LGneh1lBwImGakLBrxOPgLg4bfq2XJNSkYOtjOTe7i2S44VSPjsk1KxzTeTPVjikW4cSmy8AFFpzpktuhYnPfS3Uby/VTsPQNZrpcUaqadrftdrx6dN3sZ9qVrvJ2NdZKhp4JZy6Gp+X9Be1gQGdX6UTZAb9A8zsdKqS29LILQjSUYGyJ8sS/noFOCsiKy7rkU+p/K2SMUn7we0R3Zb+m4P76GiWVVtsj1sPDL2i9eyFIhN3upL/zHIBGRKLfpRU6GahmjBuFBu/9nIOQ1C6dv/7Gff4RnfmqDzHwlw82pPAleOhoNtY7H7+eW/+r0M83/kHTdvT2zg4V7PxatC0JMelWEGqF1wW1nr0APvQcpY9KrkmqSvJG2TAOuAJGL7oj51+hQQDEYcUeVcb9j7zuj7nzamcCcHbm5sjqzxfGqEibOU+I6stR1B5vzhoiXRqIf6JYrg0dT6oQlXe/7rHS7cYKI90G1PNDstCIzsxPn0GgW1YOzMutVpy1DKYSqpUQTTmgEZK7jhknOzUe74+KlRmaMir+h9vkB0GDBsAQnvOXCWbrF8G/GKazP7uzq7D1YcN5V3KyaV/lLYjqyEAw4Bfb77F3TVz1lRv+RaSFaV+52e/mGyl1MWSJp3pqWFsfyu0EHLpvlbWHG1Nx2Bgu8OukuvELwv0SQ7+SFgmaTDtwO9Xc5HhKTihnGMYhRydsiN5yJY2sqTBZ0TXzsV4qxvSszPmxRN8QbvtzajFisSNvT0oIrVRCNqZidWwXeg=",
-          "tag": "20iUhxS5enKXAOWJinlV9A=="
+          "salt": "x1aPZxX6J43xqybWCEra4WGqrhja3SCrr0TTRLEDNbQ=",
+          "ciphertext": "UsrrpLNsGHuo8c5I2TOben+XAMPtToQBypcsquZQePJjcktHX5K0SmgcoUga73IPPr9w9W75n+9eIzoFM2omsrcGj5XTjSunMxaxNTnHsCsJSyGyaTZSHQ4za9NjaDLbmoU8FFQqEUt+f7AndreAlz9yLR0OLFux6hN70e+yxIwOLuqWfVta2DGIvEQoYqucXTijmpO2jfewHmoFt8RuYGAQC4HZS7mtvJEaAxSpgfr9+2unEWc9epdPoX5+tS5XMgpYZefoNiuYeoSEinV+mO1lApdl5dWSFQhdJTIyMV/6AFOqU44LjWbcIw2VJMn13+kGFIiZTD7pmbylxEMMQPzWN3ZCLqPIyL7kg4rXloC9zRTLl60USwCBgJ6dHCKIMvKaMHjV81FDpjErqLQchJKBLJa1KXXF14tn+brNklo4LpOMlSoClXxqBRUbqlS40hWQclOqMdDPeDZF1e4Or2E67iC44S1WMmYGHpgKehMmS90q4zdV9PwXLpGqTZKL5Qyrs74JYIPEe2kwBN1aF1iU6aL1hfRrGkDypJBEbBiVpwPuvqu+g87ZpzPpzcXCnyvwSzkBFM8cLtkRYhJ4g83G+hlGB8uI0b5I3wZCeoC/NRurSMNBC1+M/Ts9ua5cLGSDe41H3tffTDzaGH4UtdAsbJYmjHADulGsBvznbr26eZUTyOnuuhsgw/4SmhqgaLFh/6tUEGS1ZoioDsdQqeclRhnGhUGERcoJUataWRMRwYkUGJLwYoUmj1vZJZHUuq4fKVHmuwPUqmo5PbFMVXejjDfv82Q9dbPL4rRVqhWNVEynQVbRMKUBgn9KzPmzWU+E4iRatv+aG2V+8ZSPSJxdhVTITMEL8oqcMNUR13Z1RSSF3Jkree92xdjNUcfs5eI4SugccgB5QVv0FxjvwwS9eXDOxiEmKYjVdWNeMhzEZazFOT6jePH2s7iWPY3BxANtOfDVmoU+tNIIcntVjfvelBMuSzTu/d2PEGsK3vZa3aRGG1sqAHWt4WhuR3G3EtC6EhUUJdPj1FIwJj3s+MVRecx21/9rYB03oqo3St7DeRC9z7paNv8hvMFmUFvTWMBIVrjgPGsecu/PzT3BTuS3F/f+zEWjcYYcsmWOS2qEGl+tlWAXjtVxENSKPjpnRJpIiY55B81TRoW16m2RD9yZDhsmjya1uwojyltQ8Iw6cKyB1b7pToq4B/n5PvIILe1hrThl/FIiy8y3gykqivVDOQvHxCDJwkM1IiI=",
+          "tag": "EvhDPcDPwId3//B+Bsjsng=="
         },
         "response": {
-          "order_id": "ORD-e0c458e7-f8d1-4c87-95cd-d8f25feb2acd",
-          "nonce": "4f64242ef85a36bec760c8fc66d9ba3ed5db5cf3b6a0273847e38863863975bf",
+          "order_id": "ORD-d8683a15-c581-48ad-b4b4-95bc6c2e30ef",
+          "nonce": "4f394dd9efb9b038d249a092380f1bab781f42da521649e10f134f2481032e3e",
           "status": "BLOCKED",
-          "timestamp": 1792038530,
+          "timestamp": 1792267356,
           "reason": "INVALID_NONCE"
         }
       }
@@ -208,9 +208,9 @@
         },
         "request": {
           "version": 1,
-          "salt": "S1SD63HCQ8oepNB6QZKKLpziYLS0BNGCxtMK8fUHdNQ=",
-          "ciphertext": "CDxaL6qAsp5u8Ehlvh4wDcXUzIJ7+hqEZfKf7QX3RnrPXm3bRyTgOtPJ26ksPFop+vqVRfJPSc/WCsG5zY3jmHOBub2QUB8sSi0ziWCr+HAG/YXXJLj1exReAwS5RPtAQVyYraB545tdiipe3j4Y/v0vD7jI5GZJQh8WMdyD+KwpHymeFMwRDdh5FEF3BHLvq/wNZ3W1+5kquCD/errx/ozPXCWOORD7PMpIjrsbNNsxhvo+UDM7UHrNOJKpWWf05vxnRuspB+P9OLR9vHHeeQXyrBx52Sbo7EQetIspiE7hNUkNRe/v2amsPjpq2kag3+IjemJZz1bRF0VNxsuKNmd4W5cA/q9Pbgx5iBhHF2Qjceg7NkGqJcrsdWt2D8I5jerhj6ACW6AvJBah9FdZsgvp8IcZY15z/YA1a5w9O/v3p75nAA89BLonYRpHpPFJ2lHIjW455tZxHDVbwI/Ke0ZcHgzwidM6Og/GsGU3LGneh1lBwImGakLBrxOPgLg4bfq2XJNSkYOtjOTe7i2S44VSPjsk1KxzTeTPVjikW4cSmy8AFFpzpktuhYnPfS3Uby/VTsPQNZrpcUaqadrftdrx6dN3sZ9qVrvJ2NdZKhp4JZy6Gp+X9Be1gQGdX6UTZAb9A8zsdKqS29LILQjSUYGyJ8sS/noFOCsiKy7rkU+p/K2SMUn7we0R3Zb+m4P76GiWVVtsj1sPDL2i9eyFIhN3upL/zHIBGRKLfpRU6GahmjBuFBu/9nIOQ1C6dv/7Gff4RnfmqDzHwlw82pPAleOhoNtY7H7+eW/+r0M83/kHTdvT2zg4V7PxatC0JMelWEGqF1wW1nr0APvQcpY9KrkmqSvJG2TAOuAJGL7oj51+hQQDEYcUeVcb9j7zuj7nzamcCcHbm5sjqzxfGqEibOU+I6stR1B5vzhoiXRqIf6JYrg0dT6oQlXe/7rHS7cYKI90G1PNDstCIzsxPn0GgW1YOzMutVpy1DKYSqpUQTTmgEZK7jhknOzUe74+KlRmaMir+h9vkB0GDBsAQnvOXCWbrF8G/GKazP7uzq7D1YcN5V3KyaV/lLYjqyEAw4Bfb77F3TVz1lRv+RaSFaV+52e/mGyl1MWSJp3pqWFsfyu0EHLpvlbWHG1Nx2Bgu8OukuvELwv0SQ7+SFgmaTDtwO9Xc5HhKTihnGMYhRydsiN5yJY2sqTBZ0TXzsV4qxvSszPmxRN8QbvtzajFisSNvT0oIrVRCNqZidWwXeg=",
-          "tag": "20iUhxS5enKXAOWJinlV9A=="
+          "salt": "x1aPZxX6J43xqybWCEra4WGqrhja3SCrr0TTRLEDNbQ=",
+          "ciphertext": "UsrrpLNsGHuo8c5I2TOben+XAMPtToQBypcsquZQePJjcktHX5K0SmgcoUga73IPPr9w9W75n+9eIzoFM2omsrcGj5XTjSunMxaxNTnHsCsJSyGyaTZSHQ4za9NjaDLbmoU8FFQqEUt+f7AndreAlz9yeB4OLFux6hN70e+yxIwOLuqWfVta2DGIvEQoYqucXTijmpO2jfewHmoFt8RuYGAQC4HZS7mtvJEaAxSpgfr9+2unEWc9epdPoX5+tS5XMgpYZefoNiuYeoSEinV+mO1lApdl5dWSFQhdJTIyMV/6AFOqU44LjWbcIw2VJMn13+kGFIiZTD7pmbylxEMMQPzWN3ZCLqPIyL7kg4rXloC9zRTLl60USwCBgJ6dHCKIMvKaMHjV81FDpjErqLQchJKBLJa1KXXF14tn+brNklo4LpOMlSoClXxqBRUbqlS40hWQclOqMdDPeDZF1e4Or2E67iC44S1WMmYGHpgKehMmS90q4zdV9PwXLpGqTZKL5Qyrs74JYIPEe2kwBN1aF1iU6aL1hfRrGkDypJBEbBiVpwPuvqu+g87ZpzPpzcXCnyvwSzkBFM8cLtkRYhJ4g83G+hlGB8uI0b5I3wZCeoC/NRurSMNBC1+M/Ts9ua5cLGSDe41H3tffTDzaGH4UtdAsbJYmjHADulGsBvznbr26eZUTyOnuuhsgw/4SmhqgaLFh/6tUEGS1ZoioDsdQqeclRhnGhUGERcoJUataWRMRwYkUGJLwYoUmj1vZJZHUuq4fKVHmuwPUqmo5PbFMVXejjDfv82Q9dbPL4rRVqhWNVEynQVbRMKUBgn9KzPmzWU+E4iRatv+aG2V+8ZSPSJxdhVTITMEL8oqcMNUR13Z1RSSF3Jkree92xdjNUcfs5eI4SugccgB5QVv0FxjvwwS9eXDOxiEmKYjVdWNeMhzEZazFOT6jePH2s7iWPY3BxANtOfDVmoU+tNIIcntVjfvelBMuSzTu/d2PEGsK3vZa3aRGG1sqAHWt4WhuR3G3EtC6EhUUJdPj1FIwJj3s+MVRecx21/9rYB03oqo3St7DeRC9z7paNv8hvMFmUFvTWMBIVrjgPGsecu/PzT3BTuS3F/f+zEWjcYYcsmWOS2qEGl+tlWAXjtVxENSKPjpnRJpIiY55B81TRoW16m2RD9yZDhsmjya1uwojyltQ8Iw6cKyB1b7pToq4B/n5PvIILe1hrThl/FIiy8y3gykqivVDOQvHxCDJwkM1IiI=",
+          "tag": "EvhDPcDPwId3//B+Bsjsng=="
         },
         "response": {
           "httpStatus": 400,
@@ -230,10 +230,10 @@
       "name": "expired",
       "status": 409,
       "details": {
-        "order_id": "ORD-4375f66f-6c24-47cb-9af0-373b10582882",
-        "nonce": "6f3b57c0f494f5e56b08a647c520791b085a730453fad233829837d9e3a48166",
+        "order_id": "ORD-874d7e24-e316-4b64-9a1e-abae3bde9dc7",
+        "nonce": "37fa12558a833ab999ed70589d8b75223ca787160862e8480199e12536c82e19",
         "status": "BLOCKED",
-        "timestamp": 1792038531,
+        "timestamp": 1792267357,
         "reason": "INVALID_TIMESTAMP"
       }
     },
@@ -241,10 +241,10 @@
       "name": "inconsistent",
       "status": 409,
       "details": {
-        "order_id": "ORD-5cb0b5ad-c078-436a-8f6a-48ae4c33c0bf",
-        "nonce": "42685c130653ad69035def735a4f210cf29de4a43816477bc0c9354bff2bcd28",
+        "order_id": "ORD-4c064615-7243-4a8b-8db2-b4ac3ea9011b",
+        "nonce": "ac7bf21f5b7560203763e810ad6bd7d70095f059d9ca0fb39a8464ef2aa168f2",
         "status": "BLOCKED",
-        "timestamp": 1792038532,
+        "timestamp": 1792267357,
         "reason": "INCONSISTENT_ORDER"
       }
     },
@@ -252,10 +252,10 @@
       "name": "Timestamp futuro",
       "status": 409,
       "details": {
-        "order_id": "ORD-43f45238-7580-4d8f-8219-9c0bf185317d",
-        "nonce": "2d711c18484b49a041e1fcd02ec83b91c31a055a3b5f278eef7fec80b9195d7f",
+        "order_id": "ORD-ff79e70e-992b-4f57-8c07-afbe3da5f702",
+        "nonce": "84eaf80d554e6190a920ec20590eebca8b2a5d26c11808a62e5f45931e84fe1f",
         "status": "BLOCKED",
-        "timestamp": 1792038533,
+        "timestamp": 1792267357,
         "reason": "INVALID_TIMESTAMP"
       }
     },
@@ -263,10 +263,10 @@
       "name": "Gateway exige prova de 2FA",
       "status": 409,
       "details": {
-        "order_id": "ORD-540afabc-d820-4d94-a750-4ab36d80649d",
-        "nonce": "b467d486a6df9dc9c10056eab0ef14c9c44214eef8f751809c8195ce6f226db1",
+        "order_id": "ORD-713a7f9f-cfa7-46ad-9da4-d5c113bcec12",
+        "nonce": "af040ceaf92016c23c0fd2485a92e397cefb1f18d7489cc16a9435f694e899d1",
         "status": "BLOCKED",
-        "timestamp": 1792038534,
+        "timestamp": 1792267357,
         "reason": "INVALID_TOTP"
       }
     },
@@ -274,10 +274,10 @@
       "name": "Gateway exige usuário autenticado",
       "status": 409,
       "details": {
-        "order_id": "ORD-f73ad8b6-68a3-43e6-b8a4-4e4b7c8e986a",
-        "nonce": "d4cad1c6482192e11b178960f9f627d13ce9ce307a7fe044807c38075271054b",
+        "order_id": "ORD-d85cf9b6-2805-4dc9-ba62-3f85454b9290",
+        "nonce": "43af8fdd1d61cf351be840d1fe2b9af910d476235770439a20e1a38ab98bb1bb",
         "status": "BLOCKED",
-        "timestamp": 1792038535,
+        "timestamp": 1792267358,
         "reason": "UNAUTHENTICATED"
       }
     },
@@ -285,10 +285,10 @@
       "name": "Mesmo pedido com nonce novo",
       "status": 409,
       "details": {
-        "order_id": "ORD-e0c458e7-f8d1-4c87-95cd-d8f25feb2acd",
-        "nonce": "f5e5cc3a79f981fbb17ed112e1a1c42512335bbaea85bb458a55c5a7dc8ef493",
+        "order_id": "ORD-d8683a15-c581-48ad-b4b4-95bc6c2e30ef",
+        "nonce": "20c4f92466ea6d0622f8f65d5791e3b069b8533bb9e695c0f926730ebd533b74",
         "status": "BLOCKED",
-        "timestamp": 1792038536,
+        "timestamp": 1792267358,
         "reason": "ORDER_ALREADY_PAID"
       }
     },
@@ -296,10 +296,10 @@
       "name": "Gateway consulta novamente a base DB5",
       "status": 409,
       "details": {
-        "order_id": "ORD-a9750083-834b-4bd7-abf2-f758d2ffaa9b",
-        "nonce": "da7dcd813996722e13f3958832f07da5c7da91cd90d02e8b7471be742fcf4779",
+        "order_id": "ORD-5bfb3615-2920-41a8-a4fe-09c1eb735104",
+        "nonce": "541a2dafd80d36be402e231daf8318d30fd47f384c4915f6a96d70fc752547c6",
         "status": "BLOCKED",
-        "timestamp": 1792038537,
+        "timestamp": 1792267358,
         "reason": "INVALID_CONTEXT"
       }
     },
@@ -308,22 +308,22 @@
       "status": "200/409",
       "details": [
         {
-          "status": 409,
+          "status": 200,
           "data": {
-            "order_id": "ORD-74fbec0e-05a0-435c-91a4-3c14c420aadd",
-            "nonce": "2fa08341aa1d94d9b3cb02b82d59d8dab3a55e18f90dfd9c1c85d2d693de3fe9",
-            "status": "BLOCKED",
-            "timestamp": 1792038538,
-            "reason": "INVALID_NONCE"
+            "order_id": "ORD-f05bf454-0e2e-444c-b460-cd015517904b",
+            "nonce": "e9ed2b898c9a9bca6ce6be9e6d74122f2bd55ddb9bab9f4dd920a63f076ca65d",
+            "status": "APPROVED",
+            "timestamp": 1792267359
           }
         },
         {
-          "status": 200,
+          "status": 409,
           "data": {
-            "order_id": "ORD-74fbec0e-05a0-435c-91a4-3c14c420aadd",
-            "nonce": "2fa08341aa1d94d9b3cb02b82d59d8dab3a55e18f90dfd9c1c85d2d693de3fe9",
-            "status": "APPROVED",
-            "timestamp": 1792038538
+            "order_id": "ORD-f05bf454-0e2e-444c-b460-cd015517904b",
+            "nonce": "e9ed2b898c9a9bca6ce6be9e6d74122f2bd55ddb9bab9f4dd920a63f076ca65d",
+            "status": "BLOCKED",
+            "timestamp": 1792267359,
+            "reason": "INVALID_NONCE"
           }
         }
       ]
@@ -340,10 +340,10 @@
       "name": "Replay após reiniciar gateway",
       "status": 409,
       "details": {
-        "order_id": "ORD-e0c458e7-f8d1-4c87-95cd-d8f25feb2acd",
-        "nonce": "4f64242ef85a36bec760c8fc66d9ba3ed5db5cf3b6a0273847e38863863975bf",
+        "order_id": "ORD-d8683a15-c581-48ad-b4b4-95bc6c2e30ef",
+        "nonce": "4f394dd9efb9b038d249a092380f1bab781f42da521649e10f134f2481032e3e",
         "status": "BLOCKED",
-        "timestamp": 1792038539,
+        "timestamp": 1792267359,
         "reason": "INVALID_NONCE"
       }
     },
@@ -351,7 +351,7 @@
       "name": "Cadastro, sessão, pedido e novo login persistem após reinício",
       "status": 200,
       "details": {
-        "totpCounter": 59734618,
+        "totpCounter": 59742246,
         "usedPlusOneWindow": true
       }
     },
@@ -422,7 +422,7 @@
       "status": 502,
       "details": {
         "error": "Não foi possível confirmar o pagamento. Confira seus pedidos antes de tentar novamente.",
-        "order_id": "ORD-171017f9-9bbf-4f9b-b82b-b6a372474207",
+        "order_id": "ORD-9573c9ba-1f19-46dd-8ea3-d6a476fd6f02",
         "status": "ERROR",
         "reason": "GATEWAY_UNAVAILABLE"
       }
@@ -432,7 +432,7 @@
       "status": 502,
       "details": {
         "error": "Não foi possível confirmar o pagamento. Confira seus pedidos antes de tentar novamente.",
-        "order_id": "ORD-e32fef75-3161-4e41-b910-c5d451f71744",
+        "order_id": "ORD-f5e26153-2e41-4954-8298-c5c63345442d",
         "status": "ERROR",
         "reason": "GATEWAY_UNAVAILABLE"
       }
@@ -442,7 +442,7 @@
       "status": 502,
       "details": {
         "error": "Não foi possível confirmar o pagamento. Confira seus pedidos antes de tentar novamente.",
-        "order_id": "ORD-258c3a19-63e5-43bb-b72d-8298e0b51096",
+        "order_id": "ORD-e5c85bfa-3210-43c9-9c89-0e1ef91be3ce",
         "status": "ERROR",
         "reason": "GATEWAY_UNAVAILABLE"
       }
@@ -452,7 +452,7 @@
       "status": 502,
       "details": {
         "error": "Não foi possível confirmar o pagamento. Confira seus pedidos antes de tentar novamente.",
-        "order_id": "ORD-943440a7-cbb0-4c3c-9fc5-c335aaabf221",
+        "order_id": "ORD-4593c338-97e3-4e95-907c-919bdcac492f",
         "status": "ERROR",
         "reason": "GATEWAY_UNAVAILABLE"
       }
@@ -462,7 +462,7 @@
       "status": 502,
       "details": {
         "error": "Não foi possível confirmar o pagamento. Confira seus pedidos antes de tentar novamente.",
-        "order_id": "ORD-84b947ba-9ee5-4755-b93d-69b9c9eb0abc",
+        "order_id": "ORD-54b84d67-4838-440f-8663-c896540eee8e",
         "status": "ERROR",
         "reason": "GATEWAY_UNAVAILABLE"
       }

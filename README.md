@@ -12,6 +12,7 @@ Pagamentos simulados; SQLite, Scrypt/TOTP, IP2Location DB5 e AES-GCM.
 
 Os comandos abaixo usam PowerShell. `pnpm.cmd` evita o bloqueio de `pnpm.ps1`.
 Execute-os na pasta extraída do projeto, que contém `package.json`.
+No Linux/macOS, use `pnpm` no lugar de `pnpm.cmd`.
 
 ## 2. Instalar dependências
 
@@ -67,12 +68,12 @@ Informe a senha dos cofres. O launcher inicia **dois processos Express**, loja
 em 3001 e gateway em 4000. Express serve a build e a API na mesma origem.
 Ctrl+C encerra a execução; pare a instância anterior antes de iniciar outra.
 
-| Comando | Ambiente |
-|---|---|
-| `pnpm.cmd demo` | Build com testes e IP de cenário definido no servidor. |
-| `pnpm.cmd start` | Build normal, sem endpoints de ataque. |
-| `pnpm.cmd dev:demo` | Desenvolvimento com Vite em 5173 e modo demo. |
-| `pnpm.cmd dev` | Desenvolvimento normal com Vite em 5173. |
+| Comando             | Ambiente                                               |
+| ------------------- | ------------------------------------------------------ |
+| `pnpm.cmd demo`     | Build com testes e IP de cenário definido no servidor. |
+| `pnpm.cmd start`    | Build normal, sem endpoints de ataque.                 |
+| `pnpm.cmd dev:demo` | Desenvolvimento com Vite em 5173 e modo demo.          |
+| `pnpm.cmd dev`      | Desenvolvimento normal com Vite em 5173.               |
 
 No **demo**, a DB5 é consultada para `150.162.60.21`, configurado no servidor.
 Esse endereço não é o IP detectado do navegador. No **normal**, o IP vem do
