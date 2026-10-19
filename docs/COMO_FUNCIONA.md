@@ -90,17 +90,17 @@ As janelas de pagamento, sessão e TOTP estão nomeadas em `shared/protocol/limi
 
 ## Conceitos que não devem ser confundidos
 
-| Conceito | Significado nesta aplicação |
-|---|---|
-| Scrypt | KDF com custo de memória: N=16384, r=8, p=1; verifica senha e protege a semente TOTP. Não é cifra. |
-| PBKDF2 | KDF iterativa: HMAC-SHA512, 210.000 passos; deriva 44 bytes para cofres e mensagens. |
-| AES-GCM | Cifra autenticada: protege conteúdo, integridade e autenticidade; tag de 16 bytes. Não garante frescor sozinha. |
-| Salt | Valor público aleatório: 16 bytes em credenciais, 32 em envelopes; muda o material derivado. |
-| IV | 12 bytes derivados pela KDF junto com a chave AES de 32 bytes; participa da cifra. Não fica fixo/global. |
-| Nonce | ID aleatório da transação (32 bytes em hex); persistido no gateway para impedir repetição. É diferente do IV. |
-| Timestamp | Instante em segundos; janela de ±120 s para mensagens, complementar ao nonce. |
-| TOTP | Código de seis dígitos: HMAC-SHA1, contador de períodos de 30 s e truncamento dinâmico. É o segundo fator. |
-| IP2Location | Consulta local de IP à DB5: país/região/cidade/coordenadas aproximadas, sem GPS; DB5 não tem ASN/organização. |
+| Conceito    | Significado nesta aplicação                                                                                     |
+| ----------- | --------------------------------------------------------------------------------------------------------------- |
+| Scrypt      | KDF com custo de memória: N=16384, r=8, p=1; verifica senha e protege a semente TOTP. Não é cifra.              |
+| PBKDF2      | KDF iterativa: HMAC-SHA512, 210.000 passos; deriva 44 bytes para cofres e mensagens.                            |
+| AES-GCM     | Cifra autenticada: protege conteúdo, integridade e autenticidade; tag de 16 bytes. Não garante frescor sozinha. |
+| Salt        | Valor público aleatório: 16 bytes em credenciais, 32 em envelopes; muda o material derivado.                    |
+| IV          | 12 bytes derivados pela KDF junto com a chave AES de 32 bytes; participa da cifra. Não fica fixo/global.        |
+| Nonce       | ID aleatório da transação (32 bytes em hex); persistido no gateway para impedir repetição. É diferente do IV.   |
+| Timestamp   | Instante em segundos; janela de ±120 s para mensagens, complementar ao nonce.                                   |
+| TOTP        | Código de seis dígitos: HMAC-SHA1, contador de períodos de 30 s e truncamento dinâmico. É o segundo fator.      |
+| IP2Location | Consulta local de IP à DB5: país/região/cidade/coordenadas aproximadas, sem GPS; DB5 não tem ASN/organização.   |
 
 Na seção 12 do enunciado, chave/IV devem ser derivados e não fixados no código.
 Cada processo abre **seu cofre cifrado** com senha recebida por stdin. `material`
@@ -115,12 +115,12 @@ buffers ao terminar; cada serviço continua abrindo seu próprio cofre.
 
 ## Os quatro ataques
 
-| Ação real | Quem rejeita/ignora | Código para abrir |
-|---|---|---|
-| Replay: reenviar exatamente o envelope aprovado. | `acceptOnce` retorna `INVALID_NONCE`; após 120 s, `validatePayment` pode bloquear antes por `INVALID_TIMESTAMP`. | `security-demo.service.ts: runAttack`; `gateway/.../nonce.repository.ts: acceptOnce`. |
-| Valor: alterar três bytes do ciphertext para `100` → `1e3` (=1000), conservando tag/salt. | `open` falha na autenticação; `processPayment` responde 400 `INVALID_AUTH_TAG`. | `security-demo.service.ts: tamperAmount`; `shared/protocol/encryption.ts: open`. |
-| TOTP: senha válida cria desafio; enviar código incorreto de seis dígitos. | `verifyTotp`/`verifySecondFactor` rejeitam com 401 sem criar sessão. | `src/modules/security-demo/api.ts: testTotpRequest`; `server/modules/auth/second-factor.service.ts`. |
-| Localização: enviar IP/país/cidade falsos, inclusive header forjado no script. | `requestLocation` ignora declaração e usa socket/DB5; o gateway também reconsulta a DB5. | `context.routes.ts`; `context.service.ts: requestLocation`; `payment.validation.ts`. |
+| Ação real                                                                                 | Quem rejeita/ignora                                                                                              | Código para abrir                                                                                    |
+| ----------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| Replay: reenviar exatamente o envelope aprovado.                                          | `acceptOnce` retorna `INVALID_NONCE`; após 120 s, `validatePayment` pode bloquear antes por `INVALID_TIMESTAMP`. | `security-demo.service.ts: runAttack`; `gateway/.../nonce.repository.ts: acceptOnce`.                |
+| Valor: alterar três bytes do ciphertext para `100` → `1e3` (=1000), conservando tag/salt. | `open` falha na autenticação; `processPayment` responde 400 `INVALID_AUTH_TAG`.                                  | `security-demo.service.ts: tamperAmount`; `shared/protocol/encryption.ts: open`.                     |
+| TOTP: senha válida cria desafio; enviar código incorreto de seis dígitos.                 | `verifyTotp`/`verifySecondFactor` rejeitam com 401 sem criar sessão.                                             | `src/modules/security-demo/api.ts: testTotpRequest`; `server/modules/auth/second-factor.service.ts`. |
+| Localização: enviar IP/país/cidade falsos, inclusive header forjado no script.            | `requestLocation` ignora declaração e usa socket/DB5; o gateway também reconsulta a DB5.                         | `context.routes.ts`; `context.service.ts: requestLocation`; `payment.validation.ts`.                 |
 
 No modo normal, o IP vem de `req.socket.remoteAddress`, com `trust proxy=false`.
 No demo, `150.162.60.21` é **cenário configurado no servidor**, não o IP real do
@@ -129,4 +129,3 @@ Express serve frontend e API na mesma origem. Loopback não tem país público.
 
 `decide` bloqueia país desconhecido/mudança de país; região diferente no mesmo
 país é permitida com motivo. O contexto apoia autorização; não substitui TOTP.
-Para ensaiar esses fluxos, siga [apresentacao.md](apresentacao.md).

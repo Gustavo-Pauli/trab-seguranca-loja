@@ -132,8 +132,3 @@ pnpm.cmd examples:java --attachments "../trabalho-seguranca-anexos" --download
 Depois, repita sem `--download`. O executor não altera as fontes e registra
 [docs/evidencias-java.json](docs/evidencias-java.json). A exceção do exemplo GCM
 após adulteração é esperada. A aplicação não precisa de Java para funcionar.
-
-Estudo: [guia de funções](docs/COMO_FUNCIONA.md) e [mapa dos módulos](docs/arquitetura.md).
-Entrega: [relatório](docs/relatorio.md), [roteiro](docs/apresentacao.md) e
-[validação final](docs/validacao.md). Preencha identificação e revisão humana no
-relatório e ensaie a demonstração antes de empacotar para o Moodle.
